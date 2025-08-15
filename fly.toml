@@ -6,8 +6,12 @@ primary_region = "sin" # Singapore
 [build]
   builder = "paketobuildpacks/builder-jammy-base:latest"
   [build.args]
-    # This line tells the buildpack to look inside the 'backend' module for the final .jar file
     BP_MAVEN_BUILT_MODULE = "backend"
+
+# This new [env] section passes environment variables to the running application
+[env]
+  # This tells the Paketo memory calculator to allocate space for 50 threads, not the default 250
+  BPL_JVM_THREAD_COUNT = "50"
 
 [http_service]
   internal_port = 8080
