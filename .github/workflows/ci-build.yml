@@ -48,7 +48,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up Fly CLI
-        uses: superfly/fly-pr-review-apps@v2
+        uses: superfly/fly-pr-review-apps@v1
       - name: Deploy to Staging
         run: flyctl deploy --remote-only
         env:
