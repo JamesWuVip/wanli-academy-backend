@@ -1,16 +1,14 @@
-# fly.toml
+# fly.toml - Correct version for Wanli Academy
 
 app = "wanli-staging"
-primary_region = "sin" # Singapore
+primary_region = "sin"
 
 [build]
   builder = "paketobuildpacks/builder-jammy-base:latest"
   [build.args]
     BP_MAVEN_BUILT_MODULE = "backend"
 
-# This new [env] section passes environment variables to the running application
 [env]
-  # This tells the Paketo memory calculator to allocate space for 50 threads, not the default 250
   BPL_JVM_THREAD_COUNT = "50"
 
 [http_service]
