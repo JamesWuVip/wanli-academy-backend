@@ -10,6 +10,12 @@ primary_region = "sin"
 
 [env]
   BPL_JVM_THREAD_COUNT = "50"
+  # Database configuration will be automatically injected by Fly.io
+  # DATABASE_URL is set automatically when PostgreSQL is attached
+  SPRING_PROFILES_ACTIVE = "production"
+  SPRING_JPA_HIBERNATE_DDL_AUTO = "update"
+  SPRING_JPA_SHOW_SQL = "false"
+  SPRING_JPA_DATABASE_PLATFORM = "org.hibernate.dialect.PostgreSQLDialect"
 
 [http_service]
   internal_port = 8080
