@@ -1,0 +1,14 @@
+{
+  "name": "Wanli Academy Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/java-node:1-17-20",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack", "Vue.volar", "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint", "GitHub.copilot"
+      ]
+    }
+  },
+  "forwardPorts": [8080, 5173],
+  "postCreateCommand": "mvn -B clean install -DskipTests"
+}
