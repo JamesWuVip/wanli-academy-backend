@@ -21,6 +21,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -33,11 +38,32 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Install Node.js dependencies
+        run: npm install
       - name: Build and analyze with Maven & SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JamesWuVip_wanliRepo
+      - name: Start backend for acceptance tests
+        run: |
+          cd backend
+          mvn spring-boot:run &
+          echo $! > ../backend.pid
+          sleep 30
+        env:
+          SPRING_PROFILES_ACTIVE: test
+      - name: Run acceptance tests
+        env:
+          TEST_BASE_URL: http://localhost:8080/api
+        run: |
+          npm test
+          test_exit_code=$?
+          if [ -f backend.pid ]; then
+            kill $(cat backend.pid) || true
+            rm backend.pid
+          fi
+          exit $test_exit_code
 
   deploy:
     needs: build_and_scan

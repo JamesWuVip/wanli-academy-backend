@@ -1,0 +1,40 @@
+{
+  "name": "wanli-academy-acceptance-tests",
+  "version": "1.0.0",
+  "description": "Sprint 1 自动化验收测试脚本 - 验证用户认证和授权功能",
+  "main": "acceptance-test.js",
+  "scripts": {
+    "test": "node acceptance-test.js",
+    "test:verbose": "DEBUG=* node acceptance-test.js",
+    "install-deps": "npm install",
+    "start-backend": "cd backend && mvn spring-boot:run",
+    "test:full": "npm run start-backend & sleep 30 && npm test"
+  },
+  "keywords": [
+    "acceptance-test",
+    "authentication",
+    "spring-boot",
+    "jwt",
+    "api-testing"
+  ],
+  "author": "Wanli Academy Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "bugs": {
+    "url": "https://github.com/wanli-academy/issues"
+  },
+  "homepage": "https://github.com/wanli-academy#readme"
+}
