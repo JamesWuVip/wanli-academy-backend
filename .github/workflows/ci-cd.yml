@@ -38,6 +38,44 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JamesWuVip_wanliRepo
+      
+      # 添加Node.js环境设置用于运行验收测试
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      # 安装npm依赖
+      - name: Install npm dependencies
+        run: npm install
+      
+      # 启动后端服务进行验收测试
+      - name: Start backend for acceptance tests
+        run: |
+          cd backend
+          mvn spring-boot:run &
+          echo $! > ../backend.pid
+          sleep 30
+        env:
+          SPRING_PROFILES_ACTIVE: test
+      
+      # 运行验收测试
+      - name: Run acceptance tests
+        run: |
+          npm test
+        env:
+          TEST_BASE_URL: http://localhost:8080/api
+        timeout-minutes: 5
+      
+      # 清理后端进程
+      - name: Stop backend
+        if: always()
+        run: |
+          if [ -f backend.pid ]; then
+            kill $(cat backend.pid) || true
+            rm backend.pid
+          fi
 
   deploy:
     needs: build_and_scan
