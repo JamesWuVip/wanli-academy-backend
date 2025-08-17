@@ -1,0 +1,355 @@
+{
+  "summary": {
+    "total_tests": 19,
+    "passed_tests": 11,
+    "failed_tests": 7,
+    "skipped_tests": 1,
+    "success_rate": 58,
+    "start_time": "2025-08-17T09:58:17.026Z",
+    "end_time": "2025-08-17T09:58:19.877Z",
+    "duration_ms": 2849
+  },
+  "test_suites": [
+    {
+      "name": "健康检查测试",
+      "description": "验证应用基本可用性和健康状态",
+      "tests": [
+        {
+          "name": "应用健康检查",
+          "status": "passed",
+          "message": "应用状态正常",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:17.198Z"
+        },
+        {
+          "name": "Swagger UI可访问性",
+          "status": "passed",
+          "message": "Swagger UI正常访问",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:17.221Z"
+        },
+        {
+          "name": "API文档可访问性",
+          "status": "passed",
+          "message": "API文档正常访问",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:18.181Z"
+        }
+      ],
+      "start_time": "2025-08-17T09:58:17.028Z",
+      "end_time": "2025-08-17T09:58:18.182Z",
+      "duration_ms": 1154,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "name": "认证测试",
+      "description": "验证用户登录、权限控制和JWT令牌",
+      "tests": [
+        {
+          "name": "管理员登录",
+          "status": "passed",
+          "message": "管理员登录成功",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:18.798Z"
+        },
+        {
+          "name": "无效登录拒绝",
+          "status": "passed",
+          "message": "无效登录被正确拒绝",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:18.908Z"
+        },
+        {
+          "name": "总部教师登录",
+          "status": "passed",
+          "message": "总部教师登录成功",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.014Z"
+        }
+      ],
+      "start_time": "2025-08-17T09:58:18.182Z",
+      "end_time": "2025-08-17T09:58:19.014Z",
+      "duration_ms": 832,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "name": "作业管理测试",
+      "description": "验证作业CRUD操作和权限控制",
+      "tests": [
+        {
+          "name": "创建作业",
+          "status": "failed",
+          "message": "作业创建失败",
+          "details": {
+            "error": "状态码: 403, 响应: {\"code\":\"ACCESS_DENIED\",\"message\":\"访问被拒绝：Access Denied\",\"timestamp\":1755424699153}"
+          },
+          "timestamp": "2025-08-17T09:58:19.155Z"
+        },
+        {
+          "name": "获取作业列表",
+          "status": "failed",
+          "message": "获取作业列表失败",
+          "details": {
+            "error": "状态码: 403"
+          },
+          "timestamp": "2025-08-17T09:58:19.167Z"
+        },
+        {
+          "name": "添加题目",
+          "status": "skipped",
+          "message": "因作业创建失败而跳过",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.167Z"
+        },
+        {
+          "name": "学生权限控制",
+          "status": "passed",
+          "message": "学生创建作业被正确拒绝",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.281Z"
+        }
+      ],
+      "start_time": "2025-08-17T09:58:19.014Z",
+      "end_time": "2025-08-17T09:58:19.281Z",
+      "duration_ms": 267,
+      "passed": 1,
+      "failed": 2,
+      "skipped": 1
+    },
+    {
+      "name": "用户管理测试",
+      "description": "验证用户信息获取和管理功能",
+      "tests": [
+        {
+          "name": "获取用户列表",
+          "status": "failed",
+          "message": "获取用户列表失败",
+          "details": {
+            "error": "状态码: 401"
+          },
+          "timestamp": "2025-08-17T09:58:19.422Z"
+        },
+        {
+          "name": "获取当前用户信息",
+          "status": "failed",
+          "message": "获取当前用户信息失败",
+          "details": {
+            "error": "状态码: 401"
+          },
+          "timestamp": "2025-08-17T09:58:19.433Z"
+        }
+      ],
+      "start_time": "2025-08-17T09:58:19.281Z",
+      "end_time": "2025-08-17T09:58:19.433Z",
+      "duration_ms": 152,
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0
+    },
+    {
+      "name": "性能测试",
+      "description": "验证API响应时间和并发处理能力",
+      "tests": [
+        {
+          "name": "健康检查响应时间",
+          "status": "passed",
+          "message": "响应时间: 7ms (阈值: 100ms)",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.698Z"
+        },
+        {
+          "name": "用户列表响应时间",
+          "status": "failed",
+          "message": "请求失败，状态码: 401",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.702Z"
+        },
+        {
+          "name": "作业列表响应时间",
+          "status": "failed",
+          "message": "请求失败，状态码: 403",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.710Z"
+        },
+        {
+          "name": "并发请求处理",
+          "status": "passed",
+          "message": "10个并发请求全部成功，总耗时: 51ms",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.761Z"
+        }
+      ],
+      "start_time": "2025-08-17T09:58:19.433Z",
+      "end_time": "2025-08-17T09:58:19.761Z",
+      "duration_ms": 328,
+      "passed": 2,
+      "failed": 2,
+      "skipped": 0
+    },
+    {
+      "name": "安全测试",
+      "description": "验证认证、授权和安全防护",
+      "tests": [
+        {
+          "name": "未认证访问拒绝",
+          "status": "passed",
+          "message": "未认证访问被正确拒绝",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.763Z"
+        },
+        {
+          "name": "SQL注入防护",
+          "status": "passed",
+          "message": "SQL注入尝试被阻止",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.772Z"
+        },
+        {
+          "name": "XSS防护",
+          "status": "failed",
+          "message": "XSS防护测试异常",
+          "details": {
+            "error": "状态码: 403"
+          },
+          "timestamp": "2025-08-17T09:58:19.877Z"
+        }
+      ],
+      "start_time": "2025-08-17T09:58:19.761Z",
+      "end_time": "2025-08-17T09:58:19.877Z",
+      "duration_ms": 116,
+      "passed": 2,
+      "failed": 1,
+      "skipped": 0
+    }
+  ],
+  "metadata": {
+    "generator": "Wanli Academy Integration Test Report Generator",
+    "version": "1.0.0",
+    "generated_at": "2025-08-17T09:58:40.195Z",
+    "report_format": "enhanced_json_v1"
+  },
+  "analysis": {
+    "most_failed_suite": {
+      "name": "性能测试",
+      "description": "验证API响应时间和并发处理能力",
+      "tests": [
+        {
+          "name": "健康检查响应时间",
+          "status": "passed",
+          "message": "响应时间: 7ms (阈值: 100ms)",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.698Z"
+        },
+        {
+          "name": "用户列表响应时间",
+          "status": "failed",
+          "message": "请求失败，状态码: 401",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.702Z"
+        },
+        {
+          "name": "作业列表响应时间",
+          "status": "failed",
+          "message": "请求失败，状态码: 403",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.710Z"
+        },
+        {
+          "name": "并发请求处理",
+          "status": "passed",
+          "message": "10个并发请求全部成功，总耗时: 51ms",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.761Z"
+        }
+      ],
+      "start_time": "2025-08-17T09:58:19.433Z",
+      "end_time": "2025-08-17T09:58:19.761Z",
+      "duration_ms": 328,
+      "passed": 2,
+      "failed": 2,
+      "skipped": 0
+    },
+    "fastest_suite": {
+      "name": "安全测试",
+      "description": "验证认证、授权和安全防护",
+      "tests": [
+        {
+          "name": "未认证访问拒绝",
+          "status": "passed",
+          "message": "未认证访问被正确拒绝",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.763Z"
+        },
+        {
+          "name": "SQL注入防护",
+          "status": "passed",
+          "message": "SQL注入尝试被阻止",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:19.772Z"
+        },
+        {
+          "name": "XSS防护",
+          "status": "failed",
+          "message": "XSS防护测试异常",
+          "details": {
+            "error": "状态码: 403"
+          },
+          "timestamp": "2025-08-17T09:58:19.877Z"
+        }
+      ],
+      "start_time": "2025-08-17T09:58:19.761Z",
+      "end_time": "2025-08-17T09:58:19.877Z",
+      "duration_ms": 116,
+      "passed": 2,
+      "failed": 1,
+      "skipped": 0
+    },
+    "slowest_suite": {
+      "name": "健康检查测试",
+      "description": "验证应用基本可用性和健康状态",
+      "tests": [
+        {
+          "name": "应用健康检查",
+          "status": "passed",
+          "message": "应用状态正常",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:17.198Z"
+        },
+        {
+          "name": "Swagger UI可访问性",
+          "status": "passed",
+          "message": "Swagger UI正常访问",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:17.221Z"
+        },
+        {
+          "name": "API文档可访问性",
+          "status": "passed",
+          "message": "API文档正常访问",
+          "details": {},
+          "timestamp": "2025-08-17T09:58:18.181Z"
+        }
+      ],
+      "start_time": "2025-08-17T09:58:17.028Z",
+      "end_time": "2025-08-17T09:58:18.182Z",
+      "duration_ms": 1154,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    "error_patterns": [
+      {
+        "type": "authorization",
+        "count": 3
+      },
+      {
+        "type": "authentication",
+        "count": 2
+      }
+    ]
+  }
+}

@@ -79,6 +79,6 @@ public interface HomeworkRepository extends JpaRepository<Homework, UUID> {
      * @param creatorId 创建者ID
      * @return 作业列表及题目数量信息
      */
-    @Query("SELECT h FROM Homework h LEFT JOIN FETCH h.questions WHERE h.creatorId = :creatorId ORDER BY h.createdAt DESC")
+    @Query("SELECT h FROM Homework h WHERE h.creatorId = :creatorId ORDER BY h.createdAt DESC")
     List<Homework> findByCreatorIdWithQuestions(@Param("creatorId") Long creatorId);
 }

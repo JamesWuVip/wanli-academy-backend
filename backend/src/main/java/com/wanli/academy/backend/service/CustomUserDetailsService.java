@@ -73,7 +73,15 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     private Collection<? extends GrantedAuthority> getAuthorities(User user) {
         return user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().toUpperCase()))
+                .map(role -> {
+                    String roleName = role.getName();
+                    // 如果角色名称已经包含ROLE_前缀，直接使用；否则添加前缀
+                    if (roleName.startsWith("ROLE_")) {
+                        return new SimpleGrantedAuthority(roleName);
+                    } else {
+                        return new SimpleGrantedAuthority("ROLE_" + roleName.toUpperCase());
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

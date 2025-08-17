@@ -1,0 +1,289 @@
+# Spring Boot Integration Test Configuration
+# 万里书院集成测试环境配置文件
+
+spring:
+  application:
+    name: wanli-academy-backend-integration
+  
+  # 数据源配置 - PostgreSQL
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:wanli_academy_test}
+    username: ${DB_USER:wanli_test}
+    password: ${DB_PASSWORD:test_password_123}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
+  
+  # JPA/Hibernate配置
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    show-sql: ${SPRING_JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        temp:
+          use_jdbc_metadata_defaults: false
+    open-in-view: false
+  
+  # 事务配置
+  transaction:
+    default-timeout: 30
+    rollback-on-commit-failure: true
+  
+  # Jackson配置
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: false
+    default-property-inclusion: non_null
+  
+  # 缓存配置（集成测试中禁用）
+  cache:
+    type: none
+  
+  # 安全配置
+  security:
+    user:
+      name: integration_test_user
+      password: integration_test_password
+      roles: ADMIN
+
+# 服务器配置
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+
+# Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env,configprops,beans,mappings
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    info:
+      enabled: true
+  info:
+    env:
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
+  health:
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.wanli.academy: ${LOG_LEVEL_APP:DEBUG}
+    org.springframework.web: ${LOG_LEVEL_WEB:INFO}
+    org.springframework.security: ${LOG_LEVEL_SECURITY:INFO}
+    org.hibernate.SQL: ${LOG_LEVEL_SQL:WARN}
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    org.springframework.transaction: ${LOG_LEVEL_TRANSACTION:INFO}
+    org.springframework.orm.jpa: ${LOG_LEVEL_JPA:INFO}
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%logger{36}] - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%logger{36}] - %msg%n"
+  file:
+    name: logs/integration-test.log
+    max-size: 10MB
+    max-history: 10
+
+# JWT配置
+jwt:
+  secret: ${JWT_SECRET:aW50ZWdyYXRpb25fdGVzdF9zZWNyZXRfa2V5X2Zvcl93YW5saV9hY2FkZW15X3ZlcnlfbG9uZ19hbmRfc2VjdXJl}
+  expiration: ${JWT_EXPIRATION:86400000} # 24小时
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000} # 7天
+
+# 应用特定配置
+app:
+  # 集成测试配置
+  integration-test:
+    enabled: true
+    timeout: ${INTEGRATION_TEST_TIMEOUT:300000} # 5分钟
+    max-retries: ${INTEGRATION_TEST_MAX_RETRIES:3}
+    cleanup-after-test: ${INTEGRATION_TEST_CLEANUP:true}
+  
+  # 文件上传配置
+  file-upload:
+    max-file-size: 10MB
+    max-request-size: 50MB
+    upload-dir: ${UPLOAD_DIR:./uploads/integration-test}
+  
+  # 邮件配置（集成测试中使用模拟）
+  mail:
+    enabled: false
+    mock: true
+  
+  # 外部服务配置（集成测试中使用模拟）
+  external-services:
+    mock-mode: true
+    timeout: 30000
+  
+  # 业务配置
+  business:
+    # 作业配置
+    homework:
+      max-questions-per-homework: 50
+      max-file-size-per-question: 5MB
+      allowed-file-types: jpg,jpeg,png,pdf,doc,docx
+    
+    # 用户配置
+    user:
+      password-min-length: 6
+      password-max-length: 20
+      max-login-attempts: 5
+      account-lock-duration: 300000 # 5分钟
+    
+    # 权限配置
+    security:
+      cors:
+        allowed-origins: "*"
+        allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+        allowed-headers: "*"
+        allow-credentials: false
+      
+      # API限流配置（集成测试中放宽限制）
+      rate-limit:
+        enabled: false
+        requests-per-minute: 1000
+
+# Spring Boot Admin配置（集成测试中禁用）
+spring.boot.admin:
+  client:
+    enabled: false
+
+# 多环境配置
+---
+# CI环境特定配置
+spring:
+  config:
+    activate:
+      on-profile: ci
+  
+  # CI环境数据库配置
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wanli_academy_test
+    username: wanli_test
+    password: test_password_123
+  
+  # CI环境JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+# 日志配置（CI环境）
+logging:
+  level:
+    root: WARN
+    com.wanli.academy: INFO
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+
+---
+# 本地集成测试环境配置
+spring:
+  config:
+    activate:
+      on-profile: local-integration
+  
+  # 本地数据库配置
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wanli_academy_integration
+    username: postgres
+    password: postgres
+  
+  # 本地JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+# 日志配置（本地集成测试）
+logging:
+  level:
+    root: INFO
+    com.wanli.academy: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+
+---
+# Docker环境配置
+spring:
+  config:
+    activate:
+      on-profile: docker-integration
+  
+  # Docker数据库配置
+  datasource:
+    url: jdbc:postgresql://postgres:5432/wanli_academy_test
+    username: wanli_test
+    password: test_password_123
+
+# 应用配置（Docker环境）
+app:
+  file-upload:
+    upload-dir: /app/uploads
+
+---
+# 性能测试环境配置
+spring:
+  config:
+    activate:
+      on-profile: performance
+  
+  # 性能测试数据库配置
+  datasource:
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+  
+  # 性能测试JPA配置
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+        batch_versioned_data: true
+
+# 日志配置（性能测试）
+logging:
+  level:
+    root: WARN
+    com.wanli.academy: INFO
+    org.hibernate.SQL: WARN

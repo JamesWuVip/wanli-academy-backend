@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -82,8 +83,13 @@ public class AuthController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest,
-                                 BindingResult bindingResult) {
+                                 BindingResult bindingResult,
+                                 HttpServletRequest request) {
         logger.info("收到用户登录请求，用户名或邮箱: {}", loginRequest.getUsernameOrEmail());
+        logger.info("请求Content-Type: {}", request.getContentType());
+        logger.info("LoginRequest对象: usernameOrEmail={}, password={}", 
+                   loginRequest.getUsernameOrEmail(), 
+                   loginRequest.getPassword() != null ? "[已设置]" : "[未设置]");
         
         // 检查请求参数验证结果
         if (bindingResult.hasErrors()) {

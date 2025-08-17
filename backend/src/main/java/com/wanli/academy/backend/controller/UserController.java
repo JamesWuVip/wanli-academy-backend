@@ -121,6 +121,70 @@ public class UserController {
     }
     
     /**
+     * 获取所有用户列表（仅管理员）
+     * @return 用户列表
+     */
+    @GetMapping
+    public ResponseEntity<?> getAllUsers() {
+        logger.info("收到获取用户列表请求");
+        
+        try {
+            // 从安全上下文中获取当前认证信息
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            
+            if (authentication == null || !authentication.isAuthenticated()) {
+                logger.warn("用户未认证");
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("success", false);
+                errorResponse.put("message", "用户未认证");
+                errorResponse.put("timestamp", LocalDateTime.now());
+                
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+            }
+            
+            // 检查是否为管理员或总部教师角色
+            boolean hasPermission = authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN") || 
+                                auth.getAuthority().equals("ROLE_HQ_TEACHER"));
+            
+            if (!hasPermission) {
+                logger.warn("用户权限不足，无法访问用户列表: {}", authentication.getName());
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("success", false);
+                errorResponse.put("message", "权限不足，仅管理员和总部教师可访问");
+                errorResponse.put("timestamp", LocalDateTime.now());
+                
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+            }
+            
+            // 获取所有用户
+            var users = authService.getAllUsers();
+            var userResponses = users.stream()
+                .map(this::convertToUserResponse)
+                .collect(Collectors.toList());
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "获取用户列表成功");
+            response.put("data", userResponses);
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("成功返回用户列表，共{}个用户", userResponses.size());
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
+            logger.error("获取用户列表失败: {}", e.getMessage(), e);
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "获取用户列表失败");
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+    
+    /**
      * 检查用户认证状态
      * @return 认证状态信息
      */

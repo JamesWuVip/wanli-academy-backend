@@ -14,11 +14,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,6 +49,9 @@ public class AuthService {
     
     @Autowired
     private AuthenticationManager authenticationManager;
+    
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
     
     /**
      * 用户注册
@@ -189,32 +194,32 @@ public class AuthService {
      * @return 认证响应
      */
     private AuthResponse generateAuthResponse(User user) {
-        // 生成访问令牌
-        String accessToken = jwtService.generateTokenFromUsername(user.getUsername());
+        // 使用CustomUserDetailsService获取包含角色信息的UserDetails
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getUsername());
         
-        // 生成刷新令牌
-        String refreshToken = jwtService.generateRefreshTokenFromUsername(user.getUsername());
+        // 生成包含角色信息的JWT令牌
+        String accessToken = jwtService.generateToken(userDetails);
+        String refreshToken = jwtService.generateRefreshToken(userDetails);
         
-        // 获取用户角色
         Set<String> roles = user.getRoles().stream()
-            .map(Role::getName)
-            .collect(Collectors.toSet());
+                .map(Role::getName)
+                .collect(Collectors.toSet());
         
-        // 创建认证响应
-        AuthResponse authResponse = new AuthResponse(
-            accessToken,
-            refreshToken,
-            jwtService.getJwtExpiration() / 1000, // 转换为秒
-            jwtService.getRefreshExpiration() / 1000, // 转换为秒
-            user.getId(),
-            user.getUsername(),
-            user.getEmail(),
-            user.getFirstName(),
-            user.getLastName(),
-            roles
-        );
+        AuthResponse response = new AuthResponse();
+        response.setAccessToken(accessToken);
+        response.setRefreshToken(refreshToken);
+        response.setTokenType("Bearer");
+        response.setExpiresIn(jwtService.getJwtExpiration());
+        response.setRefreshExpiresIn(jwtService.getRefreshExpiration());
+        response.setUserId(user.getId());
+        response.setUsername(user.getUsername());
+        response.setEmail(user.getEmail());
+        response.setFirstName(user.getFirstName());
+        response.setLastName(user.getLastName());
+        response.setRoles(roles);
+        response.setLastLoginAt(LocalDateTime.now());
         
-        return authResponse;
+        return response;
     }
     
     /**
@@ -242,7 +247,10 @@ public class AuthService {
      */
     @Transactional(readOnly = true)
     public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        // 在事务内初始化懒加载的roles关联，避免LazyInitializationException
+        userOptional.ifPresent(user -> user.getRoles().size());
+        return userOptional;
     }
     
     /**
@@ -252,6 +260,22 @@ public class AuthService {
      */
     @Transactional(readOnly = true)
     public Optional<User> getUserById(Long userId) {
-        return userRepository.findById(userId);
+        Optional<User> userOptional = userRepository.findById(userId);
+        // 在事务内初始化懒加载的roles关联，避免LazyInitializationException
+        userOptional.ifPresent(user -> user.getRoles().size());
+        return userOptional;
+    }
+    
+    /**
+     * 获取所有用户列表
+     * @return 用户列表
+     */
+    @Transactional(readOnly = true)
+    public List<User> getAllUsers() {
+        logger.info("获取所有用户列表");
+        List<User> users = userRepository.findAll();
+        // 在事务内初始化懒加载的roles关联，避免LazyInitializationException
+        users.forEach(user -> user.getRoles().size());
+        return users;
     }
 }

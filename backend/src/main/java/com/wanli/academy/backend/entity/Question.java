@@ -159,6 +159,11 @@ public class Question {
     
     public void setHomework(Homework homework) {
         this.homework = homework;
+        if (homework != null) {
+            this.homeworkId = homework.getId();
+        } else {
+            this.homeworkId = null;
+        }
     }
     
     @Override

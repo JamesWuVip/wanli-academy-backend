@@ -99,6 +99,7 @@ public class HomeworkService {
      * @param request 题目创建请求
      * @return 创建的题目响应
      */
+    @Transactional
     public QuestionResponse addQuestionToHomework(UUID homeworkId, QuestionCreateRequest request) {
         logger.info("Adding question to homework: {}", homeworkId);
         
@@ -118,7 +119,8 @@ public class HomeworkService {
         answerMap.put("text", request.getStandardAnswer());
         question.setStandardAnswer(answerMap);
         question.setOrderIndex(request.getOrderIndex());
-        question.setHomework(homework);
+        // 只设置homeworkId，不设置homework对象，避免JPA关联冲突
+        question.setHomeworkId(homeworkId);
         question.setCreatedAt(LocalDateTime.now());
         question.setUpdatedAt(LocalDateTime.now());
         
@@ -225,7 +227,8 @@ public class HomeworkService {
         response.setQuestionType(question.getQuestionType());
         response.setStandardAnswer(extractTextFromJsonb(question.getStandardAnswer()));
         response.setOrderIndex(question.getOrderIndex());
-        response.setHomeworkId(question.getHomework().getId());
+        // 使用homework关联获取作业ID，如果homework为null则使用homeworkId字段作为备选
+        response.setHomeworkId(question.getHomework() != null ? question.getHomework().getId() : question.getHomeworkId());
         response.setCreatedAt(question.getCreatedAt());
         response.setUpdatedAt(question.getUpdatedAt());
         

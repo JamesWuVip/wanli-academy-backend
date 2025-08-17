@@ -202,14 +202,14 @@ public interface AssignmentRepository extends JpaRepository<Assignment, UUID> {
      * @param hours 小时数
      * @return 作业列表
      */
-    @Query("SELECT a FROM Assignment a WHERE a.status = 'PUBLISHED' AND a.dueDate BETWEEN CURRENT_TIMESTAMP AND DATEADD(HOUR, :hours, CURRENT_TIMESTAMP)")
+    @Query(value = "SELECT * FROM assignments WHERE status = 'PUBLISHED' AND due_date BETWEEN CURRENT_TIMESTAMP AND CURRENT_TIMESTAMP + INTERVAL '1 hour' * :hours", nativeQuery = true)
     List<Assignment> findAssignmentsDueSoon(@Param("hours") int hours);
     
     /**
      * 查询已过期但未关闭的作业列表
      * @return 作业列表
      */
-    @Query("SELECT a FROM Assignment a WHERE a.status != 'CLOSED' AND a.dueDate < NOW()")
+    @Query("SELECT a FROM Assignment a WHERE a.status != 'CLOSED' AND a.dueDate < CURRENT_TIMESTAMP")
     List<Assignment> findOverdueAssignments();
     
     /**

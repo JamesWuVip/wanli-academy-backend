@@ -1,0 +1,157 @@
+===========================================
+万里书院集成测试数据导入
+===========================================
+开始导入测试数据...
+数据库: wanli_academy_test@localhost:5432
+用户: wujames
+
+[0;34m检查测试数据文件...[0m
+[0;32m✓[0m integration-tests/test-data/roles_test_data.sql
+[0;32m✓[0m integration-tests/test-data/users_test_data.sql
+[0;32m✓[0m integration-tests/test-data/assignments_test_data.sql
+
+[0;34m检查数据库连接...[0m
+[0;32m✓[0m 数据库连接成功
+  数据库: wanli_academy_test@localhost:5432
+  版本: PostgreSQL 14.18 (Homebrew) on aarch64-apple-darwin24.4.0, compiled by Apple clang version 17.0.0 (clang-1700.0.13.3), 64-bit
+
+[0;34m导入 角色和权限数据...[0m
+文件: integration-tests/test-data/roles_test_data.sql
+psql:integration-tests/test-data/roles_test_data.sql:16: ERROR:  duplicate key value violates unique constraint "ukofx66keruapi6vyqpv6f2or37"
+DETAIL:  Key (name)=(ROLE_HQ_TEACHER) already exists.
+ setval 
+--------
+      4
+(1 row)
+
+ id |          name          |          description           |         created_at         
+----+------------------------+--------------------------------+----------------------------
+  1 | ROLE_ADMIN             | 系统管理员，拥有所有权限       | 2025-08-17 17:26:13.921923
+  2 | ROLE_STUDENT           | 学生用户，可以查看和提交作业   | 2025-08-17 17:26:13.97805
+  3 | ROLE_HQ_TEACHER        | 总部教师，可以创建和管理作业   | 2025-08-17 17:26:13.981493
+  4 | ROLE_FRANCHISE_TEACHER | 加盟商教师，可以查看和批阅作业 | 2025-08-17 17:26:13.990608
+(4 rows)
+
+       role_name        | user_count 
+------------------------+------------
+ ROLE_ADMIN             |          1
+ ROLE_STUDENT           |          3
+ ROLE_HQ_TEACHER        |          1
+ ROLE_FRANCHISE_TEACHER |          1
+(4 rows)
+
+psql:integration-tests/test-data/roles_test_data.sql:101: ERROR:  column u.full_name does not exist
+LINE 55:     u.full_name
+             ^
+psql:integration-tests/test-data/roles_test_data.sql:103: ERROR:  syntax error at or near "CO"
+LINE 1: CO
+        ^
+[0;32m✓[0m 角色和权限数据 导入成功
+
+[0;34m导入 用户数据...[0m
+文件: integration-tests/test-data/users_test_data.sql
+DELETE 6
+psql:integration-tests/test-data/users_test_data.sql:8: ERROR:  update or delete on table "users" violates foreign key constraint "fkcvvinrdebmgkiudtxn3p6gkp7" on table "homeworks"
+DETAIL:  Key (id)=(14) is still referenced from table "homeworks".
+psql:integration-tests/test-data/users_test_data.sql:24: ERROR:  column "display_name" of relation "users" does not exist
+LINE 1: INSERT INTO users (username, password, email, display_name, ...
+                                                      ^
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+        username        |              email               |       role_name        
+------------------------+----------------------------------+------------------------
+ test_admin             | admin@test.wanli.com             | ROLE_ADMIN
+ test_franchise_teacher | franchise.teacher@test.wanli.com | ROLE_FRANCHISE_TEACHER
+ test_hq_teacher        | hq.teacher@test.wanli.com        | ROLE_HQ_TEACHER
+ test_student1          | student1@test.wanli.com          | ROLE_STUDENT
+ test_student2          | student2@test.wanli.com          | ROLE_STUDENT
+ test_student3          | student3@test.wanli.com          | ROLE_STUDENT
+(6 rows)
+
+       role_name        | user_count 
+------------------------+------------
+ ROLE_ADMIN             |          1
+ ROLE_FRANCHISE_TEACHER |          1
+ ROLE_HQ_TEACHER        |          1
+ ROLE_STUDENT           |          3
+(4 rows)
+
+[0;32m✓[0m 用户数据 导入成功
+
+[0;34m导入 作业数据...[0m
+文件: integration-tests/test-data/assignments_test_data.sql
+DELETE 10
+DELETE 5
+INSERT 0 5
+INSERT 0 10
+       title       |              description               | question_count 
+-------------------+----------------------------------------+----------------
+ Test_数学基础练习 | 测试用数学基础练习题，包含加减乘除运算 |              3
+ Test_数学应用题   | 测试用数学应用题，培养逻辑思维能力     |              2
+ Test_综合能力测试 | 测试用综合能力评估作业                 |              1
+ Test_英语单词练习 | 测试用英语单词记忆和拼写练习           |              2
+ Test_语文阅读理解 | 测试用语文阅读理解练习                 |              2
+(5 rows)
+
+  question_type  | question_count 
+-----------------+----------------
+ SINGLE_CHOICE   |              4
+ FILL_BLANK      |              3
+ ESSAY           |              2
+ MULTIPLE_CHOICE |              1
+(4 rows)
+
+       category        | count 
+-----------------------+-------
+ Test Users            |     6
+ Test Homeworks        |     5
+ Test Questions        |    10
+ User Role Assignments |     6
+(4 rows)
+
+        username        |              email               |       role_name        
+------------------------+----------------------------------+------------------------
+ test_admin             | admin@test.wanli.com             | ROLE_ADMIN
+ test_franchise_teacher | franchise.teacher@test.wanli.com | ROLE_FRANCHISE_TEACHER
+ test_hq_teacher        | hq.teacher@test.wanli.com        | ROLE_HQ_TEACHER
+ test_student1          | student1@test.wanli.com          | ROLE_STUDENT
+ test_student2          | student2@test.wanli.com          | ROLE_STUDENT
+ test_student3          | student3@test.wanli.com          | ROLE_STUDENT
+(6 rows)
+
+[0;32m✓[0m 作业数据 导入成功
+
+[0;34m验证导入结果...[0m
+[0;32m✓[0m 测试用户: 6 个
+[0;32m✓[0m 测试作业: 5 个
+[0;32m✓[0m 测试题目: 10 个
+[0;32m✓[0m 角色分配: 6 个
+
+[0;34m测试账户信息:[0m
+===========================================
+        username        |              email               |       role_name        
+------------------------+----------------------------------+------------------------
+ test_admin             | admin@test.wanli.com             | ROLE_ADMIN
+ test_franchise_teacher | franchise.teacher@test.wanli.com | ROLE_FRANCHISE_TEACHER
+ test_hq_teacher        | hq.teacher@test.wanli.com        | ROLE_HQ_TEACHER
+ test_student1          | student1@test.wanli.com          | ROLE_STUDENT
+ test_student2          | student2@test.wanli.com          | ROLE_STUDENT
+ test_student3          | student3@test.wanli.com          | ROLE_STUDENT
+(6 rows)
+
+
+[1;33m默认密码: password123[0m
+[1;33m密码已使用BCrypt加密存储[0m
+
+[0;32m===========================================[0m
+[0;32m测试数据导入完成！[0m
+[0;32m===========================================[0m
+
+使用说明:
+1. 使用测试账户登录系统进行集成测试
+2. 运行 './import-test-data.sh --clean' 清理测试数据
+3. 运行 './import-test-data.sh --backup' 导入前备份数据

@@ -1,0 +1,23 @@
+📊 万里书院集成测试报告生成器
+==================================================
+报告目录: integration-tests/reports
+🔄 开始生成测试报告...
+📖 读取测试结果: integration-tests/reports/integration-test-results.json
+🎨 生成HTML报告...
+✅ HTML报告已生成: integration-tests/reports/integration-test-report.html
+📊 生成增强JSON报告...
+✅ JSON报告已生成: integration-tests/reports/integration-test-report.json
+
+📋 报告摘要:
+   总测试数: 19
+   通过测试: 14
+   失败测试: 5
+   跳过测试: 0
+   成功率: 74%
+   执行时间: 1.4s
+
+🔍 错误分析:
+   other: 2次
+   authentication: 1次
+
+🎉 报告生成完成!

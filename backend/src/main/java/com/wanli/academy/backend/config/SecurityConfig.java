@@ -34,11 +34,14 @@ public class SecurityConfig {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomUserDetailsService customUserDetailsService;
 
     public SecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-                         JwtAuthenticationFilter jwtAuthenticationFilter) {
+                         JwtAuthenticationFilter jwtAuthenticationFilter,
+                         CustomUserDetailsService customUserDetailsService) {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     /**
@@ -57,6 +60,18 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    /**
+     * DAO认证提供者Bean
+     * 配置用户详情服务和密码编码器
+     */
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(customUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 
     /**
@@ -116,29 +131,32 @@ public class SecurityConfig {
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 
                 // 教师权限 - 作业和提交管理
-                .requestMatchers("/api/homework/**").hasAnyRole("ADMIN", "TEACHER")
-                .requestMatchers("/api/assignments/create").hasAnyRole("ADMIN", "TEACHER")
-                .requestMatchers("/api/assignments/*/update").hasAnyRole("ADMIN", "TEACHER")
-                .requestMatchers("/api/assignments/*/delete").hasAnyRole("ADMIN", "TEACHER")
-                .requestMatchers("/api/submissions/*/grade").hasAnyRole("ADMIN", "TEACHER")
-                .requestMatchers("/api/submissions/assignment/*").hasAnyRole("ADMIN", "TEACHER")
+                .requestMatchers("/api/homework/**").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER")
+                .requestMatchers("/api/homeworks/**").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER")
+                .requestMatchers("/api/assignments/**").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
+                .requestMatchers("/api/assignments/create").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER")
+                .requestMatchers("/api/assignments/*/update").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER")
+                .requestMatchers("/api/assignments/*/delete").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER")
+                .requestMatchers("/api/submissions/*/grade").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER")
+                .requestMatchers("/api/submissions/assignment/*").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER")
                 
                 // 学生权限 - 查看作业和提交作业
-                .requestMatchers("/api/assignments/list").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
-                .requestMatchers("/api/assignments/*/view").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
-                .requestMatchers("/api/submissions/create").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
-                .requestMatchers("/api/submissions/my").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/assignments/list").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
+                .requestMatchers("/api/assignments/*/view").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
+                .requestMatchers("/api/submissions/create").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
+                .requestMatchers("/api/submissions/my").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
                 
                 // 文件管理权限
-                .requestMatchers("/api/files/upload").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
-                .requestMatchers("/api/files/download/**").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
-                .requestMatchers("/api/files/delete/**").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/files/upload").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
+                .requestMatchers("/api/files/download/**").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
+                .requestMatchers("/api/files/delete/**").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
                 .requestMatchers("/api/files/cleanup").hasRole("ADMIN")
                 
                 // 用户信息访问
-                .requestMatchers("/api/users/me").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
-                .requestMatchers("/api/users/profile").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
-                .requestMatchers("/api/users/auth-status").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/users/me").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
+                .requestMatchers("/api/users/profile").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
+                .requestMatchers("/api/users/auth-status").hasAnyRole("ADMIN", "HQ_TEACHER", "FRANCHISE_TEACHER", "STUDENT")
+                .requestMatchers("/api/users").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER")
                 .requestMatchers("/api/users/**").hasRole("ADMIN")
                 
                 // 所有其他请求都需要认证

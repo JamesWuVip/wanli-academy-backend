@@ -1,0 +1,88 @@
+🚀 万里书院集成测试开始
+==================================================
+测试目标: http://localhost:8080
+超时时间: 30000ms
+报告目录: integration-tests/reports
+==================================================
+
+🧪 开始测试套件: 健康检查测试
+   验证应用基本可用性和健康状态
+   ✅ 应用健康检查: 应用状态正常
+   ✅ Swagger UI可访问性: Swagger UI正常访问
+   ✅ API文档可访问性: API文档正常访问
+   📊 套件结果: 3通过, 0失败, 0跳过
+
+🧪 开始测试套件: 认证测试
+   验证用户登录、权限控制和JWT令牌
+🔍 登录请求数据: {"usernameOrEmail":"test_admin","password":"password123"}
+🔍 登录响应状态: 200
+🔍 登录响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6InRlc3RfYWRtaW4iLCJpYXQiOjE3NTU0Mjg3NDAsImV4cCI6MTc1NTUxNTE0MH0.bk3MNPTwkEg2I1RcAicu1qvkpomKlGMtTs5ex8nkwTY","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6InRlc3RfYWRtaW4iLCJpYXQiOjE3NTU0Mjg3NDAsImV4cCI6MTc1NjAzMzU0MH0.gFHPQt5-syvKT4a95d7HEHgCYXFbM3ySnowTGr6-RN0","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":13,"username":"test_admin","email":"admin@test.wanli.com","roles":["ROLE_ADMIN"],"lastLoginAt":"2025-08-17T19:05:40.830253"},"success":true,"message":"登录成功","timestamp":"2025-08-17T19:05:40.858404"}
+   ✅ 管理员登录: 管理员登录成功
+🔍 登录请求数据: {"usernameOrEmail":"invalid","password":"invalid"}
+🔍 登录响应状态: 401
+🔍 登录响应数据: {"success":false,"message":"用户名或密码错误","timestamp":"2025-08-17T19:05:41.140696"}
+   ✅ 无效登录拒绝: 无效登录被正确拒绝
+🔍 登录请求数据: {"usernameOrEmail":"test_hq_teacher","password":"password123"}
+🔍 登录响应状态: 200
+🔍 登录响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0hRX1RFQUNIRVIiXSwic3ViIjoidGVzdF9ocV90ZWFjaGVyIiwiaWF0IjoxNzU1NDI4NzQxLCJleHAiOjE3NTU1MTUxNDF9.vTPbtDqVWf4TZdx_35sla9nww-57cKDw5fkd2sEBcrA","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0hRX1RFQUNIRVIiXSwic3ViIjoidGVzdF9ocV90ZWFjaGVyIiwiaWF0IjoxNzU1NDI4NzQxLCJleHAiOjE3NTYwMzM1NDF9.aFko5oJ8lSVWQ5OnEI0n_f2xoJePXBHSuMuZeCNi3Os","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":14,"username":"test_hq_teacher","email":"hq.teacher@test.wanli.com","roles":["ROLE_HQ_TEACHER"],"lastLoginAt":"2025-08-17T19:05:41.767241"},"success":true,"message":"登录成功","timestamp":"2025-08-17T19:05:41.768705"}
+   ✅ 总部教师登录: 总部教师登录成功
+   📊 套件结果: 3通过, 0失败, 0跳过
+
+🧪 开始测试套件: 作业管理测试
+   验证作业CRUD操作和权限控制
+🔍 登录请求数据: {"usernameOrEmail":"test_hq_teacher","password":"password123"}
+🔍 登录响应状态: 200
+🔍 登录响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0hRX1RFQUNIRVIiXSwic3ViIjoidGVzdF9ocV90ZWFjaGVyIiwiaWF0IjoxNzU1NDI4NzQyLCJleHAiOjE3NTU1MTUxNDJ9.XodzG-_VML2QPhd5H703ALRVmtDa0jjn2eSOMNbf-Us","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0hRX1RFQUNIRVIiXSwic3ViIjoidGVzdF9ocV90ZWFjaGVyIiwiaWF0IjoxNzU1NDI4NzQyLCJleHAiOjE3NTYwMzM1NDJ9.aryswNyRA8Gpx3f5yio3LdBLrrk77uEr7I_eXWOdhwk","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":14,"username":"test_hq_teacher","email":"hq.teacher@test.wanli.com","roles":["ROLE_HQ_TEACHER"],"lastLoginAt":"2025-08-17T19:05:42.021297"},"success":true,"message":"登录成功","timestamp":"2025-08-17T19:05:42.022368"}
+   ✅ 创建作业: 作业创建成功，ID: fc5ec0f6-4a44-41dd-b225-158d14d2412a
+   ✅ 获取作业列表: 获取到9个作业
+   ❌ 添加题目: 题目添加失败
+      错误: 状态码: 400, 响应: {"code":"RUNTIME_ERROR","message":"Could not commit JPA transaction","timestamp":1755428742238}
+🔍 登录请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+🔍 登录响应状态: 200
+🔍 登录响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQyODc0MiwiZXhwIjoxNzU1NTE1MTQyfQ.hKvBaNv8UDNo7YSkZSn9knaruaNhusiG6clrAW-6T0c","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQyODc0MiwiZXhwIjoxNzU2MDMzNTQyfQ.BNu5Ft-3dgchMSKKyIOl-EyldeFckPdpns_N_9RsT6M","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-17T19:05:42.739142"},"success":true,"message":"登录成功","timestamp":"2025-08-17T19:05:42.740605"}
+   ✅ 学生权限控制: 学生创建作业被正确拒绝
+   📊 套件结果: 3通过, 1失败, 0跳过
+
+🧪 开始测试套件: 用户管理测试
+   验证用户信息获取和管理功能
+🔍 登录请求数据: {"usernameOrEmail":"test_admin","password":"password123"}
+🔍 登录响应状态: 200
+🔍 登录响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6InRlc3RfYWRtaW4iLCJpYXQiOjE3NTU0Mjg3NDMsImV4cCI6MTc1NTUxNTE0M30.fIMb3QVTiEoNuZOuGwJ5R_BB5ahsra4Ry4eUsnL2QlM","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6InRlc3RfYWRtaW4iLCJpYXQiOjE3NTU0Mjg3NDMsImV4cCI6MTc1NjAzMzU0M30.sId54j-A94Xjv_ovbs9lLZyKCq8-FSgC64CLukjZdjA","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":13,"username":"test_admin","email":"admin@test.wanli.com","roles":["ROLE_ADMIN"],"lastLoginAt":"2025-08-17T19:05:43.049253"},"success":true,"message":"登录成功","timestamp":"2025-08-17T19:05:43.050425"}
+   ✅ 获取用户列表: 获取到6个用户
+   ❌ 获取当前用户信息: 获取当前用户信息失败
+      错误: 状态码: 500
+   📊 套件结果: 1通过, 1失败, 0跳过
+
+🧪 开始测试套件: 性能测试
+   验证API响应时间和并发处理能力
+🔍 登录请求数据: {"usernameOrEmail":"test_admin","password":"password123"}
+🔍 登录响应状态: 200
+🔍 登录响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6InRlc3RfYWRtaW4iLCJpYXQiOjE3NTU0Mjg3NDMsImV4cCI6MTc1NTUxNTE0M30.fIMb3QVTiEoNuZOuGwJ5R_BB5ahsra4Ry4eUsnL2QlM","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInN1YiI6InRlc3RfYWRtaW4iLCJpYXQiOjE3NTU0Mjg3NDMsImV4cCI6MTc1NjAzMzU0M30.sId54j-A94Xjv_ovbs9lLZyKCq8-FSgC64CLukjZdjA","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":13,"username":"test_admin","email":"admin@test.wanli.com","roles":["ROLE_ADMIN"],"lastLoginAt":"2025-08-17T19:05:43.397056"},"success":true,"message":"登录成功","timestamp":"2025-08-17T19:05:43.398336"}
+   ✅ 健康检查响应时间: 响应时间: 14ms (阈值: 100ms)
+   ✅ 用户列表响应时间: 响应时间: 23ms (阈值: 500ms)
+   ❌ 作业列表响应时间: 请求失败，状态码: 403
+   ✅ 并发请求处理: 10个并发请求全部成功，总耗时: 49ms
+   📊 套件结果: 3通过, 1失败, 0跳过
+
+🧪 开始测试套件: 安全测试
+   验证认证、授权和安全防护
+   ✅ 未认证访问拒绝: 未认证访问被正确拒绝
+   ✅ SQL注入防护: SQL注入尝试被阻止
+🔍 登录请求数据: {"usernameOrEmail":"test_hq_teacher","password":"password123"}
+🔍 登录响应状态: 200
+🔍 登录响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0hRX1RFQUNIRVIiXSwic3ViIjoidGVzdF9ocV90ZWFjaGVyIiwiaWF0IjoxNzU1NDI4NzQzLCJleHAiOjE3NTU1MTUxNDN9.MjjMCTLZnX4OqTCK7Zf8CU4JjJeF5v3nh2Zgp3Eeu4k","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0hRX1RFQUNIRVIiXSwic3ViIjoidGVzdF9ocV90ZWFjaGVyIiwiaWF0IjoxNzU1NDI4NzQzLCJleHAiOjE3NTYwMzM1NDN9.k1c1k9G6F4l3oQPX9LvMgml3SgjAONqyurQYemq-__E","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":14,"username":"test_hq_teacher","email":"hq.teacher@test.wanli.com","roles":["ROLE_HQ_TEACHER"],"lastLoginAt":"2025-08-17T19:05:43.645272"},"success":true,"message":"登录成功","timestamp":"2025-08-17T19:05:43.645782"}
+   ✅ XSS防护: XSS内容被正确处理
+   📊 套件结果: 3通过, 0失败, 0跳过
+
+==================================================
+📊 测试结果摘要
+==================================================
+总测试数: 19
+通过测试: 16
+失败测试: 3
+跳过测试: 0
+成功率: 84%
+执行时间: 4226ms
+JSON报告: integration-tests/reports/integration-test-results.json
+
+❌ 集成测试失败

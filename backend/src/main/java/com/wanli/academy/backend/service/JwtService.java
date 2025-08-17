@@ -156,6 +156,11 @@ public class JwtService {
             UserDetails userDetails,
             long expiration
     ) {
+        // 添加角色信息到JWT claims中
+        extraClaims.put("roles", userDetails.getAuthorities().stream()
+                .map(authority -> authority.getAuthority())
+                .toList());
+        
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
