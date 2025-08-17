@@ -1,0 +1,74 @@
+{
+  "timestamp": "2025-08-17T07:09:24.497Z",
+  "totalTests": 6,
+  "passedTests": 3,
+  "failedTests": 3,
+  "averageResponseTime": 12,
+  "maxResponseTime": 22,
+  "minResponseTime": 6,
+  "concurrentUserTest": {
+    "success": true,
+    "completedRequests": 100,
+    "failedRequests": 0,
+    "averageResponseTime": 58.07,
+    "totalTime": 68,
+    "successRate": 100
+  },
+  "apiTests": [
+    {
+      "endpoint": "/swagger-ui/index.html",
+      "method": "GET",
+      "status": 200,
+      "responseTime": 6,
+      "success": true,
+      "error": null
+    },
+    {
+      "endpoint": "/actuator/health",
+      "method": "GET",
+      "status": 200,
+      "responseTime": 8,
+      "success": true,
+      "error": null
+    },
+    {
+      "endpoint": "/actuator/info",
+      "method": "GET",
+      "status": 401,
+      "responseTime": 5,
+      "success": false,
+      "error": "Request failed with status code 401"
+    },
+    {
+      "endpoint": "/v3/api-docs",
+      "method": "GET",
+      "status": 200,
+      "responseTime": 22,
+      "success": true,
+      "error": null
+    },
+    {
+      "endpoint": "/api/assignments",
+      "method": "GET",
+      "status": 401,
+      "responseTime": 3,
+      "success": false,
+      "error": "Request failed with status code 401"
+    },
+    {
+      "endpoint": "/api/submissions",
+      "method": "GET",
+      "status": 401,
+      "responseTime": 2,
+      "success": false,
+      "error": "Request failed with status code 401"
+    }
+  ],
+  "performanceRequirements": {
+    "maxResponseTime": 2000,
+    "concurrentUsers": 100,
+    "responseTimeOk": true,
+    "concurrentOk": true,
+    "overallSuccess": true
+  }
+}

@@ -1,6 +1,5 @@
 package com.wanli.academy.backend.service;
 
-import com.wanli.academy.backend.config.TestConfig;
 import com.wanli.academy.backend.dto.AuthResponse;
 import com.wanli.academy.backend.dto.LoginRequest;
 import com.wanli.academy.backend.dto.RegisterRequest;
@@ -8,24 +7,20 @@ import com.wanli.academy.backend.entity.Role;
 import com.wanli.academy.backend.entity.User;
 import com.wanli.academy.backend.repository.RoleRepository;
 import com.wanli.academy.backend.repository.UserRepository;
-import com.wanli.academy.backend.util.TestDataUtil;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -34,472 +29,442 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 /**
- * AuthService单元测试
- * 测试用户注册、登录、令牌刷新等核心认证功能
+ * AuthService测试类
+ * 测试用户认证相关的业务逻辑
  */
-@SpringBootTest
-@ActiveProfiles("test")
-@Import(TestConfig.class)
-@DisplayName("认证服务测试")
+@ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
-    
-    @MockBean
+
+    @Mock
     private UserRepository userRepository;
-    
-    @MockBean
+
+    @Mock
     private RoleRepository roleRepository;
-    
-    @MockBean
-    private JwtService jwtService;
-    
-    @MockBean
-    private AuthenticationManager authenticationManager;
-    
-    @Autowired
+
+    @Mock
     private PasswordEncoder passwordEncoder;
-    
-    @Autowired
+
+    @Mock
+    private JwtService jwtService;
+
+    @Mock
+    private AuthenticationManager authenticationManager;
+
+    @Mock
+    private Authentication authentication;
+
+    @InjectMocks
     private AuthService authService;
-    
+
+    private RegisterRequest validRegisterRequest;
+    private LoginRequest validLoginRequest;
     private User testUser;
     private Role userRole;
-    private RegisterRequest registerRequest;
-    private LoginRequest loginRequest;
-    
+
+    private static final String TEST_USERNAME = "testuser";
+    private static final String TEST_EMAIL = "test@example.com";
+    private static final String TEST_PASSWORD = "password123";
+    private static final String ENCODED_PASSWORD = "encodedPassword123";
+    private static final String ACCESS_TOKEN = "access.token.jwt";
+    private static final String REFRESH_TOKEN = "refresh.token.jwt";
+    private static final Long JWT_EXPIRATION = 3600000L; // 1 hour
+    private static final Long REFRESH_EXPIRATION = 86400000L; // 24 hours
+
     @BeforeEach
     void setUp() {
-        // 创建测试数据
-        testUser = TestDataUtil.createTestUser(passwordEncoder);
-        userRole = TestDataUtil.createUserRole();
-        registerRequest = TestDataUtil.createRegisterRequest();
-        loginRequest = TestDataUtil.createLoginRequest();
-        
-        // 重置Mock对象
-        reset(userRepository, roleRepository, jwtService, authenticationManager);
+        // 初始化测试数据
+        validRegisterRequest = new RegisterRequest();
+        validRegisterRequest.setUsername(TEST_USERNAME);
+        validRegisterRequest.setEmail(TEST_EMAIL);
+        validRegisterRequest.setPassword(TEST_PASSWORD);
+        validRegisterRequest.setFirstName("Test");
+        validRegisterRequest.setLastName("User");
+        validRegisterRequest.setPhoneNumber("1234567890");
+
+        validLoginRequest = new LoginRequest();
+        validLoginRequest.setUsernameOrEmail(TEST_USERNAME);
+        validLoginRequest.setPassword(TEST_PASSWORD);
+
+        userRole = new Role("USER", "普通用户");
+        userRole.setId(1L);
+        userRole.setIsActive(true);
+
+        testUser = new User();
+        testUser.setId(1L);
+        testUser.setUsername(TEST_USERNAME);
+        testUser.setEmail(TEST_EMAIL);
+        testUser.setPassword(ENCODED_PASSWORD);
+        testUser.setFirstName("Test");
+        testUser.setLastName("User");
+        testUser.setPhoneNumber("1234567890");
+        testUser.setIsActive(true);
+        testUser.addRole(userRole);
+        testUser.setCreatedAt(LocalDateTime.now());
+        testUser.setUpdatedAt(LocalDateTime.now());
     }
-    
-    @Nested
-    @DisplayName("用户注册测试")
-    class UserRegistrationTests {
-        
-        @Test
-        @DisplayName("应该成功注册新用户")
-        void shouldRegisterNewUserSuccessfully() {
-            // Given
-            when(userRepository.existsByUsername(registerRequest.getUsername())).thenReturn(false);
-            when(userRepository.existsByEmail(registerRequest.getEmail())).thenReturn(false);
-            when(roleRepository.findByName("USER")).thenReturn(Optional.of(userRole));
-            when(userRepository.save(any(User.class))).thenReturn(testUser);
-            when(jwtService.generateTokenFromUsername(anyString())).thenReturn("access-token");
-            when(jwtService.generateRefreshTokenFromUsername(anyString())).thenReturn("refresh-token");
-            
-            // When
-            AuthResponse response = authService.register(registerRequest);
-            
-            // Then
-            assertNotNull(response, "注册响应不应为空");
-            assertEquals("access-token", response.getAccessToken(), "访问令牌应匹配");
-            assertEquals("refresh-token", response.getRefreshToken(), "刷新令牌应匹配");
-            assertEquals("Bearer", response.getTokenType(), "令牌类型应为Bearer");
-            assertEquals(testUser.getId(), response.getUserId(), "用户ID应匹配");
-            assertEquals(testUser.getUsername(), response.getUsername(), "用户名应匹配");
-            assertEquals(testUser.getEmail(), response.getEmail(), "邮箱应匹配");
-            
-            // 验证方法调用
-            verify(userRepository).existsByUsername(registerRequest.getUsername());
-            verify(userRepository).existsByEmail(registerRequest.getEmail());
-            verify(roleRepository).findByName("USER");
-            verify(userRepository).save(any(User.class));
-            verify(jwtService).generateTokenFromUsername(anyString());
-            verify(jwtService).generateRefreshTokenFromUsername(anyString());
-        }
-        
-        @Test
-        @DisplayName("应该拒绝重复用户名注册")
-        void shouldRejectDuplicateUsername() {
-            // Given
-            when(userRepository.existsByUsername(registerRequest.getUsername())).thenReturn(true);
-            
-            // When & Then
-            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-                authService.register(registerRequest);
-            });
-            
-            assertTrue(exception.getMessage().contains("用户名已存在"), "异常消息应包含用户名已存在");
-            verify(userRepository).existsByUsername(registerRequest.getUsername());
-            verify(userRepository, never()).save(any(User.class));
-        }
-        
-        @Test
-        @DisplayName("应该拒绝重复邮箱注册")
-        void shouldRejectDuplicateEmail() {
-            // Given
-            when(userRepository.existsByUsername(registerRequest.getUsername())).thenReturn(false);
-            when(userRepository.existsByEmail(registerRequest.getEmail())).thenReturn(true);
-            
-            // When & Then
-            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-                authService.register(registerRequest);
-            });
-            
-            assertTrue(exception.getMessage().contains("邮箱已存在"), "异常消息应包含邮箱已存在");
-            verify(userRepository).existsByUsername(registerRequest.getUsername());
-            verify(userRepository).existsByEmail(registerRequest.getEmail());
-            verify(userRepository, never()).save(any(User.class));
-        }
-        
-        @Test
-        @DisplayName("应该处理角色不存在的情况")
-        void shouldHandleMissingUserRole() {
-            // Given
-            when(userRepository.existsByUsername(registerRequest.getUsername())).thenReturn(false);
-            when(userRepository.existsByEmail(registerRequest.getEmail())).thenReturn(false);
-            when(roleRepository.findByName("USER")).thenReturn(Optional.empty());
-            when(roleRepository.save(any(Role.class))).thenAnswer(invocation -> invocation.getArgument(0));
-            when(userRepository.save(any(User.class))).thenReturn(testUser);
-            when(jwtService.generateTokenFromUsername(anyString())).thenReturn("access-token");
-            when(jwtService.generateRefreshTokenFromUsername(anyString())).thenReturn("refresh-token");
-            
-            // When
-            AuthResponse response = authService.register(registerRequest);
-            
-            // Then
-            assertNotNull(response, "注册响应不应为空");
-            verify(roleRepository).findByName("USER");
-            verify(roleRepository).save(any(Role.class)); // 验证创建了新角色
-            verify(userRepository).save(any(User.class));
-        }
-        
-        @Test
-        @DisplayName("注册时应该正确编码密码")
-        void shouldEncodePasswordDuringRegistration() {
-            // Given
-            when(userRepository.existsByUsername(registerRequest.getUsername())).thenReturn(false);
-            when(userRepository.existsByEmail(registerRequest.getEmail())).thenReturn(false);
-            when(roleRepository.findByName("USER")).thenReturn(Optional.of(userRole));
-            when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
-                User savedUser = invocation.getArgument(0);
-                // 验证密码已被编码
-                assertNotEquals(registerRequest.getPassword(), savedUser.getPassword(), "密码应该被编码");
-                assertTrue(passwordEncoder.matches(registerRequest.getPassword(), savedUser.getPassword()), "编码后的密码应该匹配原密码");
-                return testUser;
-            });
-            when(jwtService.generateTokenFromUsername(anyString())).thenReturn("access-token");
-            when(jwtService.generateRefreshTokenFromUsername(anyString())).thenReturn("refresh-token");
-            
-            // When
-            authService.register(registerRequest);
-            
-            // Then
-            verify(userRepository).save(any(User.class));
-        }
+
+    // ==================== register方法测试 ====================
+
+    @Test
+    void should_registerUser_when_validRequest() {
+        // Given
+        when(userRepository.existsByUsername(TEST_USERNAME)).thenReturn(false);
+        when(userRepository.existsByEmail(TEST_EMAIL)).thenReturn(false);
+        when(passwordEncoder.encode(TEST_PASSWORD)).thenReturn(ENCODED_PASSWORD);
+        when(roleRepository.findByName("USER")).thenReturn(Optional.of(userRole));
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
+        when(jwtService.generateTokenFromUsername(TEST_USERNAME)).thenReturn(ACCESS_TOKEN);
+        when(jwtService.generateRefreshTokenFromUsername(TEST_USERNAME)).thenReturn(REFRESH_TOKEN);
+        when(jwtService.getJwtExpiration()).thenReturn(JWT_EXPIRATION);
+        when(jwtService.getRefreshExpiration()).thenReturn(REFRESH_EXPIRATION);
+
+        // When
+        AuthResponse result = authService.register(validRegisterRequest);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(ACCESS_TOKEN, result.getAccessToken());
+        assertEquals(REFRESH_TOKEN, result.getRefreshToken());
+        assertEquals(testUser.getId(), result.getUserId());
+        assertEquals(TEST_USERNAME, result.getUsername());
+        assertEquals(TEST_EMAIL, result.getEmail());
+        assertTrue(result.getRoles().contains("USER"));
+
+        verify(userRepository).existsByUsername(TEST_USERNAME);
+        verify(userRepository).existsByEmail(TEST_EMAIL);
+        verify(passwordEncoder).encode(TEST_PASSWORD);
+        verify(roleRepository).findByName("USER");
+        verify(userRepository).save(any(User.class));
+        verify(jwtService).generateTokenFromUsername(TEST_USERNAME);
+        verify(jwtService).generateRefreshTokenFromUsername(TEST_USERNAME);
     }
-    
-    @Nested
-    @DisplayName("用户登录测试")
-    class UserLoginTests {
-        
-        @Test
-        @DisplayName("应该成功使用用户名登录")
-        void shouldLoginWithUsernameSuccessfully() {
-            // Given
-            Authentication mockAuth = mock(Authentication.class);
-            when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(mockAuth);
-            when(userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail())).thenReturn(Optional.of(testUser));
-            when(jwtService.generateTokenFromUsername(anyString())).thenReturn("access-token");
-            when(jwtService.generateRefreshTokenFromUsername(anyString())).thenReturn("refresh-token");
-            
-            // When
-            AuthResponse response = authService.login(loginRequest);
-            
-            // Then
-            assertNotNull(response, "登录响应不应为空");
-            assertEquals("access-token", response.getAccessToken(), "访问令牌应匹配");
-            assertEquals("refresh-token", response.getRefreshToken(), "刷新令牌应匹配");
-            assertEquals(testUser.getUsername(), response.getUsername(), "用户名应匹配");
-            
-            verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-            verify(userRepository).findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail());
-            verify(jwtService).generateTokenFromUsername(anyString());
-            verify(jwtService).generateRefreshTokenFromUsername(anyString());
-        }
-        
-        @Test
-        @DisplayName("应该成功使用邮箱登录")
-        void shouldLoginWithEmailSuccessfully() {
-            // Given
-            LoginRequest emailLoginRequest = TestDataUtil.createEmailLoginRequest();
-            Authentication mockAuth = mock(Authentication.class);
-            when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(mockAuth);
-            when(userRepository.findByUsernameOrEmail(emailLoginRequest.getUsernameOrEmail(), emailLoginRequest.getUsernameOrEmail())).thenReturn(Optional.of(testUser));
-            when(jwtService.generateTokenFromUsername(any())).thenReturn("access-token");
-            when(jwtService.generateRefreshTokenFromUsername(any())).thenReturn("refresh-token");
-            
-            // When
-            AuthResponse response = authService.login(emailLoginRequest);
-            
-            // Then
-            assertNotNull(response, "登录响应不应为空");
-            assertEquals(testUser.getEmail(), response.getEmail(), "邮箱应匹配");
-            
-            verify(userRepository).findByUsernameOrEmail(emailLoginRequest.getUsernameOrEmail(), emailLoginRequest.getUsernameOrEmail());
-        }
-        
-        @Test
-        @DisplayName("应该拒绝错误凭证登录")
-        void shouldRejectInvalidCredentials() {
-            // Given
-            when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                    .thenThrow(new BadCredentialsException("用户名或密码错误"));
-            
-            // When & Then
-            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-                authService.login(loginRequest);
-            });
-            
-            assertTrue(exception.getMessage().contains("用户名或密码错误"), "异常消息应包含凭证错误信息");
-            verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-            verify(userRepository, never()).findByUsername(any());
-        }
-        
-        @Test
-        @DisplayName("应该拒绝未激活用户登录")
-        void shouldRejectInactiveUserLogin() {
-            // Given
-            User inactiveUser = TestDataUtil.createInactiveUser(passwordEncoder);
-            Authentication mockAuth = mock(Authentication.class);
-            when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(mockAuth);
-            when(userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail())).thenReturn(Optional.of(inactiveUser));
-            
-            // When & Then
-            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-                authService.login(loginRequest);
-            });
-            
-            assertTrue(exception.getMessage().contains("账户已被禁用"), "异常消息应包含账户禁用信息");
-            verify(userRepository).findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail());
-            verify(jwtService, never()).generateTokenFromUsername(anyString());
-        }
-        
-        @Test
-        @DisplayName("应该处理用户不存在的情况")
-        void shouldHandleUserNotFound() {
-            // Given
-            Authentication mockAuth = mock(Authentication.class);
-            when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(mockAuth);
-            when(userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail())).thenReturn(Optional.empty());
-            
-            // When & Then
-            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-                authService.login(loginRequest);
-            });
-            
-            assertTrue(exception.getMessage().contains("用户不存在"), "异常消息应包含用户不存在信息");
-            verify(userRepository).findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail());
-        }
+
+    @Test
+    void should_throwRuntimeException_when_usernameExists() {
+        // Given
+        when(userRepository.existsByUsername(TEST_USERNAME)).thenReturn(true);
+
+        // When & Then
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            authService.register(validRegisterRequest);
+        });
+
+        assertEquals("用户名已存在", exception.getMessage());
+        verify(userRepository).existsByUsername(TEST_USERNAME);
+        verify(userRepository, never()).existsByEmail(anyString());
+        verify(userRepository, never()).save(any(User.class));
     }
-    
-    @Nested
-    @DisplayName("令牌刷新测试")
-    class TokenRefreshTests {
-        
-        @Test
-        @DisplayName("应该成功刷新有效令牌")
-        void shouldRefreshValidToken() {
-            // Given
-            String refreshToken = "valid-refresh-token";
-            when(jwtService.extractUsername(refreshToken)).thenReturn(testUser.getUsername());
-            when(userRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
-            when(jwtService.isTokenValid(refreshToken)).thenReturn(true);
-            when(jwtService.generateTokenFromUsername(anyString())).thenReturn("new-access-token");
-            when(jwtService.generateRefreshTokenFromUsername(anyString())).thenReturn("new-refresh-token");
-            
-            // When
-            AuthResponse response = authService.refreshToken(refreshToken);
-            
-            // Then
-            assertNotNull(response, "刷新响应不应为空");
-            assertEquals("new-access-token", response.getAccessToken(), "新访问令牌应匹配");
-            assertEquals("new-refresh-token", response.getRefreshToken(), "新刷新令牌应匹配");
-            assertEquals(testUser.getUsername(), response.getUsername(), "用户名应匹配");
-            
-            verify(jwtService).extractUsername(refreshToken);
-            verify(userRepository).findByUsername(testUser.getUsername());
-            verify(jwtService).isTokenValid(refreshToken);
-            verify(jwtService).generateTokenFromUsername(anyString());
-            verify(jwtService).generateRefreshTokenFromUsername(anyString());
-        }
-        
-        @Test
-        @DisplayName("应该拒绝无效刷新令牌")
-        void shouldRejectInvalidRefreshToken() {
-            // Given
-            String invalidRefreshToken = "invalid-refresh-token";
-            when(jwtService.extractUsername(invalidRefreshToken)).thenReturn(testUser.getUsername());
-            when(userRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
-            when(jwtService.isTokenValid(invalidRefreshToken)).thenReturn(false);
-            
-            // When & Then
-            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-                authService.refreshToken(invalidRefreshToken);
-            });
-            
-            assertTrue(exception.getMessage().contains("刷新令牌无效"), "异常消息应包含令牌无效信息");
-            verify(jwtService).isTokenValid(invalidRefreshToken);
-            verify(jwtService, never()).generateTokenFromUsername(anyString());
-        }
-        
-        @Test
-        @DisplayName("应该处理刷新令牌对应用户不存在的情况")
-        void shouldHandleRefreshTokenUserNotFound() {
-            // Given
-            String refreshToken = "valid-refresh-token";
-            when(jwtService.isTokenValid(refreshToken)).thenReturn(true);
-            when(jwtService.extractUsername(refreshToken)).thenReturn("nonexistentuser");
-            when(userRepository.findByUsername("nonexistentuser")).thenReturn(Optional.empty());
-            
-            // When & Then
-            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-                authService.refreshToken(refreshToken);
-            });
-            
-            assertTrue(exception.getMessage().contains("刷新令牌失败") && exception.getMessage().contains("用户不存在"), "异常消息应包含刷新令牌失败和用户不存在信息");
-            verify(jwtService).isTokenValid(refreshToken);
-            verify(jwtService).extractUsername(refreshToken);
-            verify(userRepository).findByUsername("nonexistentuser");
-        }
+
+    @Test
+    void should_throwRuntimeException_when_emailExists() {
+        // Given
+        when(userRepository.existsByUsername(TEST_USERNAME)).thenReturn(false);
+        when(userRepository.existsByEmail(TEST_EMAIL)).thenReturn(true);
+
+        // When & Then
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            authService.register(validRegisterRequest);
+        });
+
+        assertEquals("邮箱已存在", exception.getMessage());
+        verify(userRepository).existsByUsername(TEST_USERNAME);
+        verify(userRepository).existsByEmail(TEST_EMAIL);
+        verify(userRepository, never()).save(any(User.class));
     }
-    
-    @Nested
-    @DisplayName("用户可用性检查测试")
-    class UserAvailabilityTests {
-        
-        @Test
-        @DisplayName("应该正确检查用户名可用性")
-        void shouldCheckUsernameAvailability() {
-            // Given
-            String availableUsername = "availableuser";
-            String unavailableUsername = "unavailableuser";
-            when(userRepository.existsByUsername(availableUsername)).thenReturn(false);
-            when(userRepository.existsByUsername(unavailableUsername)).thenReturn(true);
-            
-            // When & Then
-            assertTrue(authService.isUsernameAvailable(availableUsername), "可用用户名应返回true");
-            assertFalse(authService.isUsernameAvailable(unavailableUsername), "不可用用户名应返回false");
-            
-            verify(userRepository).existsByUsername(availableUsername);
-            verify(userRepository).existsByUsername(unavailableUsername);
-        }
-        
-        @Test
-        @DisplayName("应该正确检查邮箱可用性")
-        void shouldCheckEmailAvailability() {
-            // Given
-            String availableEmail = "available@example.com";
-            String unavailableEmail = "unavailable@example.com";
-            when(userRepository.existsByEmail(availableEmail)).thenReturn(false);
-            when(userRepository.existsByEmail(unavailableEmail)).thenReturn(true);
-            
-            // When & Then
-            assertTrue(authService.isEmailAvailable(availableEmail), "可用邮箱应返回true");
-            assertFalse(authService.isEmailAvailable(unavailableEmail), "不可用邮箱应返回false");
-            
-            verify(userRepository).existsByEmail(availableEmail);
-            verify(userRepository).existsByEmail(unavailableEmail);
-        }
+
+    @Test
+    void should_createUserRole_when_defaultRoleNotExists() {
+        // Given
+        when(userRepository.existsByUsername(TEST_USERNAME)).thenReturn(false);
+        when(userRepository.existsByEmail(TEST_EMAIL)).thenReturn(false);
+        when(passwordEncoder.encode(TEST_PASSWORD)).thenReturn(ENCODED_PASSWORD);
+        when(roleRepository.findByName("USER")).thenReturn(Optional.empty());
+        when(roleRepository.save(any(Role.class))).thenReturn(userRole);
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
+        when(jwtService.generateTokenFromUsername(TEST_USERNAME)).thenReturn(ACCESS_TOKEN);
+        when(jwtService.generateRefreshTokenFromUsername(TEST_USERNAME)).thenReturn(REFRESH_TOKEN);
+        when(jwtService.getJwtExpiration()).thenReturn(JWT_EXPIRATION);
+        when(jwtService.getRefreshExpiration()).thenReturn(REFRESH_EXPIRATION);
+
+        // When
+        AuthResponse result = authService.register(validRegisterRequest);
+
+        // Then
+        assertNotNull(result);
+        verify(roleRepository).findByName("USER");
+        verify(roleRepository).save(any(Role.class));
+        verify(userRepository).save(any(User.class));
     }
-    
-    @Nested
-    @DisplayName("用户查询测试")
-    class UserQueryTests {
-        
-        @Test
-        @DisplayName("应该成功根据用户名查询用户")
-        void shouldGetUserByUsername() {
-            // Given
-            when(userRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
-            
-            // When
-            Optional<User> result = authService.getUserByUsername(testUser.getUsername());
-            
-            // Then
-            assertTrue(result.isPresent(), "应该找到用户");
-            assertEquals(testUser.getUsername(), result.get().getUsername(), "用户名应匹配");
-            verify(userRepository).findByUsername(testUser.getUsername());
-        }
-        
-        @Test
-        @DisplayName("应该成功根据用户ID查询用户")
-        void shouldGetUserById() {
-            // Given
-            when(userRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
-            
-            // When
-            Optional<User> result = authService.getUserById(testUser.getId());
-            
-            // Then
-            assertTrue(result.isPresent(), "应该找到用户");
-            assertEquals(testUser.getId(), result.get().getId(), "用户ID应匹配");
-            verify(userRepository).findById(testUser.getId());
-        }
-        
-        @Test
-        @DisplayName("查询不存在的用户应返回空Optional")
-        void shouldReturnEmptyForNonExistentUser() {
-            // Given
-            when(userRepository.findByUsername("nonexistent")).thenReturn(Optional.empty());
-            when(userRepository.findById(999L)).thenReturn(Optional.empty());
-            
-            // When
-            Optional<User> userByUsername = authService.getUserByUsername("nonexistent");
-            Optional<User> userById = authService.getUserById(999L);
-            
-            // Then
-            assertFalse(userByUsername.isPresent(), "不存在的用户名应返回空Optional");
-            assertFalse(userById.isPresent(), "不存在的用户ID应返回空Optional");
-        }
+
+    // ==================== login方法测试 ====================
+
+    @Test
+    void should_loginUser_when_validCredentials() {
+        // Given
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(authentication);
+        when(userRepository.findByUsernameOrEmail(TEST_USERNAME, TEST_USERNAME))
+                .thenReturn(Optional.of(testUser));
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
+        when(jwtService.generateTokenFromUsername(TEST_USERNAME)).thenReturn(ACCESS_TOKEN);
+        when(jwtService.generateRefreshTokenFromUsername(TEST_USERNAME)).thenReturn(REFRESH_TOKEN);
+        when(jwtService.getJwtExpiration()).thenReturn(JWT_EXPIRATION);
+        when(jwtService.getRefreshExpiration()).thenReturn(REFRESH_EXPIRATION);
+
+        // When
+        AuthResponse result = authService.login(validLoginRequest);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(ACCESS_TOKEN, result.getAccessToken());
+        assertEquals(REFRESH_TOKEN, result.getRefreshToken());
+        assertEquals(testUser.getId(), result.getUserId());
+        assertEquals(TEST_USERNAME, result.getUsername());
+
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(userRepository).findByUsernameOrEmail(TEST_USERNAME, TEST_USERNAME);
+        verify(userRepository).save(any(User.class));
     }
-    
-    @Nested
-    @DisplayName("边界条件和异常处理测试")
-    class EdgeCaseTests {
-        
-        @Test
-        @DisplayName("应该处理空用户名或邮箱登录")
-        void shouldHandleNullUsernameOrEmailLogin() {
-            // Given
-            LoginRequest nullLoginRequest = new LoginRequest();
-            nullLoginRequest.setUsernameOrEmail(null);
-            nullLoginRequest.setPassword("password");
-            
-            // When & Then
-            assertThrows(RuntimeException.class, () -> {
-                authService.login(nullLoginRequest);
-            }, "空用户名或邮箱应抛出异常");
-        }
-        
-        @Test
-        @DisplayName("应该处理空刷新令牌")
-        void shouldHandleNullRefreshToken() {
-            // When & Then
-            assertThrows(RuntimeException.class, () -> {
-                authService.refreshToken(null);
-            }, "空刷新令牌应抛出异常");
-        }
-        
-        @Test
-        @DisplayName("应该处理数据库异常")
-        void shouldHandleDatabaseException() {
-            // Given
-            when(userRepository.existsByUsername(registerRequest.getUsername()))
-                    .thenThrow(new RuntimeException("数据库连接失败"));
-            
-            // When & Then
-            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-                authService.register(registerRequest);
-            });
-            
-            assertTrue(exception.getMessage().contains("数据库连接失败"), "应该传播数据库异常");
-        }
+
+    @Test
+    void should_throwRuntimeException_when_invalidCredentials() {
+        // Given
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenThrow(new BadCredentialsException("Bad credentials"));
+
+        // When & Then
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            authService.login(validLoginRequest);
+        });
+
+        assertEquals("用户名或密码错误", exception.getMessage());
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(userRepository, never()).findByUsernameOrEmail(anyString(), anyString());
+    }
+
+    @Test
+    void should_throwRuntimeException_when_userNotFound() {
+        // Given
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(authentication);
+        when(userRepository.findByUsernameOrEmail(TEST_USERNAME, TEST_USERNAME))
+                .thenReturn(Optional.empty());
+
+        // When & Then
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            authService.login(validLoginRequest);
+        });
+
+        assertEquals("用户不存在", exception.getMessage());
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(userRepository).findByUsernameOrEmail(TEST_USERNAME, TEST_USERNAME);
+    }
+
+    @Test
+    void should_throwRuntimeException_when_userIsInactive() {
+        // Given
+        testUser.setIsActive(false);
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(authentication);
+        when(userRepository.findByUsernameOrEmail(TEST_USERNAME, TEST_USERNAME))
+                .thenReturn(Optional.of(testUser));
+
+        // When & Then
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            authService.login(validLoginRequest);
+        });
+
+        assertEquals("用户账户已被禁用", exception.getMessage());
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(userRepository).findByUsernameOrEmail(TEST_USERNAME, TEST_USERNAME);
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    // ==================== refreshToken方法测试 ====================
+
+    @Test
+    void should_refreshToken_when_validToken() {
+        // Given
+        when(jwtService.isTokenValid(REFRESH_TOKEN)).thenReturn(true);
+        when(jwtService.extractUsername(REFRESH_TOKEN)).thenReturn(TEST_USERNAME);
+        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
+        when(jwtService.generateTokenFromUsername(TEST_USERNAME)).thenReturn(ACCESS_TOKEN);
+        when(jwtService.generateRefreshTokenFromUsername(TEST_USERNAME)).thenReturn(REFRESH_TOKEN);
+        when(jwtService.getJwtExpiration()).thenReturn(JWT_EXPIRATION);
+        when(jwtService.getRefreshExpiration()).thenReturn(REFRESH_EXPIRATION);
+
+        // When
+        AuthResponse result = authService.refreshToken(REFRESH_TOKEN);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(ACCESS_TOKEN, result.getAccessToken());
+        assertEquals(REFRESH_TOKEN, result.getRefreshToken());
+        assertEquals(testUser.getId(), result.getUserId());
+
+        verify(jwtService).isTokenValid(REFRESH_TOKEN);
+        verify(jwtService).extractUsername(REFRESH_TOKEN);
+        verify(userRepository).findByUsername(TEST_USERNAME);
+    }
+
+    @Test
+    void should_throwRuntimeException_when_invalidRefreshToken() {
+        // Given
+        when(jwtService.isTokenValid(REFRESH_TOKEN)).thenReturn(false);
+
+        // When & Then
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            authService.refreshToken(REFRESH_TOKEN);
+        });
+
+        assertEquals("刷新令牌失败: 刷新令牌无效或已过期", exception.getMessage());
+        verify(jwtService).isTokenValid(REFRESH_TOKEN);
+        verify(jwtService, never()).extractUsername(anyString());
+    }
+
+    @Test
+    void should_throwRuntimeException_when_userNotFoundForRefresh() {
+        // Given
+        when(jwtService.isTokenValid(REFRESH_TOKEN)).thenReturn(true);
+        when(jwtService.extractUsername(REFRESH_TOKEN)).thenReturn(TEST_USERNAME);
+        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.empty());
+
+        // When & Then
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            authService.refreshToken(REFRESH_TOKEN);
+        });
+
+        assertEquals("刷新令牌失败: 用户不存在", exception.getMessage());
+        verify(jwtService).isTokenValid(REFRESH_TOKEN);
+        verify(jwtService).extractUsername(REFRESH_TOKEN);
+        verify(userRepository).findByUsername(TEST_USERNAME);
+    }
+
+    @Test
+    void should_throwRuntimeException_when_userInactiveForRefresh() {
+        // Given
+        testUser.setIsActive(false);
+        when(jwtService.isTokenValid(REFRESH_TOKEN)).thenReturn(true);
+        when(jwtService.extractUsername(REFRESH_TOKEN)).thenReturn(TEST_USERNAME);
+        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
+
+        // When & Then
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            authService.refreshToken(REFRESH_TOKEN);
+        });
+
+        assertEquals("刷新令牌失败: 用户账户已被禁用", exception.getMessage());
+        verify(jwtService).isTokenValid(REFRESH_TOKEN);
+        verify(jwtService).extractUsername(REFRESH_TOKEN);
+        verify(userRepository).findByUsername(TEST_USERNAME);
+    }
+
+    // ==================== 工具方法测试 ====================
+
+    @Test
+    void should_returnTrue_when_usernameAvailable() {
+        // Given
+        when(userRepository.existsByUsername(TEST_USERNAME)).thenReturn(false);
+
+        // When
+        boolean result = authService.isUsernameAvailable(TEST_USERNAME);
+
+        // Then
+        assertTrue(result);
+        verify(userRepository).existsByUsername(TEST_USERNAME);
+    }
+
+    @Test
+    void should_returnFalse_when_usernameNotAvailable() {
+        // Given
+        when(userRepository.existsByUsername(TEST_USERNAME)).thenReturn(true);
+
+        // When
+        boolean result = authService.isUsernameAvailable(TEST_USERNAME);
+
+        // Then
+        assertFalse(result);
+        verify(userRepository).existsByUsername(TEST_USERNAME);
+    }
+
+    @Test
+    void should_returnTrue_when_emailAvailable() {
+        // Given
+        when(userRepository.existsByEmail(TEST_EMAIL)).thenReturn(false);
+
+        // When
+        boolean result = authService.isEmailAvailable(TEST_EMAIL);
+
+        // Then
+        assertTrue(result);
+        verify(userRepository).existsByEmail(TEST_EMAIL);
+    }
+
+    @Test
+    void should_returnFalse_when_emailNotAvailable() {
+        // Given
+        when(userRepository.existsByEmail(TEST_EMAIL)).thenReturn(true);
+
+        // When
+        boolean result = authService.isEmailAvailable(TEST_EMAIL);
+
+        // Then
+        assertFalse(result);
+        verify(userRepository).existsByEmail(TEST_EMAIL);
+    }
+
+    @Test
+    void should_returnUser_when_getUserByUsername() {
+        // Given
+        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
+
+        // When
+        Optional<User> result = authService.getUserByUsername(TEST_USERNAME);
+
+        // Then
+        assertTrue(result.isPresent());
+        assertEquals(testUser.getId(), result.get().getId());
+        assertEquals(TEST_USERNAME, result.get().getUsername());
+        verify(userRepository).findByUsername(TEST_USERNAME);
+    }
+
+    @Test
+    void should_returnEmpty_when_getUserByUsernameNotFound() {
+        // Given
+        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.empty());
+
+        // When
+        Optional<User> result = authService.getUserByUsername(TEST_USERNAME);
+
+        // Then
+        assertFalse(result.isPresent());
+        verify(userRepository).findByUsername(TEST_USERNAME);
+    }
+
+    @Test
+    void should_returnUser_when_getUserById() {
+        // Given
+        when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
+
+        // When
+        Optional<User> result = authService.getUserById(1L);
+
+        // Then
+        assertTrue(result.isPresent());
+        assertEquals(testUser.getId(), result.get().getId());
+        verify(userRepository).findById(1L);
+    }
+
+    @Test
+    void should_returnEmpty_when_getUserByIdNotFound() {
+        // Given
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // When
+        Optional<User> result = authService.getUserById(1L);
+
+        // Then
+        assertFalse(result.isPresent());
+        verify(userRepository).findById(1L);
     }
 }

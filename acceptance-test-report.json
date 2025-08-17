@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-08-17T06:56:05.008Z",
+  "summary": {
+    "total": 23,
+    "passed": 12,
+    "failed": 11,
+    "passRate": "52.17%"
+  },
+  "errors": [
+    "认证测试失败: Request failed with status code 400",
+    "作业管理测试失败: Request failed with status code 401",
+    "无法进行作业提交测试：作业ID为空",
+    "文件处理测试失败: Request failed with status code 401",
+    "无法进行批改测试：提交ID为空",
+    "学生创建作业被正确拒绝",
+    "GET http://localhost:8080/api/assignments 响应时间测试失败: Request failed with status code 401",
+    "TXT文件格式测试失败: Request failed with status code 401",
+    "PDF文件格式测试失败: Request failed with status code 401",
+    "无效登录返回正确状态码",
+    "无效请求返回正确状态码"
+  ],
+  "conclusion": "FAILED"
+}

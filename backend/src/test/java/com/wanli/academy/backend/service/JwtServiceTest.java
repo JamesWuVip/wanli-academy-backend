@@ -31,7 +31,7 @@ class JwtServiceTest {
     @BeforeEach
     void setUp() {
         testUsername = "testuser";
-        testUserDetails = TestDataUtil.createTestUserDetails(testUsername, "password");
+        testUserDetails = TestDataUtil.buildTestUserDetails(testUsername, "password");
         validToken = jwtService.generateToken(testUserDetails);
     }
 
@@ -130,7 +130,7 @@ class JwtServiceTest {
         @DisplayName("应该拒绝用户名不匹配的令牌")
         void shouldRejectTokenWithWrongUsername() {
             // Given
-            UserDetails wrongUserDetails = TestDataUtil.createTestUserDetails("wronguser", "password");
+            UserDetails wrongUserDetails = TestDataUtil.buildTestUserDetails("wronguser", "password");
             
             // When
             boolean isValid = jwtService.isTokenValid(validToken, wrongUserDetails);
@@ -188,6 +188,143 @@ class JwtServiceTest {
             
             // Then
             assertFalse(isValid, "格式错误的令牌应该被拒绝");
+        }
+    }
+
+    @Nested
+    @DisplayName("用户名令牌生成测试")
+    class UsernameTokenGenerationTests {
+        
+        @Test
+        @DisplayName("应该通过用户名生成访问令牌")
+        void should_generateAccessToken_when_usernameProvided() {
+            // When
+            String token = jwtService.generateTokenFromUsername(testUsername);
+            
+            // Then
+            assertNotNull(token, "生成的令牌不应为空");
+            assertFalse(token.isEmpty(), "生成的令牌不应为空字符串");
+            
+            String extractedUsername = jwtService.extractUsername(token);
+            assertEquals(testUsername, extractedUsername, "令牌中的用户名应该正确");
+        }
+        
+        @Test
+        @DisplayName("应该通过用户名生成访问令牌（别名方法）")
+        void should_generateAccessToken_when_usernameProvidedAlias() {
+            // When
+            String token = jwtService.generateTokenByUsername(testUsername);
+            
+            // Then
+            assertNotNull(token, "生成的令牌不应为空");
+            assertFalse(token.isEmpty(), "生成的令牌不应为空字符串");
+            
+            String extractedUsername = jwtService.extractUsername(token);
+            assertEquals(testUsername, extractedUsername, "令牌中的用户名应该正确");
+        }
+        
+        @Test
+        @DisplayName("应该通过用户名生成刷新令牌")
+        void should_generateRefreshToken_when_usernameProvided() {
+            // When
+            String refreshToken = jwtService.generateRefreshTokenFromUsername(testUsername);
+            
+            // Then
+            assertNotNull(refreshToken, "生成的刷新令牌不应为空");
+            assertFalse(refreshToken.isEmpty(), "生成的刷新令牌不应为空字符串");
+            
+            String extractedUsername = jwtService.extractUsername(refreshToken);
+            assertEquals(testUsername, extractedUsername, "刷新令牌中的用户名应该正确");
+        }
+    }
+
+    @Nested
+    @DisplayName("用户ID令牌测试")
+    class UserIdTokenTests {
+        
+        @Test
+        @DisplayName("应该生成包含用户ID的令牌")
+        void should_generateTokenWithUserId_when_userIdProvided() {
+            // Given
+            Long userId = 123L;
+            
+            // When
+            String token = jwtService.generateTokenWithUserId(testUserDetails, userId);
+            
+            // Then
+            assertNotNull(token, "生成的令牌不应为空");
+            assertFalse(token.isEmpty(), "生成的令牌不应为空字符串");
+            
+            Long extractedUserId = jwtService.extractUserId(token);
+            assertEquals(userId, extractedUserId, "令牌中的用户ID应该正确");
+        }
+        
+        @Test
+        @DisplayName("应该从不包含用户ID的令牌中返回null")
+        void should_returnNull_when_tokenDoesNotContainUserId() {
+            // When
+            Long extractedUserId = jwtService.extractUserId(validToken);
+            
+            // Then
+            assertNull(extractedUserId, "不包含用户ID的令牌应该返回null");
+        }
+    }
+
+    @Nested
+    @DisplayName("配置属性测试")
+    class ConfigurationTests {
+        
+        @Test
+        @DisplayName("应该返回JWT过期时间")
+        void should_returnJwtExpiration_when_requested() {
+            // When
+            long expiration = jwtService.getJwtExpiration();
+            
+            // Then
+            assertTrue(expiration > 0, "JWT过期时间应该大于0");
+        }
+        
+        @Test
+        @DisplayName("应该返回刷新令牌过期时间")
+        void should_returnRefreshExpiration_when_requested() {
+            // When
+            long refreshExpiration = jwtService.getRefreshExpiration();
+            
+            // Then
+            assertTrue(refreshExpiration > 0, "刷新令牌过期时间应该大于0");
+            assertTrue(refreshExpiration > jwtService.getJwtExpiration(), "刷新令牌过期时间应该大于访问令牌过期时间");
+        }
+    }
+
+    @Nested
+    @DisplayName("异常处理测试")
+    class ExceptionHandlingTests {
+        
+        @Test
+        @DisplayName("应该处理空令牌")
+        void should_handleNullToken_when_validating() {
+            // When & Then
+            assertThrows(Exception.class, () -> {
+                jwtService.isTokenValid(null, testUserDetails);
+            }, "空令牌应该抛出异常");
+        }
+        
+        @Test
+        @DisplayName("应该处理空用户名提取")
+        void should_handleNullToken_when_extractingUsername() {
+            // When & Then
+            assertThrows(Exception.class, () -> {
+                jwtService.extractUsername(null);
+            }, "从空令牌提取用户名应该抛出异常");
+        }
+        
+        @Test
+        @DisplayName("应该处理空令牌的过期时间提取")
+        void should_handleNullToken_when_extractingExpiration() {
+            // When & Then
+            assertThrows(Exception.class, () -> {
+                jwtService.extractExpiration(null);
+            }, "从空令牌提取过期时间应该抛出异常");
         }
     }
 }

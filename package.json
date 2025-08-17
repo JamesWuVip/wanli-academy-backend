@@ -5,10 +5,13 @@
   "main": "acceptance-test.js",
   "scripts": {
     "test": "node acceptance-test.js",
-    "test:verbose": "DEBUG=* node acceptance-test.js",
+    "test:verbose": "DEBUG=true node acceptance-test.js",
+    "test:sprint2": "node sprint2_acceptance_test.js",
+    "test:sprint2:verbose": "DEBUG=true node sprint2_acceptance_test.js",
     "install-deps": "npm install",
     "start-backend": "cd backend && mvn spring-boot:run",
-    "test:full": "npm run start-backend & sleep 30 && npm test"
+    "test:full": "npm run install-deps && npm run start-backend & sleep 30 && npm test",
+    "test:sprint2:full": "npm run install-deps && npm run start-backend & sleep 30 && npm run test:sprint2"
   },
   "keywords": [
     "acceptance-test",
@@ -20,7 +23,8 @@
   "author": "Wanli Academy Team",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.0"
+    "axios": "^1.11.0",
+    "form-data": "^4.0.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.0"

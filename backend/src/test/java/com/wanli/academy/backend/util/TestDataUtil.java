@@ -42,7 +42,7 @@ public class TestDataUtil {
      * @param passwordEncoder 密码编码器
      * @return 测试用户
      */
-    public static User createTestUser(PasswordEncoder passwordEncoder) {
+    public static User buildTestUser(PasswordEncoder passwordEncoder) {
         User user = new User();
         user.setId(1L);
         user.setUsername(TEST_USERNAME);
@@ -57,7 +57,7 @@ public class TestDataUtil {
         
         // 设置用户角色
         Set<Role> roles = new HashSet<>();
-        roles.add(createUserRole());
+        roles.add(buildUserRole());
         user.setRoles(roles);
         
         return user;
@@ -68,7 +68,7 @@ public class TestDataUtil {
      * @param passwordEncoder 密码编码器
      * @return 管理员用户
      */
-    public static User createAdminUser(PasswordEncoder passwordEncoder) {
+    public static User buildAdminUser(PasswordEncoder passwordEncoder) {
         User user = new User();
         user.setId(2L);
         user.setUsername(ADMIN_USERNAME);
@@ -83,7 +83,7 @@ public class TestDataUtil {
         
         // 设置管理员角色
         Set<Role> roles = new HashSet<>();
-        roles.add(createAdminRole());
+        roles.add(buildAdminRole());
         user.setRoles(roles);
         
         return user;
@@ -94,8 +94,8 @@ public class TestDataUtil {
      * @param passwordEncoder 密码编码器
      * @return 未激活用户
      */
-    public static User createInactiveUser(PasswordEncoder passwordEncoder) {
-        User user = createTestUser(passwordEncoder);
+    public static User buildInactiveUser(PasswordEncoder passwordEncoder) {
+        User user = buildTestUser(passwordEncoder);
         user.setId(3L);
         user.setUsername("inactiveuser");
         user.setEmail("inactive@example.com");
@@ -107,7 +107,7 @@ public class TestDataUtil {
      * 创建用户角色
      * @return 用户角色
      */
-    public static Role createUserRole() {
+    public static Role buildUserRole() {
         Role role = new Role();
         role.setId(1L);
         role.setName("USER");
@@ -121,7 +121,7 @@ public class TestDataUtil {
      * 创建管理员角色
      * @return 管理员角色
      */
-    public static Role createAdminRole() {
+    public static Role buildAdminRole() {
         Role role = new Role();
         role.setId(2L);
         role.setName("ADMIN");
@@ -135,7 +135,7 @@ public class TestDataUtil {
      * 创建注册请求DTO
      * @return 注册请求
      */
-    public static RegisterRequest createRegisterRequest() {
+    public static RegisterRequest buildRegisterRequest() {
         RegisterRequest request = new RegisterRequest();
         request.setUsername(TEST_USERNAME);
         request.setEmail(TEST_EMAIL);
@@ -150,7 +150,7 @@ public class TestDataUtil {
      * 创建无效的注册请求DTO（用户名为空）
      * @return 无效注册请求
      */
-    public static RegisterRequest createInvalidRegisterRequest() {
+    public static RegisterRequest buildInvalidRegisterRequest() {
         RegisterRequest request = new RegisterRequest();
         request.setUsername(""); // 无效用户名
         request.setEmail(TEST_EMAIL);
@@ -165,7 +165,7 @@ public class TestDataUtil {
      * 创建登录请求DTO
      * @return 登录请求
      */
-    public static LoginRequest createLoginRequest() {
+    public static LoginRequest buildLoginRequest() {
         LoginRequest request = new LoginRequest();
         request.setUsernameOrEmail(TEST_USERNAME);
         request.setPassword(TEST_PASSWORD);
@@ -176,7 +176,7 @@ public class TestDataUtil {
      * 创建使用邮箱的登录请求DTO
      * @return 登录请求
      */
-    public static LoginRequest createEmailLoginRequest() {
+    public static LoginRequest buildEmailLoginRequest() {
         LoginRequest request = new LoginRequest();
         request.setUsernameOrEmail(TEST_EMAIL);
         request.setPassword(TEST_PASSWORD);
@@ -187,7 +187,7 @@ public class TestDataUtil {
      * 创建无效的登录请求DTO（密码错误）
      * @return 无效登录请求
      */
-    public static LoginRequest createInvalidLoginRequest() {
+    public static LoginRequest buildInvalidLoginRequest() {
         LoginRequest request = new LoginRequest();
         request.setUsernameOrEmail(TEST_USERNAME);
         request.setPassword("wrongpassword");
@@ -198,7 +198,7 @@ public class TestDataUtil {
      * 创建管理员登录请求DTO
      * @return 管理员登录请求
      */
-    public static LoginRequest createAdminLoginRequest() {
+    public static LoginRequest buildAdminLoginRequest() {
         LoginRequest request = new LoginRequest();
         request.setUsernameOrEmail(ADMIN_USERNAME);
         request.setPassword(ADMIN_PASSWORD);
@@ -235,7 +235,7 @@ public class TestDataUtil {
      * @param password 密码
      * @return UserDetails对象
      */
-    public static UserDetails createTestUserDetails(String username, String password) {
+    public static UserDetails buildTestUserDetails(String username, String password) {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(username)
                 .password(password)
@@ -247,7 +247,7 @@ public class TestDataUtil {
      * 创建默认测试用户详情对象
      * @return UserDetails对象
      */
-    public static UserDetails createDefaultTestUserDetails() {
-        return createTestUserDetails(TEST_USERNAME, TEST_PASSWORD);
+    public static UserDetails buildDefaultTestUserDetails() {
+        return buildTestUserDetails(TEST_USERNAME, TEST_PASSWORD);
     }
 }

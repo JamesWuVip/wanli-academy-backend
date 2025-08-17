@@ -1,8 +1,11 @@
 package com.wanli.academy.backend.config;
 
+import com.wanli.academy.backend.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,8 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Spring Security配置类
- * 配置HTTP安全规则，JWT认证和CORS设置
+ * Spring Security 配置类
+ * 配置认证、授权、CORS等安全相关设置
  */
 @Configuration
 @EnableWebSecurity
@@ -108,6 +111,35 @@ public class SecurityConfig {
                 
                 // 允许对静态资源的访问
                 .requestMatchers("/static/**", "/public/**").permitAll()
+                
+                // 管理员权限 - 完全访问权限
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                
+                // 教师权限 - 作业和提交管理
+                .requestMatchers("/api/homework/**").hasAnyRole("ADMIN", "TEACHER")
+                .requestMatchers("/api/assignments/create").hasAnyRole("ADMIN", "TEACHER")
+                .requestMatchers("/api/assignments/*/update").hasAnyRole("ADMIN", "TEACHER")
+                .requestMatchers("/api/assignments/*/delete").hasAnyRole("ADMIN", "TEACHER")
+                .requestMatchers("/api/submissions/*/grade").hasAnyRole("ADMIN", "TEACHER")
+                .requestMatchers("/api/submissions/assignment/*").hasAnyRole("ADMIN", "TEACHER")
+                
+                // 学生权限 - 查看作业和提交作业
+                .requestMatchers("/api/assignments/list").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/assignments/*/view").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/submissions/create").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/submissions/my").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                
+                // 文件管理权限
+                .requestMatchers("/api/files/upload").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/files/download/**").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/files/delete/**").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/files/cleanup").hasRole("ADMIN")
+                
+                // 用户信息访问
+                .requestMatchers("/api/users/me").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/users/profile").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/users/auth-status").hasAnyRole("ADMIN", "TEACHER", "STUDENT")
+                .requestMatchers("/api/users/**").hasRole("ADMIN")
                 
                 // 所有其他请求都需要认证
                 .anyRequest().authenticated()
