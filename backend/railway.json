@@ -4,13 +4,16 @@
     "buildCommand": "mvn clean package -DskipTests"
   },
   "deploy": {
-    "startCommand": "java -Dserver.port=$PORT -Dspring.profiles.active=production -jar target/*.jar",
+    "startCommand": "java -Xmx512m -Dserver.port=$PORT -Dspring.profiles.active=production -Dmanagement.server.port=$PORT -jar target/*.jar",
     "replicas": 1,
     "sleepApplication": false,
     "restartPolicyType": "ON_FAILURE"
   },
   "healthcheck": {
     "path": "/actuator/health",
-    "port": "$PORT"
+    "port": "$PORT",
+    "timeout": "30s",
+    "interval": "10s",
+    "retries": 5
   }
 }
