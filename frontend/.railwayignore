@@ -1,0 +1,11 @@
+# Ignore Java/Maven files from parent directory
+../pom.xml
+../backend/
+../target/
+*.jar
+
+# Ignore other non-frontend files
+../.git/
+../node_modules/
+../integration-tests/
+../doc/
