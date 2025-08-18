@@ -5,7 +5,6 @@ import com.wanli.academy.backend.dto.LoginRequest;
 import com.wanli.academy.backend.dto.RegisterRequest;
 import com.wanli.academy.backend.dto.RefreshTokenRequest;
 import com.wanli.academy.backend.service.AuthService;
-import com.wanli.academy.backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
