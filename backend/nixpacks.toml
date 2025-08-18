@@ -1,4 +1,4 @@
-[phases.setup]
+[providers]
 nixPkgs = ["jdk17", "maven"]
 
 [phases.build]
