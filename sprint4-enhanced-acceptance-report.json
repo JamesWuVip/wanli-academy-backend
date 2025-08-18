@@ -1,0 +1,43 @@
+{
+  "testSuite": "Sprint 4 Enhanced Acceptance Test",
+  "timestamp": "2025-08-18T06:53:21.418Z",
+  "environment": {
+    "backend": "http://localhost:8080",
+    "frontend": "http://localhost:5173",
+    "api": "http://localhost:8080/api"
+  },
+  "acceptanceCriteria": {
+    "total": 5,
+    "completed": 0,
+    "details": {
+      "studentLogin": false,
+      "findGradedAssignment": false,
+      "viewResultPage": false,
+      "viewScoreAndFeedback": false,
+      "compareAnswers": false,
+      "playVideo": false
+    }
+  },
+  "testSummary": {
+    "total": 2,
+    "passed": 0,
+    "failed": 2,
+    "successRate": "0.00"
+  },
+  "errors": [
+    "[student-login] 断言失败: 学员登录请求成功",
+    "[student-login] 断言失败: 登录响应状态码为200，实际: 500"
+  ],
+  "testData": {
+    "loginToken": null,
+    "studentUser": null,
+    "assignmentList": [],
+    "gradedSubmissions": [],
+    "submissionResults": []
+  },
+  "conclusion": {
+    "allCriteriaMet": false,
+    "allTestsPassed": false,
+    "overallSuccess": false
+  }
+}

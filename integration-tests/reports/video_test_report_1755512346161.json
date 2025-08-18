@@ -1,0 +1,25 @@
+{
+  "summary": {
+    "total": 2,
+    "passed": 1,
+    "failed": 1,
+    "partial": 0
+  },
+  "results": [
+    {
+      "testName": "访问首页",
+      "status": "PASSED",
+      "message": "成功访问首页",
+      "timestamp": "2025-08-18T10:19:05.349Z",
+      "screenshot": null
+    },
+    {
+      "testName": "整体测试",
+      "status": "FAILED",
+      "message": "测试异常: page.waitForTimeout is not a function",
+      "timestamp": "2025-08-18T10:19:05.709Z",
+      "screenshot": null
+    }
+  ],
+  "timestamp": "2025-08-18T10:19:06.161Z"
+}

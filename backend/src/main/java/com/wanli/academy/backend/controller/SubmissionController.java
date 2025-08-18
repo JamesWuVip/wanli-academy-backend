@@ -1,6 +1,7 @@
 package com.wanli.academy.backend.controller;
 
 import com.wanli.academy.backend.dto.SubmissionResponse;
+import com.wanli.academy.backend.dto.SubmissionResultDTO;
 import com.wanli.academy.backend.service.SubmissionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -310,7 +311,7 @@ public class SubmissionController {
         )
     })
     @GetMapping("/my-submissions")
-    @PreAuthorize("@permissionService.isStudent()")
+    @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<List<SubmissionResponse>> getMySubmissions() {
         logger.info("Received request to get my submissions");
         
@@ -414,6 +415,57 @@ public class SubmissionController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error retrieving submission {}: {}", submissionId, e.getMessage(), e);
+            throw e;
+        }
+    }
+    
+    /**
+     * 获取作业提交结果详情（包含题目解析和视频讲解）
+     * GET /api/submissions/{submissionId}/result
+     * 
+     * @param submissionId 提交ID
+     * @return 提交结果详情
+     */
+    @Operation(
+        summary = "获取作业提交结果详情",
+        description = "获取作业提交的详细结果，包含题目解析和视频讲解。学生只能查看自己的提交结果，教师可以查看自己创建的作业的提交结果。"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "成功获取提交结果详情",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = SubmissionResultDTO.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "提交不存在"
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "未授权访问"
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "权限不足，只能查看自己的提交或自己创建的作业的提交"
+        )
+    })
+    @GetMapping("/{submissionId}/result")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('HQ_TEACHER') or hasRole('FRANCHISE_TEACHER')")
+    public ResponseEntity<SubmissionResultDTO> getSubmissionResult(
+            @Parameter(description = "提交的唯一标识符", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
+            @PathVariable UUID submissionId) {
+        
+        logger.info("Received request to get submission result: {}", submissionId);
+        
+        try {
+            SubmissionResultDTO result = submissionService.getSubmissionResult(submissionId);
+            logger.info("Successfully retrieved submission result: {}", submissionId);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error retrieving submission result {}: {}", submissionId, e.getMessage(), e);
             throw e;
         }
     }

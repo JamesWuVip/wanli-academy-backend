@@ -1,0 +1,64 @@
+{
+  "title": "Sprint 4 浏览器自动化验收测试报告",
+  "summary": {
+    "totalTests": 7,
+    "passedTests": 4,
+    "failedTests": 3,
+    "successRate": "57.14%",
+    "duration": "20秒",
+    "startTime": "2025-08-18T07:37:22.766Z",
+    "endTime": "2025-08-18T07:37:43.109Z"
+  },
+  "testDetails": [
+    {
+      "name": "访问应用首页",
+      "passed": true,
+      "details": "页面标题: Vite App",
+      "screenshot": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/homepage_1755502646907.png",
+      "timestamp": "2025-08-18T07:37:27.118Z"
+    },
+    {
+      "name": "学员身份登录",
+      "passed": true,
+      "details": "登录成功，当前URL: http://localhost:5173/",
+      "screenshot": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/after_login_1755502657143.png",
+      "timestamp": "2025-08-18T07:37:37.306Z"
+    },
+    {
+      "name": "验证作业列表页面",
+      "passed": true,
+      "details": "找到 5 个作业项目",
+      "screenshot": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/assignment_list_1755502658106.png",
+      "timestamp": "2025-08-18T07:37:38.301Z"
+    },
+    {
+      "name": "点击查看结果链接",
+      "passed": true,
+      "details": "成功跳转到结果页面: http://localhost:5173/assignments",
+      "screenshot": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/after_click_result_1755502660010.png",
+      "timestamp": "2025-08-18T07:37:40.159Z"
+    },
+    {
+      "name": "验证总分和教师评语显示",
+      "passed": false,
+      "details": "总分: 未找到, 教师评语: 未找到",
+      "screenshot": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/result_page_content_1755502660959.png",
+      "timestamp": "2025-08-18T07:37:41.111Z"
+    },
+    {
+      "name": "验证逐题答案对比功能",
+      "passed": false,
+      "details": "题目数量: 0, 学生答案: 未找到, 标准答案: 未找到",
+      "screenshot": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/answer_comparison_1755502662273.png",
+      "timestamp": "2025-08-18T07:37:42.429Z"
+    },
+    {
+      "name": "验证教师讲解视频播放功能",
+      "passed": false,
+      "details": "视频元素: 未找到, 播放按钮: 未找到",
+      "screenshot": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/video_playback_1755502662851.png",
+      "timestamp": "2025-08-18T07:37:43.009Z"
+    }
+  ],
+  "conclusion": "❌ 验收测试未通过"
+}

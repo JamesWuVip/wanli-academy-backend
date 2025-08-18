@@ -1,0 +1,42 @@
+{
+  "timestamp": "2025-08-18T11:11:16.139Z",
+  "vueDebugInfo": {
+    "vueVersion": null,
+    "appInstance": "Vue app instance found",
+    "submissionResult": {
+      "hasSubmissionId": true,
+      "submissionId": "770e8400-e29b-41d4-a716-446655440001"
+    },
+    "questionsData": {
+      "questionCards": 0,
+      "videoSections": 0,
+      "videoPlayers": 0,
+      "innerHTML": "<h2 data-v-c28b76bf=\"\">逐题详情</h2>"
+    },
+    "componentState": {
+      "hasLoading": false,
+      "hasError": false,
+      "loadingVisible": false,
+      "errorVisible": false
+    },
+    "errors": [],
+    "apiCalls": [
+      {
+        "url": "http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001/result",
+        "duration": 26,
+        "responseEnd": 3886.39999999851
+      }
+    ]
+  },
+  "pageStructure": {
+    "hasQuestionsSection": true,
+    "questionsSectionHTML": "<div data-v-c28b76bf=\"\" class=\"questions-section\"><h2 data-v-c28b76bf=\"\">逐题详情</h2></div>",
+    "bodyHTML": "\n    <div id=\"app\" data-v-app=\"\"><div data-v-7a7a37b1=\"\" class=\"app\"><!-- 顶部导航栏 --><header data-v-7a7a37b1=\"\" class=\"header\"><div data-v-7a7a37b1=\"\" class=\"container\"><div data-v-7a7a37b1=\"\" class=\"header-content\"><div data-v-7a7a37b1=\"\" class=\"logo\"><h1 data-v-7a7a37b1=\"\">万里书院</h1><span data-v-7a7a37b1=\"\" class=\"subtitle\">在线作业系统</span></div><nav data-v-7a7a37b1=\"\" class=\"nav\"><a data-v-7a7a37b1=\"\" href=\"/assignments\" class=\"nav-link\" data-testid=\"assignments-link\"><span data-v-7a7a37b1=\"\">我的作业</span></a></nav><div data-v-7a7a37b1=\"\" class=\"user-info\"><span data-v-7a7a37b1=\"\" class=\"username\">test_student1</span><button data-v-7a7a37b1=\"\" class=\"logout-btn\">退出</button></div></div></div></header><!-- 主要内容区域 --><main data-v-7a7a37b1=\"\" class=\"main\"><div data-v-c28b76bf=\"\" data-v-7a7a37b1=\"\" class=\"submission-result\" submissionid=\"770e8400-e29b-41d4-a716-446655440001\"><!-- 页面标题 --><div data-v-c28b76bf=\"\" class=\"header\"><h1 data-v-c28b76bf=\"\" class=\"title\">作业结果详情</h1><button data-v-c28b76b"
+  },
+  "finalCheck": {
+    "questionCards": 0,
+    "videoSections": 0,
+    "questionsHTML": "<h2 data-v-c28b76bf=\"\">逐题详情</h2>"
+  },
+  "currentUrl": "http://localhost:5173/submissions/770e8400-e29b-41d4-a716-446655440001/result"
+}

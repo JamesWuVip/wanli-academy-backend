@@ -3,6 +3,7 @@ package com.wanli.academy.backend.service;
 import com.wanli.academy.backend.dto.AssignmentResponse;
 import com.wanli.academy.backend.dto.SubmissionResponse;
 import com.wanli.academy.backend.dto.AssignmentFileResponse;
+import com.wanli.academy.backend.dto.StudentAssignmentResponse;
 import com.wanli.academy.backend.entity.Assignment;
 import com.wanli.academy.backend.entity.Submission;
 import com.wanli.academy.backend.entity.AssignmentFile;
@@ -88,6 +89,22 @@ public class AssignmentServiceQuery {
                    assignmentPage.getNumber() + 1, assignmentPage.getTotalPages());
         
         return assignmentPage.map(this::convertToAssignmentResponse);
+    }
+    
+    /**
+     * 获取已发布的作业列表
+     * @return 已发布作业列表
+     */
+    public List<AssignmentResponse> getPublishedAssignments() {
+        logger.info("Fetching published assignments");
+        
+        List<Assignment> assignments = assignmentRepository.findPublishedAssignments();
+        
+        logger.info("Found {} published assignments", assignments.size());
+        
+        return assignments.stream()
+                .map(this::convertToAssignmentResponse)
+                .collect(Collectors.toList());
     }
     
     /**
@@ -259,6 +276,26 @@ public class AssignmentServiceQuery {
     }
     
     /**
+     * 获取学生的作业列表（包含提交状态）
+     * @return 学生作业列表
+     */
+    public List<StudentAssignmentResponse> getStudentAssignments() {
+        logger.info("Fetching assignments for current student with submission status");
+        
+        // 获取当前登录用户
+        User currentUser = getCurrentUser();
+        
+        // 获取已发布的作业
+        List<Assignment> assignments = assignmentRepository.findPublishedAssignments();
+        
+        logger.info("Found {} published assignments for student: {}", assignments.size(), currentUser.getUsername());
+        
+        return assignments.stream()
+                .map(assignment -> convertToStudentAssignmentResponse(assignment, currentUser))
+                .collect(Collectors.toList());
+    }
+    
+    /**
      * 获取当前登录用户
      * @return 当前用户
      */
@@ -354,6 +391,50 @@ public class AssignmentServiceQuery {
         response.setUploaderUsername(file.getUploader().getUsername());
         response.setCreatedAt(file.getCreatedAt());
         response.setUpdatedAt(file.getUpdatedAt());
+        
+        return response;
+    }
+    
+    /**
+     * 转换作业实体为学生作业响应DTO（包含提交状态）
+     * @param assignment 作业实体
+     * @param student 学生用户
+     * @return 学生作业响应DTO
+     */
+    private StudentAssignmentResponse convertToStudentAssignmentResponse(Assignment assignment, User student) {
+        StudentAssignmentResponse response = new StudentAssignmentResponse();
+        
+        // 设置作业基本信息
+        response.setId(assignment.getId());
+        response.setTitle(assignment.getTitle());
+        response.setDescription(assignment.getDescription());
+        response.setCreatorId(assignment.getCreator().getId());
+        response.setCreatorUsername(assignment.getCreator().getUsername());
+        response.setDueDate(assignment.getDueDate());
+        response.setTotalScore(assignment.getMaxScore());
+        response.setStatus(assignment.getStatus());
+        response.setCreatedAt(assignment.getCreatedAt());
+        response.setUpdatedAt(assignment.getUpdatedAt());
+        
+        // 查找学生的提交记录
+        List<Submission> studentSubmissions = assignment.getSubmissions().stream()
+                .filter(submission -> submission.getStudent().getId().equals(student.getId()))
+                .collect(Collectors.toList());
+        
+        if (!studentSubmissions.isEmpty()) {
+            // 取最新的提交记录
+            Submission latestSubmission = studentSubmissions.stream()
+                    .max((s1, s2) -> s1.getSubmittedAt().compareTo(s2.getSubmittedAt()))
+                    .orElse(null);
+            
+            if (latestSubmission != null) {
+                response.setSubmissionId(latestSubmission.getId());
+                response.setSubmissionStatus(latestSubmission.getStatus());
+                response.setScore(latestSubmission.getScore());
+                response.setSubmittedAt(latestSubmission.getSubmittedAt());
+                response.setGradedAt(latestSubmission.getGradedAt());
+            }
+        }
         
         return response;
     }

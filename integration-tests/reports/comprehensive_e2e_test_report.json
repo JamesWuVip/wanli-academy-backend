@@ -1,0 +1,138 @@
+{
+  "reportTitle": "综合端到端验证测试报告",
+  "timestamp": "2025-08-18T11:18:30.000Z",
+  "testDuration": "约5分钟",
+  "systemHealth": {
+    "frontend": {
+      "status": "运行正常",
+      "url": "http://localhost:5173",
+      "details": "前端开发服务器正常运行，HMR功能正常"
+    },
+    "backend": {
+      "status": "运行正常",
+      "url": "http://localhost:8080",
+      "details": "Spring Boot后端服务正常运行，API响应正常"
+    }
+  },
+  "testSuites": {
+    "basicFunctionality": {
+      "testScript": "sprint4_real_browser_test.js",
+      "totalTests": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "successRate": "100%",
+      "duration": "38.65秒",
+      "tests": [
+        {
+          "name": "启动浏览器并访问首页",
+          "status": "PASSED",
+          "details": "成功访问首页，页面标题正确"
+        },
+        {
+          "name": "用户登录",
+          "status": "PASSED",
+          "details": "学生账号登录成功，正确跳转到作业列表"
+        },
+        {
+          "name": "导航到作业列表",
+          "status": "PASSED",
+          "details": "作业列表页面加载正常"
+        },
+        {
+          "name": "点击查看结果",
+          "status": "PASSED",
+          "details": "成功导航到结果页面"
+        },
+        {
+          "name": "验证页面内容",
+          "status": "PASSED",
+          "details": "总分显示、教师评语、答案对比、视频播放器均正常"
+        }
+      ]
+    },
+    "videoPlayback": {
+      "testScript": "video_playback_test.js",
+      "totalTests": 7,
+      "passedTests": 7,
+      "failedTests": 0,
+      "successRate": "100%",
+      "tests": [
+        {
+          "name": "访问首页",
+          "status": "PASSED",
+          "details": "成功访问首页"
+        },
+        {
+          "name": "用户登录",
+          "status": "PASSED",
+          "details": "登录成功，正确跳转"
+        },
+        {
+          "name": "作业列表加载",
+          "status": "PASSED",
+          "details": "作业列表页面加载成功"
+        },
+        {
+          "name": "查看结果按钮",
+          "status": "PASSED",
+          "details": "成功点击查看结果按钮"
+        },
+        {
+          "name": "导航到结果页面",
+          "status": "PASSED",
+          "details": "成功导航到结果页面"
+        },
+        {
+          "name": "结果页面组件",
+          "status": "PASSED",
+          "details": "结果页面组件已加载"
+        },
+        {
+          "name": "视频播放器检测",
+          "status": "PASSED",
+          "details": "找到3个YouTube视频iframe，视频播放器正常"
+        }
+      ]
+    }
+  },
+  "coreFeatureValidation": {
+    "userAuthentication": {
+      "status": "✅ 正常",
+      "details": "学生账号登录功能正常，认证流程完整"
+    },
+    "assignmentList": {
+      "status": "✅ 正常",
+      "details": "作业列表显示正常，数据加载正确"
+    },
+    "resultViewing": {
+      "status": "✅ 正常",
+      "details": "结果查看功能正常，页面导航正确"
+    },
+    "videoPlayback": {
+      "status": "✅ 正常",
+      "details": "视频播放功能正常，YouTube嵌入视频正常显示"
+    }
+  },
+  "overallSummary": {
+    "totalTests": 12,
+    "passedTests": 12,
+    "failedTests": 0,
+    "overallSuccessRate": "100%",
+    "systemStatus": "健康",
+    "conclusion": "所有端到端测试通过，系统功能完整正常"
+  },
+  "technicalDetails": {
+    "frontendTechnology": "Vue.js + Vite",
+    "backendTechnology": "Spring Boot + Maven",
+    "testingFramework": "Puppeteer",
+    "videoTechnology": "YouTube嵌入iframe",
+    "databaseStatus": "正常运行",
+    "apiEndpoints": "所有测试的API端点响应正常"
+  },
+  "issuesFound": [],
+  "recommendations": [
+    "系统运行稳定，所有核心功能正常",
+    "视频播放功能已完全集成并正常工作",
+    "建议定期运行端到端测试以确保系统稳定性"
+  ]
+}

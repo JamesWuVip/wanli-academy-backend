@@ -59,6 +59,19 @@ public class Question {
     private LocalDateTime updatedAt;
     
     /**
+     * 题目解析，用于提供详细的解题思路和方法
+     */
+    @Column(name = "explanation", columnDefinition = "TEXT")
+    private String explanation;
+    
+    /**
+     * 视频讲解链接，用于提供视频形式的题目讲解
+     */
+    @Size(max = 500, message = "视频链接长度不能超过500个字符")
+    @Column(name = "video_url", length = 500)
+    private String videoUrl;
+    
+    /**
      * 与Homework实体的多对一关系
      * 一个题目只能属于一个作业
      */
@@ -74,6 +87,15 @@ public class Question {
         this.questionType = questionType;
         this.content = content;
         this.orderIndex = orderIndex;
+    }
+    
+    public Question(UUID homeworkId, String questionType, Map<String, Object> content, Integer orderIndex, String explanation, String videoUrl) {
+        this.homeworkId = homeworkId;
+        this.questionType = questionType;
+        this.content = content;
+        this.orderIndex = orderIndex;
+        this.explanation = explanation;
+        this.videoUrl = videoUrl;
     }
     
     // JPA生命周期回调方法
@@ -164,6 +186,22 @@ public class Question {
         } else {
             this.homeworkId = null;
         }
+    }
+    
+    public String getExplanation() {
+        return explanation;
+    }
+    
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+    
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+    
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
     
     @Override

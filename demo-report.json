@@ -1,0 +1,111 @@
+{
+  "title": "万里学院系统功能演示报告",
+  "timestamp": "2025-08-18T05:57:30.654Z",
+  "summary": {
+    "totalSteps": 8,
+    "successfulSteps": 8,
+    "duration": "N/A"
+  },
+  "features": [
+    {
+      "name": "API文档系统",
+      "description": "SpringDoc OpenAPI集成，提供完整的REST API文档",
+      "endpoints": "37个API端点",
+      "models": "17个数据模型",
+      "access": "http://localhost:8080/swagger-ui/index.html"
+    },
+    {
+      "name": "用户认证系统",
+      "description": "支持学员和教师角色的登录认证",
+      "features": [
+        "JWT令牌认证",
+        "角色权限控制",
+        "安全登录流程"
+      ]
+    },
+    {
+      "name": "作业管理系统",
+      "description": "完整的作业创建、查看、提交流程",
+      "features": [
+        "作业列表",
+        "作业详情",
+        "文件上传",
+        "提交管理"
+      ]
+    },
+    {
+      "name": "评分系统",
+      "description": "自动化评分和结果展示",
+      "features": [
+        "智能评分",
+        "详细反馈",
+        "答案对比",
+        "视频解析"
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "step": "api_docs_main",
+      "description": "Swagger API文档主页面",
+      "screenshot": "api_docs_main_1755496633404.png",
+      "timestamp": "2025-08-18T05:57:13.597Z",
+      "url": "http://localhost:8080/swagger-ui/index.html"
+    },
+    {
+      "step": "api_docs_auth",
+      "description": "认证API接口详情",
+      "screenshot": "api_docs_auth_1755496634651.png",
+      "timestamp": "2025-08-18T05:57:14.857Z",
+      "url": "http://localhost:8080/swagger-ui/index.html#/auth-controller/register"
+    },
+    {
+      "step": "homepage",
+      "description": "系统首页",
+      "screenshot": "homepage_1755496637606.png",
+      "timestamp": "2025-08-18T05:57:17.722Z",
+      "url": "http://localhost:5174/"
+    },
+    {
+      "step": "student_login",
+      "description": "学生登录成功",
+      "screenshot": "student_login_1755496640747.png",
+      "timestamp": "2025-08-18T05:57:20.845Z",
+      "url": "http://localhost:5174/assignments"
+    },
+    {
+      "step": "login_page",
+      "description": "登录页面",
+      "screenshot": "login_page_1755496640845.png",
+      "timestamp": "2025-08-18T05:57:20.931Z",
+      "url": "http://localhost:5174/assignments"
+    },
+    {
+      "step": "assignment_list",
+      "description": "作业列表页面",
+      "screenshot": "assignment_list_1755496643558.png",
+      "timestamp": "2025-08-18T05:57:23.680Z",
+      "url": "http://localhost:5174/assignments"
+    },
+    {
+      "step": "submission_result",
+      "description": "作业提交结果页面",
+      "screenshot": "submission_result_1755496649313.png",
+      "timestamp": "2025-08-18T05:57:29.483Z",
+      "url": "http://localhost:5174/submissions/770e8400-e29b-41d4-a716-446655440001/result"
+    },
+    {
+      "step": "submission_result_full",
+      "description": "作业结果完整页面",
+      "screenshot": "submission_result_full_1755496650484.png",
+      "timestamp": "2025-08-18T05:57:30.654Z",
+      "url": "http://localhost:5174/submissions/770e8400-e29b-41d4-a716-446655440001/result"
+    }
+  ],
+  "technicalDetails": {
+    "frontend": "Vue.js 3 + TypeScript + Vite",
+    "backend": "Spring Boot 3 + Spring Security + JPA",
+    "database": "H2 Database (开发环境)",
+    "documentation": "SpringDoc OpenAPI 3"
+  }
+}

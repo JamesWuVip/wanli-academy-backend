@@ -1,0 +1,25 @@
+{
+  "summary": {
+    "total": 2,
+    "passed": 1,
+    "failed": 1,
+    "partial": 0
+  },
+  "results": [
+    {
+      "testName": "访问首页",
+      "status": "PASSED",
+      "message": "成功访问首页",
+      "timestamp": "2025-08-18T10:18:02.674Z",
+      "screenshot": null
+    },
+    {
+      "testName": "登录按钮点击",
+      "status": "FAILED",
+      "message": "无法找到或点击登录按钮",
+      "timestamp": "2025-08-18T10:18:13.056Z",
+      "screenshot": null
+    }
+  ],
+  "timestamp": "2025-08-18T10:18:13.489Z"
+}

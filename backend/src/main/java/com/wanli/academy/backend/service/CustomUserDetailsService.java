@@ -75,12 +75,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         return user.getRoles().stream()
                 .map(role -> {
                     String roleName = role.getName();
-                    // 如果角色名称已经包含ROLE_前缀，直接使用；否则添加前缀
-                    if (roleName.startsWith("ROLE_")) {
-                        return new SimpleGrantedAuthority(roleName);
-                    } else {
-                        return new SimpleGrantedAuthority("ROLE_" + roleName.toUpperCase());
-                    }
+                    // 数据库中的角色名称已经包含ROLE_前缀，直接使用
+                    return new SimpleGrantedAuthority(roleName);
                 })
                 .collect(Collectors.toList());
     }

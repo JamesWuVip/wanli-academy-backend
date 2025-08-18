@@ -1,0 +1,18 @@
+{
+  "totalTests": 1,
+  "passedTests": 0,
+  "failedTests": 1,
+  "tests": [
+    {
+      "name": "测试执行",
+      "passed": false,
+      "details": "测试执行失败: page.waitForLoadState is not a function",
+      "screenshot": null,
+      "timestamp": "2025-08-18T07:49:01.683Z"
+    }
+  ],
+  "startTime": "2025-08-18T07:48:57.898Z",
+  "endTime": "2025-08-18T07:49:01.861Z",
+  "duration": "3.96秒",
+  "successRate": "0.0%"
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Token优化配置",
+  "version": "1.0.0",
+  "description": "永久解决token过长问题的配置文件",
+  "rules": {
+    "max_output_length": 2000,
+    "max_file_view_lines": 100,
+    "max_search_results": 10,
+    "prefer_incremental_edits": true,
+    "avoid_full_file_output": true,
+    "combine_related_operations": true
+  },
+  "strategies": {
+    "code_editing": {
+      "prefer_edit_file_update": true,
+      "use_targeted_replacements": true,
+      "avoid_complete_rewrites": true,
+      "max_replacement_blocks": 5
+    },
+    "file_viewing": {
+      "use_line_ranges": true,
+      "avoid_entire_file_reads": true,
+      "focus_on_relevant_sections": true
+    },
+    "search_optimization": {
+      "use_specific_queries": true,
+      "limit_search_scope": true,
+      "avoid_broad_searches": true
+    }
+  },
+  "best_practices": [
+    "使用edit_file_update而非edit_file_fast_apply处理大文件",
+    "查看文件时指定具体行范围，避免读取整个文件",
+    "搜索时使用精确的关键词，限制搜索范围",
+    "合并相关的修改操作，减少工具调用次数",
+    "优先使用增量修改而非完全重写",
+    "避免输出冗长的代码片段和调试信息"
+  ],
+  "monitoring": {
+    "track_output_length": true,
+    "warn_on_long_outputs": true,
+    "suggest_optimizations": true
+  }
+}

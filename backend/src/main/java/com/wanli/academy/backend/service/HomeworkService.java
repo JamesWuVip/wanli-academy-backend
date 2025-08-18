@@ -231,6 +231,9 @@ public class HomeworkService {
         response.setHomeworkId(question.getHomework() != null ? question.getHomework().getId() : question.getHomeworkId());
         response.setCreatedAt(question.getCreatedAt());
         response.setUpdatedAt(question.getUpdatedAt());
+        // 添加新字段
+        response.setExplanation(question.getExplanation());
+        response.setVideoUrl(question.getVideoUrl());
         
         return response;
     }

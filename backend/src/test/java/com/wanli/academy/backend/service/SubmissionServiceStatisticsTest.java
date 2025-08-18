@@ -95,9 +95,9 @@ class SubmissionServiceStatisticsTest {
 
         // 设置Security Context
         SecurityContextHolder.setContext(securityContext);
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getName()).thenReturn(TEST_USERNAME);
-        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
+        lenient().when(securityContext.getAuthentication()).thenReturn(authentication);
+        lenient().when(authentication.getName()).thenReturn(TEST_USERNAME);
+        lenient().when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
     }
 
     @Test

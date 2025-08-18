@@ -1,0 +1,18 @@
+{
+  "totalTests": 1,
+  "passedTests": 0,
+  "failedTests": 1,
+  "tests": [
+    {
+      "name": "测试执行",
+      "passed": false,
+      "details": "测试执行失败: net::ERR_CONNECTION_REFUSED at http://localhost:5174/login",
+      "screenshot": null,
+      "timestamp": "2025-08-18T07:52:48.915Z"
+    }
+  ],
+  "startTime": "2025-08-18T07:52:45.989Z",
+  "endTime": "2025-08-18T07:52:49.229Z",
+  "duration": "3.24秒",
+  "successRate": "0.0%"
+}

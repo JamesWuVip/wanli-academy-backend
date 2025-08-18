@@ -1,0 +1,53 @@
+{
+  "summary": {
+    "totalTests": 5,
+    "passedTests": 3,
+    "failedTests": 2,
+    "successRate": "60.00%",
+    "duration": "35.89秒",
+    "timestamp": "2025-08-18T03:48:54.682Z"
+  },
+  "testResults": [
+    {
+      "testName": "启动浏览器并访问首页",
+      "passed": true,
+      "details": "页面标题: Vite App, URL: http://localhost:5173/",
+      "error": null,
+      "screenshotPath": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/homepage_1755488906084.png",
+      "timestamp": "2025-08-18T03:48:26.335Z"
+    },
+    {
+      "testName": "用户登录",
+      "passed": true,
+      "details": "登录成功，当前URL: http://localhost:5173/assignments",
+      "error": null,
+      "screenshotPath": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/after_login_1755488925231.png",
+      "timestamp": "2025-08-18T03:48:45.412Z"
+    },
+    {
+      "testName": "导航到作业列表",
+      "passed": true,
+      "details": "成功访问作业列表页面，URL: http://localhost:5173/assignments",
+      "error": null,
+      "screenshotPath": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/assignments_page_1755488929817.png",
+      "timestamp": "2025-08-18T03:48:50.008Z"
+    },
+    {
+      "testName": "点击查看结果",
+      "passed": false,
+      "details": "点击查看结果失败",
+      "error": "无法找到或点击查看结果按钮",
+      "screenshotPath": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/view_result_error_1755488934206.png",
+      "timestamp": "2025-08-18T03:48:54.389Z"
+    },
+    {
+      "testName": "验证页面内容",
+      "passed": false,
+      "details": "总分显示: ❌, 教师评语: ❌, 答案对比: ❌, 视频播放器: ✅",
+      "error": null,
+      "screenshotPath": "/Users/wujames/Downloads/wanliRepo/integration-tests/screenshots/content_verification_1755488934494.png",
+      "timestamp": "2025-08-18T03:48:54.682Z"
+    }
+  ],
+  "conclusion": "Sprint 4 浏览器验收测试未通过"
+}

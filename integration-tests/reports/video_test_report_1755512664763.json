@@ -1,0 +1,60 @@
+{
+  "summary": {
+    "total": 7,
+    "passed": 3,
+    "failed": 4,
+    "partial": 0
+  },
+  "results": [
+    {
+      "testName": "访问首页",
+      "status": "PASSED",
+      "message": "成功访问首页",
+      "timestamp": "2025-08-18T10:24:13.656Z",
+      "screenshot": null
+    },
+    {
+      "testName": "用户登录",
+      "status": "PASSED",
+      "message": "登录成功",
+      "timestamp": "2025-08-18T10:24:17.509Z",
+      "screenshot": null
+    },
+    {
+      "testName": "作业列表加载",
+      "status": "PASSED",
+      "message": "作业列表页面加载成功",
+      "timestamp": "2025-08-18T10:24:18.442Z",
+      "screenshot": null
+    },
+    {
+      "testName": "查看结果按钮",
+      "status": "FAILED",
+      "message": "无法找到查看结果按钮",
+      "timestamp": "2025-08-18T10:24:20.474Z",
+      "screenshot": null
+    },
+    {
+      "testName": "导航到结果页面",
+      "status": "FAILED",
+      "message": "导航失败，当前URL: http://localhost:5173/",
+      "timestamp": "2025-08-18T10:24:24.069Z",
+      "screenshot": null
+    },
+    {
+      "testName": "结果页面组件",
+      "status": "FAILED",
+      "message": "结果页面组件未找到",
+      "timestamp": "2025-08-18T10:24:24.375Z",
+      "screenshot": null
+    },
+    {
+      "testName": "视频播放器检测",
+      "status": "FAILED",
+      "message": "视频播放器组件未找到",
+      "timestamp": "2025-08-18T10:24:24.375Z",
+      "screenshot": null
+    }
+  ],
+  "timestamp": "2025-08-18T10:24:24.763Z"
+}

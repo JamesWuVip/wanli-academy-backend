@@ -1,0 +1,18 @@
+{
+  "totalTests": 1,
+  "passedTests": 0,
+  "failedTests": 1,
+  "tests": [
+    {
+      "name": "测试执行",
+      "passed": false,
+      "details": "测试执行失败: 未成功跳转到结果页面",
+      "screenshot": null,
+      "timestamp": "2025-08-18T07:56:53.800Z"
+    }
+  ],
+  "startTime": "2025-08-18T07:56:39.526Z",
+  "endTime": "2025-08-18T07:56:53.969Z",
+  "duration": "14.44秒",
+  "successRate": "0.0%"
+}

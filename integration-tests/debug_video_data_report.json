@@ -1,0 +1,91 @@
+{
+  "timestamp": "2025-08-18T10:55:31.495Z",
+  "pageData": {
+    "videoElements": {
+      "videoTags": 0,
+      "iframes": 0,
+      "videoPlayers": 0,
+      "allTestIds": [
+        "assignments-link"
+      ]
+    },
+    "pageStructure": {
+      "title": "作业结果 - 万里书院",
+      "url": "http://localhost:5173/submissions/770e8400-e29b-41d4-a716-446655440001/result",
+      "bodyClasses": "",
+      "mainContent": "<div data-v-c28b76bf=\"\" data-v-7a7a37b1=\"\" class=\"submission-result\" submissionid=\"770e8400-e29b-41d4-a716-446655440001\"><!-- 页面标题 --><div data-v-c28b76bf=\"\" class=\"header\"><h1 data-v-c28b76bf=\"\" class=\"title\">作业结果详情</h1><button data-v-c28b76bf=\"\" class=\"back-btn\"> ← 返回作业列表 </button></div><!-- 加载状态 --><!-- 作业结果内容 --><div data-v-c28b76bf=\"\" class=\"result-content\"><!-- 总体信息 --><div data-v-c28b76bf=\"\" class=\"summary-card\"><h2 data-v-c28b76bf=\"\">总体评价</h2><div data-v-c28b76bf=\"\" class=\"summary-info\"><div data-v-c28b76bf=\"\" class=\"score-section\"><span data-v-c28b76bf=\"\" class=\"label\">总分：</span><span data-v-c28b76bf=\"\" class=\"score\">85/100</span><span data-v-c28b76bf=\"\" class=\"percentage\">(85%)</span></div><div data-v-c28b76bf=\"\" class=\"comment-section\"><span data-v-c28b76bf=\"\" class=\"label\">教师评语：</span><p data-v-c28b76bf=\"\" class=\"comment\">计算正确，但需要注意书写格式。</p></div></div></div><!-- 逐题详情 --><div data-v-c28b76bf=\"\" class=\"questions-section\"><h2 data-v-c28b76bf=\"\">逐题详情</h2></div></div></div>"
+    },
+    "vueData": {}
+  },
+  "apiResponses": [
+    {
+      "url": "http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001/result",
+      "status": 200,
+      "data": {
+        "submissionId": "770e8400-e29b-41d4-a716-446655440001",
+        "assignmentId": "660e8400-e29b-41d4-a716-446655440101",
+        "assignmentTitle": "Test_数学基础练习作业",
+        "studentId": 16,
+        "studentUsername": "test_student1",
+        "content": "第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14",
+        "status": "GRADED",
+        "score": 85,
+        "maxScore": 100,
+        "feedback": "计算正确，但需要注意书写格式。",
+        "teacherFeedback": "计算正确，但需要注意书写格式。",
+        "submittedAt": "2024-01-15T10:30:00",
+        "gradedAt": "2024-01-15T14:20:00",
+        "questions": [
+          {
+            "id": "550e8400-e29b-41d4-a716-446655440201",
+            "content": "{text=计算：25 + 37 = ?, options=[A. 52, B. 62, C. 72, D. 82]}",
+            "questionType": "SINGLE_CHOICE",
+            "standardAnswer": "{answer=B, explanation=25 + 37 = 62，选择B}",
+            "orderIndex": 1,
+            "homeworkId": "550e8400-e29b-41d4-a716-446655440101",
+            "createdAt": "2025-08-18T15:07:20.444513",
+            "updatedAt": "2025-08-18T15:24:17.341728",
+            "explanation": "这是一道基础数学题目。首先我们需要理解加法的概念：1 + 1 表示将1个单位与另外1个单位相加。根据数学基本运算规则，1 + 1 = 2。这是最基础的算术运算，是学习更复杂数学概念的基础。",
+            "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            "studentAnswer": "暂无答案",
+            "score": 0,
+            "maxScore": 10
+          },
+          {
+            "id": "550e8400-e29b-41d4-a716-446655440202",
+            "content": "{text=计算：8 × 9 = ?, options=[A. 63, B. 71, C. 72, D. 81]}",
+            "questionType": "SINGLE_CHOICE",
+            "standardAnswer": "{answer=C, explanation=8 × 9 = 72，选择C}",
+            "orderIndex": 2,
+            "homeworkId": "550e8400-e29b-41d4-a716-446655440101",
+            "createdAt": "2025-08-18T15:07:20.444513",
+            "updatedAt": "2025-08-18T15:24:17.341759",
+            "explanation": "这是一道基础数学题目。首先我们需要理解加法的概念：1 + 1 表示将1个单位与另外1个单位相加。根据数学基本运算规则，1 + 1 = 2。这是最基础的算术运算，是学习更复杂数学概念的基础。",
+            "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            "studentAnswer": "暂无答案",
+            "score": 0,
+            "maxScore": 10
+          },
+          {
+            "id": "550e8400-e29b-41d4-a716-446655440203",
+            "content": "{text=计算：100 - 45 = ?}",
+            "questionType": "FILL_BLANK",
+            "standardAnswer": "{answer=55, explanation=100 - 45 = 55}",
+            "orderIndex": 3,
+            "homeworkId": "550e8400-e29b-41d4-a716-446655440101",
+            "createdAt": "2025-08-18T15:07:20.444513",
+            "updatedAt": "2025-08-18T15:24:17.341791",
+            "explanation": "这是一道基础数学题目。首先我们需要理解加法的概念：1 + 1 表示将1个单位与另外1个单位相加。根据数学基本运算规则，1 + 1 = 2。这是最基础的算术运算，是学习更复杂数学概念的基础。",
+            "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            "studentAnswer": "暂无答案",
+            "score": 0,
+            "maxScore": 10
+          }
+        ]
+      }
+    }
+  ],
+  "screenshots": [
+    "/Users/wujames/Downloads/wanliRepo/integration-tests/debug_screenshots/video_debug_1755514531500.png"
+  ]
+}

@@ -1,12 +1,18 @@
 package com.wanli.academy.backend.service;
 
 import com.wanli.academy.backend.dto.SubmissionResponse;
+import com.wanli.academy.backend.dto.SubmissionResultDTO;
+import com.wanli.academy.backend.dto.QuestionResponse;
 import com.wanli.academy.backend.entity.Assignment;
 import com.wanli.academy.backend.entity.Submission;
 import com.wanli.academy.backend.entity.User;
+import com.wanli.academy.backend.entity.Question;
+import com.wanli.academy.backend.entity.Homework;
 import com.wanli.academy.backend.repository.AssignmentRepository;
 import com.wanli.academy.backend.repository.SubmissionRepository;
 import com.wanli.academy.backend.repository.UserRepository;
+import com.wanli.academy.backend.repository.QuestionRepository;
+import com.wanli.academy.backend.repository.HomeworkRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +21,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,6 +48,12 @@ public class SubmissionService {
     
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private QuestionRepository questionRepository;
+    
+    @Autowired
+    private HomeworkRepository homeworkRepository;
     
     /**
      * 提交作业
@@ -190,6 +204,7 @@ public class SubmissionService {
      * 获取学生的所有提交记录
      * @return 提交列表
      */
+    @Transactional(readOnly = true)
     public List<SubmissionResponse> getStudentSubmissions() {
         Long currentUserId = getCurrentUserId();
         
@@ -286,6 +301,91 @@ public class SubmissionService {
     }
     
     /**
+     * 获取作业提交结果详情（包含题目解析和视频讲解）
+     * @param submissionId 提交ID
+     * @return 提交结果详情
+     */
+    public SubmissionResultDTO getSubmissionResult(UUID submissionId) {
+        logger.info("Getting submission result for submission: {}", submissionId);
+        
+        // 查询提交记录
+        Submission submission = submissionRepository.findById(submissionId)
+                .orElseThrow(() -> new IllegalArgumentException("提交记录不存在"));
+        
+        Long currentUserId = getCurrentUserId();
+        
+        // 验证权限：学生只能查看自己的提交，教师可以查看自己创建的作业的提交
+        Assignment assignment = assignmentRepository.findById(submission.getAssignmentId())
+                .orElseThrow(() -> new IllegalArgumentException("作业不存在"));
+        
+        boolean isStudent = submission.getStudentId().equals(currentUserId);
+        boolean isTeacher = assignment.getCreatorId().equals(currentUserId);
+        
+        if (!isStudent && !isTeacher) {
+            throw new AccessDeniedException("您只能查看自己的提交或自己创建的作业的提交");
+        }
+        
+        // 查询学生信息
+        User student = userRepository.findById(submission.getStudentId())
+                .orElseThrow(() -> new IllegalArgumentException("学生不存在"));
+        
+        // 通过Assignment标题查找对应的Homework，然后获取题目
+        // 这是一个临时解决方案，理想情况下应该在Assignment中添加homeworkId字段
+        List<Question> questions = new ArrayList<>();
+        try {
+            // 尝试通过标题匹配找到对应的Homework
+            String assignmentTitle = assignment.getTitle();
+            // 移除"作业"后缀，因为Homework表中的标题可能不包含"作业"字样
+            String homeworkTitle = assignmentTitle.replace("作业", "").trim();
+            
+            // 查找匹配的Homework
+            Optional<Homework> homework = homeworkRepository.findByTitle(homeworkTitle);
+            if (!homework.isPresent()) {
+                // 如果精确匹配失败，尝试模糊匹配
+                List<Homework> homeworkList = homeworkRepository.findByTitleContainingIgnoreCase(homeworkTitle.substring(0, Math.min(homeworkTitle.length(), 10)));
+                if (!homeworkList.isEmpty()) {
+                    homework = Optional.of(homeworkList.get(0));
+                }
+            }
+            
+            if (homework.isPresent()) {
+                questions = questionRepository.findByHomeworkIdOrderByOrderIndexAsc(homework.get().getId());
+                logger.info("Found {} questions for assignment: {}", questions.size(), assignment.getId());
+            } else {
+                logger.warn("No matching homework found for assignment: {} with title: {}", assignment.getId(), assignmentTitle);
+            }
+        } catch (Exception e) {
+            logger.error("Error loading questions for assignment {}: {}", assignment.getId(), e.getMessage(), e);
+        }
+        
+        // 转换题目为响应DTO
+        List<QuestionResponse> questionResponses = questions.stream()
+                .map(this::convertToQuestionResponse)
+                .collect(Collectors.toList());
+        
+        // 构建并返回结果DTO
+        SubmissionResultDTO result = new SubmissionResultDTO(
+                submission.getId(),
+                assignment.getId(),
+                assignment.getTitle(),
+                student.getId(),
+                student.getUsername(),
+                submission.getContent(),
+                submission.getFilePath(),
+                submission.getStatus(),
+                submission.getScore(),
+                assignment.getMaxScore(),
+                submission.getFeedback(),
+                submission.getSubmittedAt(),
+                submission.getGradedAt(),
+                questionResponses
+        );
+        
+        logger.info("Successfully retrieved submission result for submission: {}", submissionId);
+        return result;
+    }
+    
+    /**
      * 获取作业的统计信息
      * @param assignmentId 作业ID
      * @return 统计信息
@@ -368,14 +468,51 @@ public class SubmissionService {
         response.setCreatedAt(submission.getCreatedAt());
         response.setUpdatedAt(submission.getUpdatedAt());
         
-        // 设置关联信息
-        if (submission.getAssignment() != null) {
-            response.setAssignmentTitle(submission.getAssignment().getTitle());
+        // 通过Repository查询关联信息，避免懒加载问题
+        try {
+            Assignment assignment = assignmentRepository.findById(submission.getAssignmentId()).orElse(null);
+            if (assignment != null) {
+                response.setAssignmentTitle(assignment.getTitle());
+            }
+        } catch (Exception e) {
+            logger.warn("Failed to load assignment for submission {}: {}", submission.getId(), e.getMessage());
         }
         
-        if (submission.getStudent() != null) {
-            response.setStudentUsername(submission.getStudent().getUsername());
+        try {
+            User student = userRepository.findById(submission.getStudentId()).orElse(null);
+            if (student != null) {
+                response.setStudentUsername(student.getUsername());
+            }
+        } catch (Exception e) {
+            logger.warn("Failed to load student for submission {}: {}", submission.getId(), e.getMessage());
         }
+        
+        return response;
+    }
+    
+    /**
+     * 转换题目实体为响应DTO
+     * @param question 题目实体
+     * @return 题目响应DTO
+     */
+    private QuestionResponse convertToQuestionResponse(Question question) {
+        QuestionResponse response = new QuestionResponse(
+                question.getId(),
+                question.getContent() != null ? question.getContent().toString() : null,
+                question.getQuestionType(),
+                question.getStandardAnswer() != null ? question.getStandardAnswer().toString() : null,
+                question.getOrderIndex(),
+                question.getHomeworkId(),
+                question.getCreatedAt(),
+                question.getUpdatedAt(),
+                question.getExplanation(),
+                question.getVideoUrl()
+        );
+        
+        // 设置默认值
+        response.setStudentAnswer("暂无答案"); // 默认学生答案
+        response.setScore(0); // 默认得分
+        response.setMaxScore(10); // 默认满分
         
         return response;
     }

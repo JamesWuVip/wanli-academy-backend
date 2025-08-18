@@ -84,16 +84,16 @@ public class AuthService {
         user.setPhoneNumber(registerRequest.getPhoneNumber());
         user.setIsActive(true);
         
-        // 分配默认角色（USER）
-        Optional<Role> userRole = roleRepository.findByName("USER");
-        if (userRole.isPresent()) {
-            user.addRole(userRole.get());
+        // 分配默认角色（ROLE_STUDENT）
+        Optional<Role> studentRole = roleRepository.findByName("ROLE_STUDENT");
+        if (studentRole.isPresent()) {
+            user.addRole(studentRole.get());
         } else {
-            logger.warn("默认角色 'USER' 不存在，创建新角色");
-            Role newUserRole = new Role("USER", "普通用户");
-            newUserRole.setIsActive(true);
-            roleRepository.save(newUserRole);
-            user.addRole(newUserRole);
+            logger.warn("默认角色 'ROLE_STUDENT' 不存在，创建新角色");
+            Role newStudentRole = new Role("ROLE_STUDENT", "学生");
+            newStudentRole.setIsActive(true);
+            roleRepository.save(newStudentRole);
+            user.addRole(newStudentRole);
         }
         
         // 保存用户

@@ -2,6 +2,7 @@ package com.wanli.academy.backend.controller;
 
 import com.wanli.academy.backend.dto.AssignmentCreateRequest;
 import com.wanli.academy.backend.dto.AssignmentResponse;
+import com.wanli.academy.backend.dto.StudentAssignmentResponse;
 import com.wanli.academy.backend.dto.SubmissionResponse;
 import com.wanli.academy.backend.dto.AssignmentFileResponse;
 import com.wanli.academy.backend.exception.ErrorResponse;
@@ -442,6 +443,84 @@ public class AssignmentController {
     }
 
     /**
+     * 获取已发布的作业列表（学生专用）
+     * GET /api/assignments/published
+     * 
+     * @return 已发布的作业列表
+     */
+    @Operation(
+        summary = "获取已发布的作业列表",
+        description = "学生获取所有已发布的作业列表，可以进行提交。"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "成功获取已发布作业列表",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = AssignmentResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "未授权访问"
+        )
+    })
+    @GetMapping("/published")
+    @PreAuthorize("@permissionService.isStudent()")
+    public ResponseEntity<List<AssignmentResponse>> getPublishedAssignments() {
+        logger.info("Received request to get published assignments for student");
+        
+        try {
+            List<AssignmentResponse> assignments = assignmentServiceQuery.getPublishedAssignments();
+            logger.info("Successfully retrieved {} published assignments", assignments.size());
+            return new ResponseEntity<>(assignments, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error retrieving published assignments: {}", e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    /**
+     * 获取学生的作业列表（包含提交状态）
+     * GET /api/assignments/my-assignments
+     * 
+     * @return 包含学生提交状态的作业列表
+     */
+    @Operation(
+        summary = "获取学生的作业列表",
+        description = "学生获取所有已发布的作业列表，包含自己的提交状态和提交ID。"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "成功获取学生作业列表",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = StudentAssignmentResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "未授权访问"
+        )
+    })
+    @GetMapping("/my-assignments")
+    @PreAuthorize("@permissionService.isStudent()")
+    public ResponseEntity<List<StudentAssignmentResponse>> getMyAssignments() {
+        logger.info("Received request to get assignments with submission status for student");
+        
+        try {
+            List<StudentAssignmentResponse> assignments = assignmentServiceQuery.getStudentAssignments();
+            logger.info("Successfully retrieved {} assignments with submission status", assignments.size());
+            return new ResponseEntity<>(assignments, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error retrieving student assignments: {}", e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    /**
      * 根据状态获取作业列表
      * GET /api/assignments/status/{status}
      * 
@@ -450,7 +529,7 @@ public class AssignmentController {
      */
     @Operation(
         summary = "根据状态获取作业列表",
-        description = "根据作业状态获取作业列表。只有总部教师角色可以访问此接口。"
+        description = "根据指定状态获取作业列表。只有总部教师角色可以访问此接口。"
     )
     @ApiResponses(value = {
         @ApiResponse(
@@ -473,16 +552,16 @@ public class AssignmentController {
     @GetMapping("/status/{status}")
     @PreAuthorize("@permissionService.isTeacher()")
     public ResponseEntity<List<AssignmentResponse>> getAssignmentsByStatus(
-            @Parameter(description = "作业状态", required = true, example = "ACTIVE")
+            @Parameter(description = "作业状态", required = true, example = "PUBLISHED")
             @PathVariable String status) {
-        logger.info("Received request to get assignments with status: {}", status);
+        logger.info("Received request to get assignments by status: {}", status);
         
         try {
             List<AssignmentResponse> assignments = assignmentServiceQuery.getAssignmentsByStatus(status);
             logger.info("Successfully retrieved {} assignments with status: {}", assignments.size(), status);
             return new ResponseEntity<>(assignments, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error retrieving assignments with status {}: {}", status, e.getMessage(), e);
+            logger.error("Error retrieving assignments by status {}: {}", status, e.getMessage(), e);
             throw e;
         }
     }

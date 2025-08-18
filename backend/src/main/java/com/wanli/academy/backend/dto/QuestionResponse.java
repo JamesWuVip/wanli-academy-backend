@@ -34,6 +34,21 @@ public class QuestionResponse {
     @Schema(description = "更新时间", example = "2024-01-15T10:30:00")
     private LocalDateTime updatedAt;
     
+    @Schema(description = "题目解析", example = "这道题考查基本的加法运算...")
+    private String explanation;
+    
+    @Schema(description = "视频讲解链接", example = "https://example.com/video/123")
+    private String videoUrl;
+    
+    @Schema(description = "学生答案", example = "5")
+    private String studentAnswer;
+    
+    @Schema(description = "题目得分", example = "8")
+    private Integer score;
+    
+    @Schema(description = "题目满分", example = "10")
+    private Integer maxScore;
+    
     // 默认构造函数
     public QuestionResponse() {}
     
@@ -48,6 +63,22 @@ public class QuestionResponse {
         this.homeworkId = homeworkId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+    
+    // 完整构造函数
+    public QuestionResponse(UUID id, String content, String questionType, String standardAnswer, 
+                           Integer orderIndex, UUID homeworkId, LocalDateTime createdAt, LocalDateTime updatedAt,
+                           String explanation, String videoUrl) {
+        this.id = id;
+        this.content = content;
+        this.questionType = questionType;
+        this.standardAnswer = standardAnswer;
+        this.orderIndex = orderIndex;
+        this.homeworkId = homeworkId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.explanation = explanation;
+        this.videoUrl = videoUrl;
     }
     
     // Getter和Setter方法
@@ -115,6 +146,46 @@ public class QuestionResponse {
         this.updatedAt = updatedAt;
     }
     
+    public String getExplanation() {
+        return explanation;
+    }
+    
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+    
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+    
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+    
+    public String getStudentAnswer() {
+        return studentAnswer;
+    }
+    
+    public void setStudentAnswer(String studentAnswer) {
+        this.studentAnswer = studentAnswer;
+    }
+    
+    public Integer getScore() {
+        return score;
+    }
+    
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+    
+    public Integer getMaxScore() {
+        return maxScore;
+    }
+    
+    public void setMaxScore(Integer maxScore) {
+        this.maxScore = maxScore;
+    }
+    
     @Override
     public String toString() {
         return "QuestionResponse{" +
@@ -126,6 +197,11 @@ public class QuestionResponse {
                 ", homeworkId=" + homeworkId +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", explanation='" + explanation + '\'' +
+                ", videoUrl='" + videoUrl + '\'' +
+                ", studentAnswer='" + studentAnswer + '\'' +
+                ", score=" + score +
+                ", maxScore=" + maxScore +
                 '}';
     }
 }

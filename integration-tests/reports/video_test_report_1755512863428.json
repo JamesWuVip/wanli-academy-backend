@@ -1,0 +1,25 @@
+{
+  "summary": {
+    "total": 2,
+    "passed": 1,
+    "failed": 1,
+    "partial": 0
+  },
+  "results": [
+    {
+      "testName": "访问首页",
+      "status": "PASSED",
+      "message": "成功访问首页",
+      "timestamp": "2025-08-18T10:27:38.849Z",
+      "screenshot": null
+    },
+    {
+      "testName": "用户登录",
+      "status": "FAILED",
+      "message": "登录失败，未检测到登录后的页面内容，当前URL: http://localhost:5173/",
+      "timestamp": "2025-08-18T10:27:42.993Z",
+      "screenshot": null
+    }
+  ],
+  "timestamp": "2025-08-18T10:27:43.428Z"
+}

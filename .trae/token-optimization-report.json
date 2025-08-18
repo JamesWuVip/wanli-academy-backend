@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-08-18T05:23:41.292Z",
+  "stats": {
+    "totalCalls": 0,
+    "longOutputs": 0,
+    "optimizationsSuggested": 0
+  },
+  "efficiency": {
+    "longOutputRate": "NaN%",
+    "optimizationRate": "NaN%"
+  },
+  "recommendations": [
+    "使用edit_file_update而非edit_file_fast_apply处理大文件",
+    "查看文件时指定具体行范围，避免读取整个文件",
+    "搜索时使用精确的关键词，限制搜索范围",
+    "合并相关的修改操作，减少工具调用次数",
+    "优先使用增量修改而非完全重写",
+    "避免输出冗长的代码片段和调试信息"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "summary": {
+    "total": 5,
+    "passed": 3,
+    "failed": 2,
+    "partial": 0
+  },
+  "results": [
+    {
+      "testName": "访问首页",
+      "status": "PASSED",
+      "message": "成功访问首页",
+      "timestamp": "2025-08-18T10:21:16.936Z",
+      "screenshot": null
+    },
+    {
+      "testName": "用户登录",
+      "status": "PASSED",
+      "message": "登录成功",
+      "timestamp": "2025-08-18T10:21:21.068Z",
+      "screenshot": null
+    },
+    {
+      "testName": "作业列表加载",
+      "status": "PASSED",
+      "message": "作业列表页面加载成功",
+      "timestamp": "2025-08-18T10:21:21.998Z",
+      "screenshot": null
+    },
+    {
+      "testName": "查看结果按钮",
+      "status": "FAILED",
+      "message": "无法找到查看结果按钮",
+      "timestamp": "2025-08-18T10:21:57.020Z",
+      "screenshot": null
+    },
+    {
+      "testName": "整体测试",
+      "status": "FAILED",
+      "message": "测试异常: page.waitForTimeout is not a function",
+      "timestamp": "2025-08-18T10:21:57.685Z",
+      "screenshot": null
+    }
+  ],
+  "timestamp": "2025-08-18T10:21:58.157Z"
+}

@@ -1,0 +1,18 @@
+{
+  "totalTests": 1,
+  "passedTests": 0,
+  "failedTests": 1,
+  "tests": [
+    {
+      "name": "测试执行",
+      "passed": false,
+      "details": "测试执行失败: Waiting for selector `#username` failed",
+      "screenshot": null,
+      "timestamp": "2025-08-18T07:54:00.605Z"
+    }
+  ],
+  "startTime": "2025-08-18T07:53:25.429Z",
+  "endTime": "2025-08-18T07:54:00.809Z",
+  "duration": "35.38秒",
+  "successRate": "0.0%"
+}

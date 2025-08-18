@@ -1,30 +1,24 @@
 package com.wanli.academy.backend.service;
 
-import com.wanli.academy.backend.entity.Assignment;
-import com.wanli.academy.backend.entity.AssignmentFile;
-import com.wanli.academy.backend.entity.Role;
-import com.wanli.academy.backend.entity.Submission;
-import com.wanli.academy.backend.entity.User;
-import com.wanli.academy.backend.repository.AssignmentRepository;
-import com.wanli.academy.backend.repository.AssignmentFileRepository;
-import com.wanli.academy.backend.repository.SubmissionRepository;
-import com.wanli.academy.backend.repository.UserRepository;
+import com.wanli.academy.backend.entity.*;
+import com.wanli.academy.backend.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 /**
- * 权限验证服务
- * 提供基于角色和资源的访问控制逻辑
+ * 权限服务类
+ * 负责处理用户权限验证和访问控制
  */
 @Service
+@Transactional(readOnly = true)
 public class PermissionService {
 
     private static final Logger logger = LoggerFactory.getLogger(PermissionService.class);
@@ -46,7 +40,7 @@ public class PermissionService {
      * @return true如果用户是管理员
      */
     public boolean isAdmin() {
-        return hasRole("ADMIN");
+        return hasRole("ROLE_ADMIN");
     }
 
     /**
@@ -54,7 +48,7 @@ public class PermissionService {
      * @return true如果用户是教师或管理员
      */
     public boolean isTeacher() {
-        return hasRole("HQ_TEACHER") || hasRole("FRANCHISE_TEACHER") || hasRole("ADMIN");
+        return hasRole("ROLE_HQ_TEACHER") || hasRole("ROLE_FRANCHISE_TEACHER") || hasRole("ROLE_ADMIN");
     }
 
     /**
@@ -62,7 +56,10 @@ public class PermissionService {
      * @return true如果用户是学生、教师或管理员
      */
     public boolean isStudent() {
-        return hasRole("STUDENT") || hasRole("HQ_TEACHER") || hasRole("FRANCHISE_TEACHER") || hasRole("ADMIN");
+        logger.info("=== PermissionService.isStudent() called ===");
+        boolean result = hasRole("ROLE_STUDENT");
+        logger.info("isStudent() result: {}", result);
+        return result;
     }
 
     /**
@@ -71,20 +68,22 @@ public class PermissionService {
      * @return true如果用户具有该角色
      */
     public boolean hasRole(String roleName) {
-        try {
-            User currentUser = getCurrentUser();
-            if (currentUser == null) {
-                return false;
-            }
-
-            Set<Role> roles = currentUser.getRoles();
-            return roles.stream()
-                    .anyMatch(role -> role.getName().equals("ROLE_" + roleName) || 
-                                    role.getName().equals(roleName));
-        } catch (Exception e) {
-            logger.error("检查用户角色时发生错误: {}", e.getMessage());
+        logger.info("=== PermissionService.hasRole() called with roleName: {} ===", roleName);
+        User currentUser = getCurrentUser();
+        if (currentUser == null) {
+            logger.warn("getCurrentUser() returned null");
             return false;
         }
+        
+        logger.info("Current user: {}, roles count: {}", currentUser.getUsername(), currentUser.getRoles().size());
+        for (Role role : currentUser.getRoles()) {
+            logger.info("User role: {}", role.getName());
+        }
+        
+        boolean result = currentUser.getRoles().stream()
+                .anyMatch(role -> role.getName().equals(roleName));
+        logger.info("hasRole({}) result: {}", roleName, result);
+        return result;
     }
 
     /**
@@ -93,36 +92,44 @@ public class PermissionService {
      * @return true如果用户可以访问该作业
      */
     public boolean canAccessAssignment(UUID assignmentId) {
-        logger.info("=== canAccessAssignment called with ID: {}", assignmentId);
+        System.out.println("=== PermissionService.canAccessAssignment() called ===");
+        System.out.println("Assignment ID: " + assignmentId);
+        logger.info("=== PermissionService.canAccessAssignment() called for assignmentId: {} ===", assignmentId);
+        logger.info("=== STACK TRACE ===");
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (int i = 0; i < Math.min(10, stackTrace.length); i++) {
+            logger.info("Stack[{}]: {}", i, stackTrace[i]);
+        }
+        logger.info("=== END STACK TRACE ===");
         
         User currentUser = getCurrentUser();
-        logger.info("=== currentUser: {}", currentUser != null ? currentUser.getUsername() : "null");
         if (currentUser == null) {
-            logger.info("=== 当前用户为空，返回false");
+            logger.warn("canAccessAssignment: No current user found");
             return false;
         }
-
-        // 首先检查作业是否存在
-        Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
-        logger.info("=== assignment.isPresent(): {}", assignment.isPresent());
-        if (!assignment.isPresent()) {
-            logger.info("=== 作业不存在，返回false");
-            return false;
-        }
-
-        // 管理员和教师可以访问所有存在的作业
-        boolean isAdminResult = isAdmin();
-        boolean isTeacherResult = isTeacher();
-        logger.info("=== isAdmin(): {}, isTeacher(): {}", isAdminResult, isTeacherResult);
-        if (isAdminResult || isTeacherResult) {
-            logger.info("=== 管理员或教师，返回true");
+        
+        logger.info("canAccessAssignment: Current user: {}, roles: {}", currentUser.getUsername(), currentUser.getRoles());
+        
+        // 管理员和教师可以访问所有作业
+        if (isAdmin() || isTeacher()) {
+            logger.info("canAccessAssignment: User is admin or teacher, access granted");
             return true;
         }
-
+        
         // 学生只能访问已发布的作业
-        boolean canAccess = "PUBLISHED".equals(assignment.get().getStatus());
-        logger.info("=== 学生访问，状态: {}, 结果: {}", assignment.get().getStatus(), canAccess);
-        return canAccess;
+        Optional<Assignment> assignmentOpt = assignmentRepository.findById(assignmentId);
+        if (assignmentOpt.isEmpty()) {
+            logger.warn("canAccessAssignment: Assignment not found: {}", assignmentId);
+            return false;
+        }
+        
+        Assignment assignment = assignmentOpt.get();
+        boolean isPublished = "PUBLISHED".equals(assignment.getStatus());
+        logger.info("canAccessAssignment: Assignment status: {}, isPublished: {}", assignment.getStatus(), isPublished);
+        
+        boolean result = isPublished;
+        logger.info("canAccessAssignment: Final result: {}", result);
+        return result;
     }
 
     /**
@@ -329,17 +336,27 @@ public class PermissionService {
      */
     private User getCurrentUser() {
         try {
+            logger.info("=== getCurrentUser() called");
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            logger.info("=== authentication: {}", authentication);
             if (authentication == null || !authentication.isAuthenticated()) {
+                logger.info("=== authentication is null or not authenticated");
                 return null;
             }
 
             String username = authentication.getName();
+            logger.info("=== username from authentication: {}", username);
             if ("anonymousUser".equals(username)) {
+                logger.info("=== username is anonymousUser");
                 return null;
             }
 
-            return userRepository.findByUsername(username).orElse(null);
+            User user = userRepository.findByUsername(username).orElse(null);
+            logger.info("=== user found in database: {}", user != null ? user.getUsername() : "null");
+            if (user != null) {
+                logger.info("=== user roles: {}", user.getRoles().stream().map(Role::getName).toArray());
+            }
+            return user;
         } catch (Exception e) {
             logger.error("获取当前用户时发生错误: {}", e.getMessage());
             return null;

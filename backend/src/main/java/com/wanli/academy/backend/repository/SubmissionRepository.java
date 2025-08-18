@@ -85,6 +85,14 @@ public interface SubmissionRepository extends JpaRepository<Submission, UUID> {
     List<Submission> findByStudentIdOrderBySubmittedAtDesc(Long studentId);
     
     /**
+     * 根据学生ID查询提交记录列表，预加载关联数据，按提交时间倒序排列
+     * @param studentId 学生ID
+     * @return 提交记录列表
+     */
+    @Query("SELECT s FROM Submission s LEFT JOIN FETCH s.assignment LEFT JOIN FETCH s.student WHERE s.studentId = :studentId ORDER BY s.submittedAt DESC")
+    List<Submission> findByStudentIdWithAssociationsOrderBySubmittedAtDesc(@Param("studentId") Long studentId);
+    
+    /**
      * 查询提交时间在指定时间之后的提交记录
      * @param submittedAt 提交时间
      * @return 提交记录列表

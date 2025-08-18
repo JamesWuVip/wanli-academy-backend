@@ -34,6 +34,8 @@ check_files() {
         "$TEST_DATA_DIR/roles_test_data.sql"
         "$TEST_DATA_DIR/users_test_data.sql"
         "$TEST_DATA_DIR/assignments_test_data.sql"
+        "$TEST_DATA_DIR/assignments_sprint3_test_data.sql"
+        "$TEST_DATA_DIR/submissions_test_data.sql"
     )
     
     for file in "${files[@]}"; do
@@ -198,6 +200,8 @@ main() {
     execute_sql_file "$TEST_DATA_DIR/roles_test_data.sql" "角色和权限数据"
     execute_sql_file "$TEST_DATA_DIR/users_test_data.sql" "用户数据"
     execute_sql_file "$TEST_DATA_DIR/assignments_test_data.sql" "作业数据"
+    execute_sql_file "$TEST_DATA_DIR/assignments_sprint3_test_data.sql" "Sprint3作业数据"
+    execute_sql_file "$TEST_DATA_DIR/submissions_test_data.sql" "作业提交数据"
     
     # 验证结果
     verify_import

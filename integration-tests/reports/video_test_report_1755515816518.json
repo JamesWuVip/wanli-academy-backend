@@ -1,0 +1,60 @@
+{
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "partial": 0
+  },
+  "results": [
+    {
+      "testName": "访问首页",
+      "status": "PASSED",
+      "message": "成功访问首页",
+      "timestamp": "2025-08-18T11:16:45.238Z",
+      "screenshot": null
+    },
+    {
+      "testName": "用户登录",
+      "status": "PASSED",
+      "message": "登录成功，当前URL: http://localhost:5173/assignments",
+      "timestamp": "2025-08-18T11:16:48.569Z",
+      "screenshot": null
+    },
+    {
+      "testName": "作业列表加载",
+      "status": "PASSED",
+      "message": "作业列表页面加载成功",
+      "timestamp": "2025-08-18T11:16:48.775Z",
+      "screenshot": null
+    },
+    {
+      "testName": "查看结果按钮",
+      "status": "PASSED",
+      "message": "成功点击查看结果按钮",
+      "timestamp": "2025-08-18T11:16:48.799Z",
+      "screenshot": null
+    },
+    {
+      "testName": "导航到结果页面",
+      "status": "PASSED",
+      "message": "成功导航到结果页面",
+      "timestamp": "2025-08-18T11:16:51.801Z",
+      "screenshot": null
+    },
+    {
+      "testName": "结果页面组件",
+      "status": "PASSED",
+      "message": "结果页面组件已加载",
+      "timestamp": "2025-08-18T11:16:52.298Z",
+      "screenshot": null
+    },
+    {
+      "testName": "视频播放器检测",
+      "status": "PASSED",
+      "message": "找到视频播放器: 0 video, 3 iframe",
+      "timestamp": "2025-08-18T11:16:55.317Z",
+      "screenshot": null
+    }
+  ],
+  "timestamp": "2025-08-18T11:16:56.518Z"
+}

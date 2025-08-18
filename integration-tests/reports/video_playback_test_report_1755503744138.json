@@ -1,0 +1,18 @@
+{
+  "totalTests": 1,
+  "passedTests": 0,
+  "failedTests": 1,
+  "tests": [
+    {
+      "name": "测试执行",
+      "passed": false,
+      "details": "测试执行失败: SyntaxError: Failed to execute 'querySelectorAll' on 'Document': '.view-result-btn, .result-btn, button:has-text(\"查看结果\")' is not a valid selector.",
+      "screenshot": null,
+      "timestamp": "2025-08-18T07:55:44.020Z"
+    }
+  ],
+  "startTime": "2025-08-18T07:55:32.556Z",
+  "endTime": "2025-08-18T07:55:44.138Z",
+  "duration": "11.58秒",
+  "successRate": "0.0%"
+}

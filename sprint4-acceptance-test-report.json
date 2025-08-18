@@ -1,0 +1,17 @@
+{
+  "testSuite": "Sprint 4 Acceptance Test",
+  "timestamp": "2025-08-17T16:12:05.740Z",
+  "environment": "http://localhost:8080",
+  "summary": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "successRate": "100.00"
+  },
+  "errors": [],
+  "testData": {
+    "users": [],
+    "assignments": [],
+    "submissions": []
+  }
+}

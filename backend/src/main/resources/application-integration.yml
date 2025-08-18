@@ -106,7 +106,7 @@ logging:
     root: INFO
     com.wanli.academy: ${LOG_LEVEL_APP:DEBUG}
     org.springframework.web: ${LOG_LEVEL_WEB:INFO}
-    org.springframework.security: ${LOG_LEVEL_SECURITY:INFO}
+    org.springframework.security: ${LOG_LEVEL_SECURITY:DEBUG}
     org.hibernate.SQL: ${LOG_LEVEL_SQL:WARN}
     org.hibernate.type.descriptor.sql.BasicBinder: WARN
     org.springframework.transaction: ${LOG_LEVEL_TRANSACTION:INFO}
@@ -286,4 +286,4 @@ logging:
   level:
     root: WARN
     com.wanli.academy: INFO
-    org.hibernate.SQL: WARN
+    org.hibernate.SQL: WARNlogging.level.org.springframework.security=DEBUG

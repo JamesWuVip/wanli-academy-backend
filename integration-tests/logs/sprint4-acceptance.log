@@ -1,0 +1,1430 @@
+[2025-08-17T16:36:51.827Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T16:36:51.833Z] [INFO] ==================================================
+[2025-08-17T16:36:51.834Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T16:36:52.129Z] [FAIL] ❌ 学员登录: FAILED - 登录失败或未获取到token
+[2025-08-17T16:36:52.129Z] [ERROR]    Error: {"success":false,"message":"请求参数验证失败","errors":{"usernameOrEmail":"用户名或邮箱不能为空"},"timestamp":"2025-08-18T00:36:52.107336"}
+[2025-08-17T16:36:52.129Z] [ERROR] 学员登录失败，无法继续后续测试
+[2025-08-17T16:37:08.284Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T16:37:08.286Z] [INFO] ==================================================
+[2025-08-17T16:37:08.286Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T16:37:08.508Z] [FAIL] ❌ 学员登录: FAILED - 登录失败或未获取到token
+[2025-08-17T16:37:08.508Z] [ERROR]    Error: 
+[2025-08-17T16:37:08.509Z] [ERROR] 学员登录失败，无法继续后续测试
+[2025-08-17T16:37:53.682Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T16:37:53.684Z] [INFO] ==================================================
+[2025-08-17T16:37:53.684Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T16:37:53.684Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T16:37:53.684Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T16:37:53.997Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:37:53.998Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0ODY3MywiZXhwIjoxNzU1NTM1MDczfQ.7SJhUqiKnUjcb68-R9V0FRr_LJykiMqeWHV3CzZG3jM","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0ODY3MywiZXhwIjoxNzU2MDUzNDczfQ.kpGLo1DzWUiVxC3OcU8v-IOT_dT7qJmwN002g-FSRhI","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T00:37:53.987602"},"success":true,"message":"登录成功","timestamp":"2025-08-18T00:37:53.990771"}
+[2025-08-17T16:37:53.998Z] [FAIL] ❌ 学员登录: FAILED - 登录失败或未获取到token
+[2025-08-17T16:37:53.998Z] [ERROR]    Error: 
+[2025-08-17T16:37:53.998Z] [ERROR] 学员登录失败，无法继续后续测试
+[2025-08-17T16:38:12.224Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T16:38:12.226Z] [INFO] ==================================================
+[2025-08-17T16:38:12.226Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T16:38:12.226Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T16:38:12.226Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T16:38:12.405Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:38:12.406Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0ODY5MiwiZXhwIjoxNzU1NTM1MDkyfQ.ts2mv-o8fnzPeRrTlL7yGkRURkrDKEih-Yg82jMCC2M","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0ODY5MiwiZXhwIjoxNzU2MDUzNDkyfQ.iah-4jaGkXjqOYR7IuqkLai0dsoCr9RsungtvUnYkY0","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T00:38:12.398636"},"success":true,"message":"登录成功","timestamp":"2025-08-18T00:38:12.400095"}
+[2025-08-17T16:38:12.406Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T16:38:13.407Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T16:38:13.408Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T16:38:13.552Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:38:13.552Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T16:38:13.552Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T16:38:13.552Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T16:38:13.553Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T16:38:13.580Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:38:13.581Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T16:38:13.581Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T16:38:13.593Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:38:13.593Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T16:38:13.594Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T16:38:13.594Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T16:38:13.594Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T16:38:13.645Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:38:13.645Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:38:13.646Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755448693641}
+[2025-08-17T16:38:13.646Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:38:13.657Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:38:13.657Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:38:13.657Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755448693655}
+[2025-08-17T16:38:13.657Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:38:13.657Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T16:38:13.657Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T16:38:13.668Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:38:13.668Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:38:13.668Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755448693666}
+[2025-08-17T16:38:13.668Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:38:13.678Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:38:13.678Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:38:13.678Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755448693677}
+[2025-08-17T16:38:13.678Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:38:13.691Z] [INFO] ==================================================
+[2025-08-17T16:38:13.691Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T16:38:13.691Z] [INFO] 总测试数: 5
+[2025-08-17T16:38:13.691Z] [INFO] 通过测试: 4
+[2025-08-17T16:38:13.691Z] [INFO] 失败测试: 1
+[2025-08-17T16:38:13.691Z] [INFO] 成功率: 80.00%
+[2025-08-17T16:38:13.691Z] [INFO] 测试时长: 1秒
+[2025-08-17T16:38:13.691Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T16:38:13.691Z] [INFO] ==================================================
+[2025-08-17T16:50:05.203Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T16:50:05.205Z] [INFO] ==================================================
+[2025-08-17T16:50:05.205Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T16:50:05.205Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T16:50:05.205Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T16:50:05.669Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:50:05.669Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0OTQwNSwiZXhwIjoxNzU1NTM1ODA1fQ.SxlGnoLb1to6LCbitUcGd59_8WkU9TJ9Ez8XDJRFdnI","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0OTQwNSwiZXhwIjoxNzU2MDU0MjA1fQ.dl3jA9Rw2egxw71tI9tX_TSNSjbhGWp7UC4Jgi6MHkc","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T00:50:05.655895"},"success":true,"message":"登录成功","timestamp":"2025-08-18T00:50:05.658894"}
+[2025-08-17T16:50:05.669Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T16:50:06.670Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T16:50:06.671Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T16:50:06.731Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:50:06.731Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T16:50:06.731Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T16:50:06.732Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T16:50:06.732Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T16:50:06.756Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:50:06.756Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T16:50:06.756Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T16:50:06.775Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:50:06.776Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T16:50:06.776Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T16:50:06.776Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T16:50:06.776Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T16:50:06.800Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:50:06.800Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:50:06.800Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755449406796}
+[2025-08-17T16:50:06.800Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:50:06.816Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:50:06.816Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:50:06.816Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755449406814}
+[2025-08-17T16:50:06.816Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:50:06.816Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T16:50:06.816Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T16:50:06.858Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:50:06.858Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:50:06.858Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755449406856}
+[2025-08-17T16:50:06.858Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:50:06.872Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:50:06.872Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:50:06.872Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755449406870}
+[2025-08-17T16:50:06.872Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:50:06.901Z] [INFO] ==================================================
+[2025-08-17T16:50:06.902Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T16:50:06.902Z] [INFO] 总测试数: 5
+[2025-08-17T16:50:06.902Z] [INFO] 通过测试: 4
+[2025-08-17T16:50:06.902Z] [INFO] 失败测试: 1
+[2025-08-17T16:50:06.902Z] [INFO] 成功率: 80.00%
+[2025-08-17T16:50:06.902Z] [INFO] 测试时长: 2秒
+[2025-08-17T16:50:06.902Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T16:50:06.902Z] [INFO] ==================================================
+[2025-08-17T16:50:58.217Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T16:50:58.220Z] [INFO] ==================================================
+[2025-08-17T16:50:58.221Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T16:50:58.221Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T16:50:58.221Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T16:50:58.681Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:50:58.681Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0OTQ1OCwiZXhwIjoxNzU1NTM1ODU4fQ.GzGrHHdXSC7_7MC5OWq6-8TGC3Q-7JpzuOP2n8GOsLA","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0OTQ1OCwiZXhwIjoxNzU2MDU0MjU4fQ.jSUErKxei-klruRj4D6XRQjEAOjNC43CuAAwEWJ7iJk","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T00:50:58.664993"},"success":true,"message":"登录成功","timestamp":"2025-08-18T00:50:58.666568"}
+[2025-08-17T16:50:58.682Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T16:50:59.683Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T16:50:59.685Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T16:50:59.770Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:50:59.770Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T16:50:59.770Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T16:50:59.770Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T16:50:59.771Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T16:50:59.788Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:50:59.788Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T16:50:59.788Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T16:50:59.799Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:50:59.800Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T16:50:59.800Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T16:50:59.800Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T16:50:59.800Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T16:50:59.820Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:50:59.820Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:50:59.820Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755449459816}
+[2025-08-17T16:50:59.820Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:50:59.832Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:50:59.832Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:50:59.832Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755449459830}
+[2025-08-17T16:50:59.832Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:50:59.832Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T16:50:59.832Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T16:50:59.841Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:50:59.841Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:50:59.841Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755449459840}
+[2025-08-17T16:50:59.841Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:50:59.850Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T16:50:59.850Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T16:50:59.850Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755449459849}
+[2025-08-17T16:50:59.850Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:50:59.863Z] [INFO] ==================================================
+[2025-08-17T16:50:59.863Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T16:50:59.863Z] [INFO] 总测试数: 5
+[2025-08-17T16:50:59.863Z] [INFO] 通过测试: 4
+[2025-08-17T16:50:59.863Z] [INFO] 失败测试: 1
+[2025-08-17T16:50:59.863Z] [INFO] 成功率: 80.00%
+[2025-08-17T16:50:59.863Z] [INFO] 测试时长: 2秒
+[2025-08-17T16:50:59.863Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T16:50:59.863Z] [INFO] ==================================================
+[2025-08-17T16:59:18.561Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T16:59:18.567Z] [INFO] ==================================================
+[2025-08-17T16:59:18.568Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T16:59:18.568Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T16:59:18.568Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T16:59:19.059Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:59:19.059Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0OTk1OSwiZXhwIjoxNzU1NTM2MzU5fQ.30m5MiA4Nj6uzfUCqtyJYtdg0T5X9hBQvFJWmiCrPPE","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ0OTk1OSwiZXhwIjoxNzU2MDU0NzU5fQ.e8aJW6tjgxYspABiUJms107JS5kWQUtCV2L6rovqIPU","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T00:59:19.035078"},"success":true,"message":"登录成功","timestamp":"2025-08-18T00:59:19.037926"}
+[2025-08-17T16:59:19.059Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T16:59:20.061Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T16:59:20.063Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T16:59:20.139Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:59:20.139Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T16:59:20.140Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T16:59:20.140Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T16:59:20.140Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T16:59:20.155Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:59:20.155Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T16:59:20.155Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T16:59:20.176Z] [DEBUG] 响应状态: 200
+[2025-08-17T16:59:20.176Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T16:59:20.176Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T16:59:20.176Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T16:59:20.176Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T16:59:20.197Z] [DEBUG] 请求失败: Request failed with status code 500
+[2025-08-17T16:59:20.197Z] [DEBUG] 错误响应状态: 500
+[2025-08-17T16:59:20.197Z] [DEBUG] 错误响应数据: {"code":"NULL_POINTER","message":"系统内部错误，请联系管理员","timestamp":1755449960192}
+[2025-08-17T16:59:20.197Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:59:20.212Z] [DEBUG] 请求失败: Request failed with status code 500
+[2025-08-17T16:59:20.212Z] [DEBUG] 错误响应状态: 500
+[2025-08-17T16:59:20.212Z] [DEBUG] 错误响应数据: {"code":"NULL_POINTER","message":"系统内部错误，请联系管理员","timestamp":1755449960210}
+[2025-08-17T16:59:20.212Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:59:20.213Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T16:59:20.213Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T16:59:20.234Z] [DEBUG] 请求失败: Request failed with status code 500
+[2025-08-17T16:59:20.235Z] [DEBUG] 错误响应状态: 500
+[2025-08-17T16:59:20.235Z] [DEBUG] 错误响应数据: {"code":"NULL_POINTER","message":"系统内部错误，请联系管理员","timestamp":1755449960231}
+[2025-08-17T16:59:20.235Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:59:20.312Z] [DEBUG] 请求失败: Request failed with status code 500
+[2025-08-17T16:59:20.312Z] [DEBUG] 错误响应状态: 500
+[2025-08-17T16:59:20.312Z] [DEBUG] 错误响应数据: {"code":"NULL_POINTER","message":"系统内部错误，请联系管理员","timestamp":1755449960305}
+[2025-08-17T16:59:20.312Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T16:59:20.361Z] [INFO] ==================================================
+[2025-08-17T16:59:20.361Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T16:59:20.361Z] [INFO] 总测试数: 5
+[2025-08-17T16:59:20.361Z] [INFO] 通过测试: 4
+[2025-08-17T16:59:20.361Z] [INFO] 失败测试: 1
+[2025-08-17T16:59:20.361Z] [INFO] 成功率: 80.00%
+[2025-08-17T16:59:20.361Z] [INFO] 测试时长: 2秒
+[2025-08-17T16:59:20.361Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T16:59:20.361Z] [INFO] ==================================================
+[2025-08-17T17:02:02.784Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:02:02.786Z] [INFO] ==================================================
+[2025-08-17T17:02:02.786Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:02:02.786Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:02:02.786Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:02:03.243Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:02:03.243Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDEyMywiZXhwIjoxNzU1NTM2NTIzfQ.vEBThv9M55njqKj8WhvVRVV0oZ-pneLP8yObEsgVuDg","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDEyMywiZXhwIjoxNzU2MDU0OTIzfQ.fYW-9cZKataEjIDuR2kWQVhQw-qJqcU_6jrzD5ysDFI","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:02:03.225849"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:02:03.227955"}
+[2025-08-17T17:02:03.243Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:02:04.245Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:02:04.247Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:02:04.326Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:02:04.326Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:02:04.326Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:02:04.326Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:02:04.326Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:02:04.343Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:02:04.344Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:02:04.344Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:02:04.357Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:02:04.358Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:02:04.358Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:02:04.358Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:02:04.358Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:02:04.382Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:02:04.382Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:02:04.383Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450124378}
+[2025-08-17T17:02:04.383Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:02:04.398Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:02:04.398Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:02:04.398Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450124396}
+[2025-08-17T17:02:04.398Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:02:04.398Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:02:04.398Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:02:04.412Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:02:04.412Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:02:04.412Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450124410}
+[2025-08-17T17:02:04.413Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:02:04.427Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:02:04.427Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:02:04.427Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450124426}
+[2025-08-17T17:02:04.427Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:02:04.440Z] [INFO] ==================================================
+[2025-08-17T17:02:04.441Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:02:04.441Z] [INFO] 总测试数: 5
+[2025-08-17T17:02:04.441Z] [INFO] 通过测试: 4
+[2025-08-17T17:02:04.441Z] [INFO] 失败测试: 1
+[2025-08-17T17:02:04.441Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:02:04.441Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:02:04.441Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:02:04.441Z] [INFO] ==================================================
+[2025-08-17T17:05:28.083Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:05:28.086Z] [INFO] ==================================================
+[2025-08-17T17:05:28.086Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:05:28.086Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:05:28.086Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:05:28.617Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:05:28.617Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDMyOCwiZXhwIjoxNzU1NTM2NzI4fQ.cmAaqmS-kBgYb_Zef8jnm_zS5COrcNUtlEkwxWXJQi8","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDMyOCwiZXhwIjoxNzU2MDU1MTI4fQ.THIS7n7jC2F3asdUwze1O9NrfKrlk5WzVKEBGGGCggQ","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:05:28.59928"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:05:28.600879"}
+[2025-08-17T17:05:28.617Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:05:29.619Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:05:29.619Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:05:29.671Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:05:29.671Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:05:29.672Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:05:29.672Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:05:29.672Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:05:29.687Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:05:29.687Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:05:29.687Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:05:29.698Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:05:29.699Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:05:29.699Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:05:29.699Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:05:29.699Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:05:29.718Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:05:29.718Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:05:29.718Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450329715}
+[2025-08-17T17:05:29.718Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:05:29.729Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:05:29.729Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:05:29.729Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450329727}
+[2025-08-17T17:05:29.729Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:05:29.729Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:05:29.729Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:05:29.738Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:05:29.738Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:05:29.738Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450329737}
+[2025-08-17T17:05:29.738Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:05:29.748Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:05:29.748Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:05:29.748Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450329746}
+[2025-08-17T17:05:29.748Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:05:29.761Z] [INFO] ==================================================
+[2025-08-17T17:05:29.761Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:05:29.761Z] [INFO] 总测试数: 5
+[2025-08-17T17:05:29.761Z] [INFO] 通过测试: 4
+[2025-08-17T17:05:29.761Z] [INFO] 失败测试: 1
+[2025-08-17T17:05:29.761Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:05:29.761Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:05:29.761Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:05:29.761Z] [INFO] ==================================================
+[2025-08-17T17:08:17.497Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:08:17.503Z] [INFO] ==================================================
+[2025-08-17T17:08:17.503Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:08:17.503Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:08:17.504Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:08:17.983Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:08:17.983Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDQ5NywiZXhwIjoxNzU1NTM2ODk3fQ.FG1ywXE8RjuPQM7LvsR6gDr4KpiiCoFcJfDMup6zZNM","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDQ5NywiZXhwIjoxNzU2MDU1Mjk3fQ.GekFaPnuLL8gvC2_Lyoze7IqPrsjjzFqareumCD4QYo","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:08:17.961001"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:08:17.963717"}
+[2025-08-17T17:08:17.983Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:08:18.985Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:08:18.985Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:08:19.044Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:08:19.044Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:08:19.044Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:08:19.044Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:08:19.044Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:08:19.060Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:08:19.061Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:08:19.061Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:08:19.074Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:08:19.074Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:08:19.074Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:08:19.074Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:08:19.074Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:08:19.099Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:08:19.100Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:08:19.100Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450499095}
+[2025-08-17T17:08:19.100Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:08:19.112Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:08:19.112Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:08:19.112Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450499110}
+[2025-08-17T17:08:19.112Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:08:19.112Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:08:19.112Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:08:19.121Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:08:19.121Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:08:19.121Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450499120}
+[2025-08-17T17:08:19.121Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:08:19.130Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:08:19.130Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:08:19.130Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450499129}
+[2025-08-17T17:08:19.130Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:08:19.166Z] [INFO] ==================================================
+[2025-08-17T17:08:19.166Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:08:19.166Z] [INFO] 总测试数: 5
+[2025-08-17T17:08:19.166Z] [INFO] 通过测试: 4
+[2025-08-17T17:08:19.166Z] [INFO] 失败测试: 1
+[2025-08-17T17:08:19.166Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:08:19.166Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:08:19.166Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:08:19.166Z] [INFO] ==================================================
+[2025-08-17T17:10:44.569Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:10:44.576Z] [INFO] ==================================================
+[2025-08-17T17:10:44.576Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:10:44.576Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:10:44.576Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:10:45.160Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:10:45.160Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDY0NSwiZXhwIjoxNzU1NTM3MDQ1fQ.vXomD6qljDgc0NVdvp_hLO0JQf00_oKu5K1EcFTzbGc","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDY0NSwiZXhwIjoxNzU2MDU1NDQ1fQ.27KLoXjqYhCqCc5agdEVYVaJ3K6unExHr08Lw0y5LX8","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:10:45.140192"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:10:45.142581"}
+[2025-08-17T17:10:45.160Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:10:46.162Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:10:46.164Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:10:46.237Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:10:46.238Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:10:46.238Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:10:46.238Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:10:46.238Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:10:46.254Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:10:46.254Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:10:46.254Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:10:46.275Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:10:46.275Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:10:46.275Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:10:46.275Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:10:46.275Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:10:46.301Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:10:46.301Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:10:46.302Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450646295}
+[2025-08-17T17:10:46.302Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:10:46.318Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:10:46.319Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:10:46.319Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450646317}
+[2025-08-17T17:10:46.319Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:10:46.319Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:10:46.319Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:10:46.328Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:10:46.328Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:10:46.328Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450646326}
+[2025-08-17T17:10:46.328Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:10:46.337Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:10:46.337Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:10:46.337Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450646336}
+[2025-08-17T17:10:46.337Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:10:46.368Z] [INFO] ==================================================
+[2025-08-17T17:10:46.368Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:10:46.369Z] [INFO] 总测试数: 5
+[2025-08-17T17:10:46.369Z] [INFO] 通过测试: 4
+[2025-08-17T17:10:46.369Z] [INFO] 失败测试: 1
+[2025-08-17T17:10:46.369Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:10:46.369Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:10:46.369Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:10:46.369Z] [INFO] ==================================================
+[2025-08-17T17:11:53.336Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:11:53.338Z] [INFO] ==================================================
+[2025-08-17T17:11:53.339Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:11:53.339Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:11:53.339Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:11:53.481Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:11:53.482Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDcxMywiZXhwIjoxNzU1NTM3MTEzfQ.lOFyw5pLvi6VVwz9yAVscrK7Czg7ueTJB3YJo8wkJMc","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDcxMywiZXhwIjoxNzU2MDU1NTEzfQ.w-fupWr9JerrL3R-ai4-HSxWxze2iGxlT9oDz9G-YRQ","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:11:53.473476"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:11:53.47627"}
+[2025-08-17T17:11:53.482Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:11:54.482Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:11:54.483Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:11:54.509Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:11:54.509Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:11:54.509Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:11:54.510Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:11:54.510Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:11:54.522Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:11:54.522Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:11:54.522Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:11:54.531Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:11:54.531Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:11:54.531Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:11:54.532Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:11:54.532Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:11:54.545Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:11:54.545Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:11:54.545Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450714543}
+[2025-08-17T17:11:54.545Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:11:54.555Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:11:54.556Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:11:54.556Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450714554}
+[2025-08-17T17:11:54.556Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:11:54.556Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:11:54.556Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:11:54.564Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:11:54.564Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:11:54.564Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450714563}
+[2025-08-17T17:11:54.564Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:11:54.573Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:11:54.573Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:11:54.573Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450714572}
+[2025-08-17T17:11:54.573Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:11:54.587Z] [INFO] ==================================================
+[2025-08-17T17:11:54.587Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:11:54.587Z] [INFO] 总测试数: 5
+[2025-08-17T17:11:54.587Z] [INFO] 通过测试: 4
+[2025-08-17T17:11:54.587Z] [INFO] 失败测试: 1
+[2025-08-17T17:11:54.587Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:11:54.587Z] [INFO] 测试时长: 1秒
+[2025-08-17T17:11:54.587Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:11:54.587Z] [INFO] ==================================================
+[2025-08-17T17:12:59.719Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:12:59.722Z] [INFO] ==================================================
+[2025-08-17T17:12:59.722Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:12:59.723Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:12:59.723Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:12:59.938Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:12:59.939Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDc3OSwiZXhwIjoxNzU1NTM3MTc5fQ.RxUVZcpAoiOI4qQh9hb8uCWG6Li6L1CFILmtiPWRREU","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDc3OSwiZXhwIjoxNzU2MDU1NTc5fQ.U0aKnSRDZ0Zs0P31djjOLtcUfn7NRSz4FoniAqi24Gw","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:12:59.931547"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:12:59.932983"}
+[2025-08-17T17:12:59.939Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:13:00.940Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:13:00.941Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:13:00.959Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:13:00.960Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:13:00.960Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:13:00.960Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:13:00.960Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:13:00.970Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:13:00.970Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:13:00.970Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:13:00.977Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:13:00.978Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:13:00.978Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:13:00.978Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:13:00.978Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:13:00.990Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:13:00.991Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:13:00.991Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450780988}
+[2025-08-17T17:13:00.991Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:13:00.999Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:13:00.999Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:13:00.999Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450780998}
+[2025-08-17T17:13:00.999Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:13:00.999Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:13:00.999Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:13:01.006Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:13:01.006Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:13:01.006Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450781005}
+[2025-08-17T17:13:01.006Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:13:01.017Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:13:01.017Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:13:01.017Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450781016}
+[2025-08-17T17:13:01.017Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:13:01.029Z] [INFO] ==================================================
+[2025-08-17T17:13:01.029Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:13:01.029Z] [INFO] 总测试数: 5
+[2025-08-17T17:13:01.029Z] [INFO] 通过测试: 4
+[2025-08-17T17:13:01.029Z] [INFO] 失败测试: 1
+[2025-08-17T17:13:01.029Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:13:01.029Z] [INFO] 测试时长: 1秒
+[2025-08-17T17:13:01.029Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:13:01.029Z] [INFO] ==================================================
+[2025-08-17T17:13:53.368Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:13:53.371Z] [INFO] ==================================================
+[2025-08-17T17:13:53.371Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:13:53.371Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:13:53.371Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:13:53.839Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:13:53.839Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDgzMywiZXhwIjoxNzU1NTM3MjMzfQ.lUuvgXwCOaNDv9cG6FgUSDFiITO_-FlbyVRzB4RPYmI","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MDgzMywiZXhwIjoxNzU2MDU1NjMzfQ.cNl4bYAD9HGskaDjB6I93rBKc378yYgSkL8rv2cUp6Q","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:13:53.820529"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:13:53.822486"}
+[2025-08-17T17:13:53.839Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:13:54.841Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:13:54.841Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:13:54.903Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:13:54.904Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:13:54.904Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:13:54.904Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:13:54.904Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:13:54.920Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:13:54.920Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:13:54.920Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:13:54.933Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:13:54.933Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:13:54.933Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:13:54.933Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:13:54.933Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:13:54.955Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:13:54.955Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:13:54.955Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450834951}
+[2025-08-17T17:13:54.955Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:13:54.967Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:13:54.967Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:13:54.967Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450834965}
+[2025-08-17T17:13:54.967Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:13:54.967Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:13:54.967Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:13:54.978Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:13:54.978Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:13:54.979Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450834977}
+[2025-08-17T17:13:54.979Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:13:54.988Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:13:54.988Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:13:54.988Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755450834987}
+[2025-08-17T17:13:54.988Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:13:55.000Z] [INFO] ==================================================
+[2025-08-17T17:13:55.000Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:13:55.000Z] [INFO] 总测试数: 5
+[2025-08-17T17:13:55.000Z] [INFO] 通过测试: 4
+[2025-08-17T17:13:55.000Z] [INFO] 失败测试: 1
+[2025-08-17T17:13:55.000Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:13:55.000Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:13:55.000Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:13:55.000Z] [INFO] ==================================================
+[2025-08-17T17:17:06.824Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:17:06.831Z] [INFO] ==================================================
+[2025-08-17T17:17:06.831Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:17:06.831Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:17:06.831Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:17:07.002Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:17:07.002Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTAyNiwiZXhwIjoxNzU1NTM3NDI2fQ.G2NUUbbxDcH31J2upY5QwWvYijTappTgbRx99ptKSz4","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTAyNiwiZXhwIjoxNzU2MDU1ODI2fQ.XsTt76N3yFn_QdYcf65JfaRtS2O43BV30CdH03f1mdY","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:17:06.993776"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:17:06.995827"}
+[2025-08-17T17:17:07.002Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:17:08.004Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:17:08.005Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:17:08.031Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:17:08.031Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:17:08.032Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:17:08.032Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:17:08.032Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:17:08.044Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:17:08.044Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:17:08.044Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:17:08.053Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:17:08.054Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:17:08.054Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:17:08.054Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:17:08.054Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:17:08.067Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:17:08.068Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:17:08.068Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451028064}
+[2025-08-17T17:17:08.068Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:17:08.077Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:17:08.078Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:17:08.078Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451028076}
+[2025-08-17T17:17:08.078Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:17:08.078Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:17:08.078Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:17:08.086Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:17:08.086Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:17:08.086Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451028085}
+[2025-08-17T17:17:08.086Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:17:08.096Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:17:08.096Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:17:08.096Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451028094}
+[2025-08-17T17:17:08.096Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:17:08.134Z] [INFO] ==================================================
+[2025-08-17T17:17:08.134Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:17:08.134Z] [INFO] 总测试数: 5
+[2025-08-17T17:17:08.134Z] [INFO] 通过测试: 4
+[2025-08-17T17:17:08.134Z] [INFO] 失败测试: 1
+[2025-08-17T17:17:08.134Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:17:08.134Z] [INFO] 测试时长: 1秒
+[2025-08-17T17:17:08.134Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:17:08.134Z] [INFO] ==================================================
+[2025-08-17T17:18:33.340Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:18:33.349Z] [INFO] ==================================================
+[2025-08-17T17:18:33.349Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:18:33.349Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:18:33.349Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:18:33.927Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:18:33.932Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTExMywiZXhwIjoxNzU1NTM3NTEzfQ.3uQDRZ4BciDKvhNqCScatDOWhDUvh1_PM-xBiUaxhek","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTExMywiZXhwIjoxNzU2MDU1OTEzfQ.gECuymyKSYPObp4LtSDn8XOTqj072JEoAXu-AMBGtgI","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:18:33.882691"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:18:33.901384"}
+[2025-08-17T17:18:33.932Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:18:34.934Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:18:34.936Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:18:35.082Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:18:35.083Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:18:35.083Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:18:35.083Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:18:35.083Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:18:35.103Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:18:35.104Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:18:35.104Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:18:35.117Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:18:35.117Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:18:35.118Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:18:35.118Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:18:35.118Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:18:35.141Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:18:35.141Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:18:35.141Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451115137}
+[2025-08-17T17:18:35.141Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:18:35.152Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:18:35.153Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:18:35.153Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451115151}
+[2025-08-17T17:18:35.153Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:18:35.153Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:18:35.153Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:18:35.161Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:18:35.161Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:18:35.162Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451115160}
+[2025-08-17T17:18:35.162Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:18:35.170Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:18:35.170Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:18:35.170Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451115169}
+[2025-08-17T17:18:35.170Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:18:35.199Z] [INFO] ==================================================
+[2025-08-17T17:18:35.199Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:18:35.199Z] [INFO] 总测试数: 5
+[2025-08-17T17:18:35.199Z] [INFO] 通过测试: 4
+[2025-08-17T17:18:35.199Z] [INFO] 失败测试: 1
+[2025-08-17T17:18:35.199Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:18:35.199Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:18:35.199Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:18:35.199Z] [INFO] ==================================================
+[2025-08-17T17:20:34.368Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:20:34.370Z] [INFO] ==================================================
+[2025-08-17T17:20:34.370Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:20:34.370Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:20:34.370Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:20:34.927Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:20:34.927Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTIzNCwiZXhwIjoxNzU1NTM3NjM0fQ.2PGPEgX5hbOc4y8bPcusjHII924-1JXr-rCLRHIJQEg","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTIzNCwiZXhwIjoxNzU2MDU2MDM0fQ.TiYDg5ACeSTIUI1-fPTPJIaguNcFQD-A66__aLycM8Y","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:20:34.879703"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:20:34.902328"}
+[2025-08-17T17:20:34.927Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:20:35.929Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:20:35.929Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:20:36.052Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:20:36.052Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:20:36.052Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:20:36.052Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:20:36.052Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:20:36.067Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:20:36.067Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:20:36.067Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:20:36.079Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:20:36.079Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:20:36.079Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:20:36.080Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:20:36.080Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:20:36.100Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:20:36.100Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:20:36.100Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451236097}
+[2025-08-17T17:20:36.100Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:20:36.112Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:20:36.112Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:20:36.112Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451236110}
+[2025-08-17T17:20:36.112Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:20:36.112Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:20:36.112Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:20:36.121Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:20:36.121Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:20:36.122Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451236120}
+[2025-08-17T17:20:36.122Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:20:36.130Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:20:36.130Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:20:36.130Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451236129}
+[2025-08-17T17:20:36.130Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:20:36.142Z] [INFO] ==================================================
+[2025-08-17T17:20:36.142Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:20:36.142Z] [INFO] 总测试数: 5
+[2025-08-17T17:20:36.142Z] [INFO] 通过测试: 4
+[2025-08-17T17:20:36.142Z] [INFO] 失败测试: 1
+[2025-08-17T17:20:36.142Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:20:36.142Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:20:36.142Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:20:36.142Z] [INFO] ==================================================
+[2025-08-17T17:24:56.790Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:24:56.796Z] [INFO] ==================================================
+[2025-08-17T17:24:56.797Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:24:56.797Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:24:56.797Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:24:57.334Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:24:57.334Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTQ5NywiZXhwIjoxNzU1NTM3ODk3fQ.8-Fdwiy1Xk6aSFZRbG_ruoY8riCpCMSI1KWJdddrzCo","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTQ5NywiZXhwIjoxNzU2MDU2Mjk3fQ.e0_iZUxYWQb_78t3v_3kVU00tzPvnaxsM9LfCjf4m_I","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:24:57.314489"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:24:57.316686"}
+[2025-08-17T17:24:57.334Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:24:58.335Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:24:58.336Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:24:58.392Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:24:58.392Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:24:58.393Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:24:58.393Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:24:58.393Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:24:58.407Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:24:58.407Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:24:58.407Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:24:58.420Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:24:58.420Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:24:58.421Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:24:58.421Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:24:58.421Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:24:58.441Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:24:58.441Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:24:58.442Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451498438}
+[2025-08-17T17:24:58.442Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:24:58.454Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:24:58.454Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:24:58.454Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451498453}
+[2025-08-17T17:24:58.455Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:24:58.455Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:24:58.455Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:24:58.464Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:24:58.464Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:24:58.464Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451498463}
+[2025-08-17T17:24:58.464Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:24:58.473Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:24:58.473Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:24:58.473Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451498472}
+[2025-08-17T17:24:58.473Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:24:58.512Z] [INFO] ==================================================
+[2025-08-17T17:24:58.512Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:24:58.512Z] [INFO] 总测试数: 5
+[2025-08-17T17:24:58.512Z] [INFO] 通过测试: 4
+[2025-08-17T17:24:58.512Z] [INFO] 失败测试: 1
+[2025-08-17T17:24:58.512Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:24:58.512Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:24:58.512Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:24:58.513Z] [INFO] ==================================================
+[2025-08-17T17:29:25.345Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:29:25.353Z] [INFO] ==================================================
+[2025-08-17T17:29:25.353Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:29:25.353Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:29:25.353Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:29:25.788Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:29:25.788Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTc2NSwiZXhwIjoxNzU1NTM4MTY1fQ.wwb_X0Pf_zehQ7siWsgQCso7Z-iUbqk7HYSDubUNm2o","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTc2NSwiZXhwIjoxNzU2MDU2NTY1fQ.FU3s6wTtVFsWezJbjpu_IOAywuS4t2TG4U6f1WaiMu4","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:29:25.769955"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:29:25.772087"}
+[2025-08-17T17:29:25.788Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:29:26.790Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:29:26.792Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:29:26.874Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:29:26.875Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:29:26.875Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:29:26.875Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:29:26.875Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:29:26.891Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:29:26.891Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:29:26.891Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:29:26.903Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:29:26.903Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:29:26.904Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:29:26.904Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:29:26.904Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:29:26.927Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:29:26.927Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:29:26.927Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451766923}
+[2025-08-17T17:29:26.927Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:29:26.946Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:29:26.946Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:29:26.946Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451766945}
+[2025-08-17T17:29:26.947Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:29:26.947Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:29:26.947Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:29:26.956Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:29:26.956Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:29:26.956Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451766954}
+[2025-08-17T17:29:26.956Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:29:26.965Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:29:26.965Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:29:26.965Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451766964}
+[2025-08-17T17:29:26.966Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:29:27.007Z] [INFO] ==================================================
+[2025-08-17T17:29:27.007Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:29:27.007Z] [INFO] 总测试数: 5
+[2025-08-17T17:29:27.007Z] [INFO] 通过测试: 4
+[2025-08-17T17:29:27.007Z] [INFO] 失败测试: 1
+[2025-08-17T17:29:27.007Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:29:27.007Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:29:27.007Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:29:27.007Z] [INFO] ==================================================
+[2025-08-17T17:30:37.130Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:30:37.132Z] [INFO] ==================================================
+[2025-08-17T17:30:37.132Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:30:37.133Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:30:37.133Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:30:37.672Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:30:37.672Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTgzNywiZXhwIjoxNzU1NTM4MjM3fQ.JY_aDdRuQR-eVYit30Vh4HpIcmprxHCY5uSXoif4jcw","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTgzNywiZXhwIjoxNzU2MDU2NjM3fQ.y9-2iDM-4NDzCLTtaapisGCkormUMcvrD2Rw7DZhdpg","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:30:37.655241"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:30:37.657083"}
+[2025-08-17T17:30:37.672Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:30:38.673Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:30:38.674Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:30:38.826Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:30:38.826Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:30:38.826Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:30:38.826Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:30:38.826Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:30:38.841Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:30:38.841Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:30:38.841Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:30:38.854Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:30:38.854Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:30:38.854Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:30:38.854Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:30:38.854Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:30:38.875Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:30:38.875Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:30:38.875Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451838872}
+[2025-08-17T17:30:38.875Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:30:38.888Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:30:38.888Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:30:38.888Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451838886}
+[2025-08-17T17:30:38.888Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:30:38.889Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:30:38.889Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:30:38.898Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:30:38.898Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:30:38.898Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451838897}
+[2025-08-17T17:30:38.898Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:30:38.907Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:30:38.907Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:30:38.907Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451838905}
+[2025-08-17T17:30:38.907Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:30:38.919Z] [INFO] ==================================================
+[2025-08-17T17:30:38.919Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:30:38.919Z] [INFO] 总测试数: 5
+[2025-08-17T17:30:38.919Z] [INFO] 通过测试: 4
+[2025-08-17T17:30:38.919Z] [INFO] 失败测试: 1
+[2025-08-17T17:30:38.919Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:30:38.919Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:30:38.919Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:30:38.919Z] [INFO] ==================================================
+[2025-08-17T17:31:49.699Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:31:49.702Z] [INFO] ==================================================
+[2025-08-17T17:31:49.702Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:31:49.702Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:31:49.702Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:31:50.238Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:31:50.238Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTkxMCwiZXhwIjoxNzU1NTM4MzEwfQ.AK_PY0YcOSW-pGdldrRWcgGX3NSKPHynwrYehVf2sVM","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MTkxMCwiZXhwIjoxNzU2MDU2NzEwfQ.mHHWsIv2mXwEnV8EFZJFLRzB3yvAtUitmjKDUBlWNBo","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:31:50.220896"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:31:50.222951"}
+[2025-08-17T17:31:50.238Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:31:51.239Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:31:51.239Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:31:51.301Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:31:51.301Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:31:51.301Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:31:51.301Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:31:51.301Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:31:51.316Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:31:51.316Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:31:51.316Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:31:51.328Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:31:51.328Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:31:51.329Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:31:51.329Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:31:51.329Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:31:51.350Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:31:51.350Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:31:51.350Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451911347}
+[2025-08-17T17:31:51.350Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:31:51.362Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:31:51.362Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:31:51.363Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451911361}
+[2025-08-17T17:31:51.363Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:31:51.363Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:31:51.363Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:31:51.372Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:31:51.372Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:31:51.372Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451911371}
+[2025-08-17T17:31:51.372Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:31:51.381Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:31:51.381Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:31:51.381Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755451911380}
+[2025-08-17T17:31:51.381Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:31:51.393Z] [INFO] ==================================================
+[2025-08-17T17:31:51.393Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:31:51.393Z] [INFO] 总测试数: 5
+[2025-08-17T17:31:51.393Z] [INFO] 通过测试: 4
+[2025-08-17T17:31:51.393Z] [INFO] 失败测试: 1
+[2025-08-17T17:31:51.393Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:31:51.393Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:31:51.393Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:31:51.393Z] [INFO] ==================================================
+[2025-08-17T17:50:19.892Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:50:19.895Z] [INFO] ==================================================
+[2025-08-17T17:50:19.895Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:50:19.895Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:50:19.895Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:50:20.522Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:50:20.522Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MzAyMCwiZXhwIjoxNzU1NTM5NDIwfQ.yu3SGwbO5G_WJcWf2UQbLY6d1_EBGr-m0WvATAlzrNA","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MzAyMCwiZXhwIjoxNzU2MDU3ODIwfQ.dRkF_D1tsY5m1mg-01qbj2wy6qxN8z4PZrG5QXkeJ1I","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:50:20.366128"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:50:20.374387"}
+[2025-08-17T17:50:20.523Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:50:21.524Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:50:21.525Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:50:21.585Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:50:21.585Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:50:21.585Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:50:21.586Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:50:21.586Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:50:21.600Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:50:21.601Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:50:21.601Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:50:21.613Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:50:21.613Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:50:21.613Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:50:21.613Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:50:21.613Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:50:21.634Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:50:21.634Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:50:21.634Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453021630}
+[2025-08-17T17:50:21.634Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:50:21.647Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:50:21.647Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:50:21.647Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453021646}
+[2025-08-17T17:50:21.647Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:50:21.648Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:50:21.648Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:50:21.657Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:50:21.657Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:50:21.657Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453021656}
+[2025-08-17T17:50:21.657Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:50:21.668Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:50:21.669Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:50:21.669Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453021667}
+[2025-08-17T17:50:21.669Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:50:21.705Z] [INFO] ==================================================
+[2025-08-17T17:50:21.705Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:50:21.705Z] [INFO] 总测试数: 5
+[2025-08-17T17:50:21.705Z] [INFO] 通过测试: 4
+[2025-08-17T17:50:21.705Z] [INFO] 失败测试: 1
+[2025-08-17T17:50:21.705Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:50:21.705Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:50:21.705Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:50:21.705Z] [INFO] ==================================================
+[2025-08-17T17:54:27.740Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:54:27.742Z] [INFO] ==================================================
+[2025-08-17T17:54:27.742Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:54:27.742Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:54:27.742Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:54:27.969Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:54:27.969Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MzI2NywiZXhwIjoxNzU1NTM5NjY3fQ.yyMcpf672EnUm1GJieDb6Hn0WbP991Q0P5NxYORN91g","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MzI2NywiZXhwIjoxNzU2MDU4MDY3fQ.ZSOoqeIufDAPXdSOSGlDZTJdxY6ylQRYeEgwuGtVRfo","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:54:27.961606"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:54:27.962732"}
+[2025-08-17T17:54:27.969Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:54:28.971Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:54:28.971Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:54:29.007Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:54:29.007Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:54:29.007Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:54:29.008Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:54:29.008Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:54:29.018Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:54:29.018Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:54:29.018Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:54:29.026Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:54:29.026Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:54:29.027Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:54:29.027Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:54:29.027Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:54:29.045Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:54:29.046Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:54:29.046Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453269041}
+[2025-08-17T17:54:29.046Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:54:29.059Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:54:29.060Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:54:29.060Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453269056}
+[2025-08-17T17:54:29.060Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:54:29.060Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:54:29.060Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:54:29.069Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:54:29.069Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:54:29.069Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453269067}
+[2025-08-17T17:54:29.070Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:54:29.682Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:54:29.683Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:54:29.683Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453269680}
+[2025-08-17T17:54:29.683Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:54:29.714Z] [INFO] ==================================================
+[2025-08-17T17:54:29.714Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:54:29.715Z] [INFO] 总测试数: 5
+[2025-08-17T17:54:29.715Z] [INFO] 通过测试: 4
+[2025-08-17T17:54:29.715Z] [INFO] 失败测试: 1
+[2025-08-17T17:54:29.715Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:54:29.715Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:54:29.715Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:54:29.715Z] [INFO] ==================================================
+[2025-08-17T17:55:50.604Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T17:55:50.618Z] [INFO] ==================================================
+[2025-08-17T17:55:50.619Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T17:55:50.619Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T17:55:50.619Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T17:55:51.199Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:55:51.200Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MzM1MSwiZXhwIjoxNzU1NTM5NzUxfQ.DwyTLSjZU4r15pHcwx56sud-RdE4Ovpt4nUblnEfAOM","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MzM1MSwiZXhwIjoxNzU2MDU4MTUxfQ.BAopvvWA7JWyE0d8m4tUAdNrGKnFy1TtT4qXv18uzYc","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T01:55:51.180266"},"success":true,"message":"登录成功","timestamp":"2025-08-18T01:55:51.182201"}
+[2025-08-17T17:55:51.200Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T17:55:52.201Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T17:55:52.202Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T17:55:52.269Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:55:52.269Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T17:55:52.269Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T17:55:52.269Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T17:55:52.269Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T17:55:52.285Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:55:52.285Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T17:55:52.285Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T17:55:52.300Z] [DEBUG] 响应状态: 200
+[2025-08-17T17:55:52.300Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T17:55:52.301Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T17:55:52.301Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T17:55:52.301Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:55:52.326Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:55:52.326Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:55:52.326Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453352321}
+[2025-08-17T17:55:52.326Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:55:52.338Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:55:52.338Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:55:52.338Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453352337}
+[2025-08-17T17:55:52.338Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:55:52.339Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T17:55:52.339Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T17:55:52.349Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:55:52.349Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:55:52.349Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453352347}
+[2025-08-17T17:55:52.349Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:55:52.359Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T17:55:52.359Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T17:55:52.359Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453352357}
+[2025-08-17T17:55:52.359Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T17:55:52.403Z] [INFO] ==================================================
+[2025-08-17T17:55:52.404Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T17:55:52.404Z] [INFO] 总测试数: 5
+[2025-08-17T17:55:52.404Z] [INFO] 通过测试: 4
+[2025-08-17T17:55:52.404Z] [INFO] 失败测试: 1
+[2025-08-17T17:55:52.404Z] [INFO] 成功率: 80.00%
+[2025-08-17T17:55:52.404Z] [INFO] 测试时长: 2秒
+[2025-08-17T17:55:52.404Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T17:55:52.404Z] [INFO] ==================================================
+[2025-08-17T18:05:21.712Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T18:05:21.717Z] [INFO] ==================================================
+[2025-08-17T18:05:21.717Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T18:05:21.717Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T18:05:21.717Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T18:05:21.877Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:05:21.878Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MzkyMSwiZXhwIjoxNzU1NTQwMzIxfQ.MM2VkKVH1IIg6M_h-JPDVVQLOO0wpeEv9im7MWdxBCg","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1MzkyMSwiZXhwIjoxNzU2MDU4NzIxfQ.8JYsXi4VrcpmILJYcFdHBZAqMWM9xRZeTJzHGYGMED4","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T02:05:21.868002"},"success":true,"message":"登录成功","timestamp":"2025-08-18T02:05:21.868789"}
+[2025-08-17T18:05:21.878Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T18:05:22.879Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T18:05:22.879Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T18:05:22.929Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:05:22.929Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T18:05:22.930Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T18:05:22.930Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T18:05:22.930Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:05:22.947Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:05:22.947Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:05:22.947Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:05:22.962Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:05:22.963Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:05:22.963Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T18:05:22.963Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T18:05:22.963Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:05:22.977Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:05:22.977Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:05:22.977Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453922974}
+[2025-08-17T18:05:22.977Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:05:22.996Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:05:22.996Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:05:22.997Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453922993}
+[2025-08-17T18:05:22.997Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:05:22.997Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T18:05:22.997Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:05:23.011Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:05:23.011Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:05:23.012Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453923008}
+[2025-08-17T18:05:23.012Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:05:23.027Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:05:23.027Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:05:23.027Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453923024}
+[2025-08-17T18:05:23.027Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:05:23.064Z] [INFO] ==================================================
+[2025-08-17T18:05:23.064Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T18:05:23.064Z] [INFO] 总测试数: 5
+[2025-08-17T18:05:23.064Z] [INFO] 通过测试: 4
+[2025-08-17T18:05:23.064Z] [INFO] 失败测试: 1
+[2025-08-17T18:05:23.064Z] [INFO] 成功率: 80.00%
+[2025-08-17T18:05:23.064Z] [INFO] 测试时长: 1秒
+[2025-08-17T18:05:23.064Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T18:05:23.064Z] [INFO] ==================================================
+[2025-08-17T18:06:17.657Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T18:06:17.661Z] [INFO] ==================================================
+[2025-08-17T18:06:17.661Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T18:06:17.661Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T18:06:17.661Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T18:06:17.879Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:06:17.880Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1Mzk3NywiZXhwIjoxNzU1NTQwMzc3fQ.y7wNg07lMdVRFIur_h6fcvTppY_UBje2Kx9u8qqzE_4","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1Mzk3NywiZXhwIjoxNzU2MDU4Nzc3fQ.sck86FUjnl3Rw6r08Eza5xwm9OdtPRVvzs7GMfqxG4o","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T02:06:17.871037"},"success":true,"message":"登录成功","timestamp":"2025-08-18T02:06:17.872255"}
+[2025-08-17T18:06:17.880Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T18:06:18.883Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T18:06:18.883Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T18:06:18.913Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:06:18.913Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T18:06:18.913Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T18:06:18.913Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T18:06:18.913Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:06:18.923Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:06:18.923Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:06:18.923Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:06:18.931Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:06:18.931Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:06:18.931Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T18:06:18.932Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T18:06:18.932Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:06:18.942Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:06:18.943Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:06:18.943Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453978940}
+[2025-08-17T18:06:18.943Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:06:18.972Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:06:18.972Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:06:18.972Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453978970}
+[2025-08-17T18:06:18.972Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:06:18.972Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T18:06:18.972Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:06:18.992Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:06:18.993Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:06:18.993Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453978989}
+[2025-08-17T18:06:18.993Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:06:19.012Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:06:19.012Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:06:19.013Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755453979010}
+[2025-08-17T18:06:19.013Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:06:19.026Z] [INFO] ==================================================
+[2025-08-17T18:06:19.026Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T18:06:19.026Z] [INFO] 总测试数: 5
+[2025-08-17T18:06:19.026Z] [INFO] 通过测试: 4
+[2025-08-17T18:06:19.026Z] [INFO] 失败测试: 1
+[2025-08-17T18:06:19.026Z] [INFO] 成功率: 80.00%
+[2025-08-17T18:06:19.026Z] [INFO] 测试时长: 1秒
+[2025-08-17T18:06:19.027Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T18:06:19.027Z] [INFO] ==================================================
+[2025-08-17T18:08:29.908Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T18:08:29.913Z] [INFO] ==================================================
+[2025-08-17T18:08:29.913Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T18:08:29.913Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T18:08:29.913Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T18:08:30.060Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:08:30.060Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NDExMCwiZXhwIjoxNzU1NTQwNTEwfQ.2BvdFkmdpYkyRVSt4GLpke6pSNBrYH3DJROmcelXga0","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NDExMCwiZXhwIjoxNzU2MDU4OTEwfQ.99X09srVUeAROgRi2UhmgB0y7sPa0kaerDmul0OXqMk","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T02:08:30.053666"},"success":true,"message":"登录成功","timestamp":"2025-08-18T02:08:30.055077"}
+[2025-08-17T18:08:30.060Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T18:08:31.062Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T18:08:31.063Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T18:08:31.079Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:08:31.079Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T18:08:31.079Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T18:08:31.079Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T18:08:31.080Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:08:31.089Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:08:31.089Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:08:31.089Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:08:31.097Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:08:31.097Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:08:31.097Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T18:08:31.098Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T18:08:31.098Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:08:31.107Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:08:31.107Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:08:31.107Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755454111105}
+[2025-08-17T18:08:31.107Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:08:31.117Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:08:31.117Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:08:31.117Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755454111115}
+[2025-08-17T18:08:31.117Z] [FAIL] ❌ 逐题查看答案对比: FAILED - 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:08:31.118Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T18:08:31.118Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:08:31.125Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:08:31.125Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:08:31.125Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755454111124}
+[2025-08-17T18:08:31.126Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:08:31.133Z] [DEBUG] 请求失败: Request failed with status code 403
+[2025-08-17T18:08:31.133Z] [DEBUG] 错误响应状态: 403
+[2025-08-17T18:08:31.133Z] [DEBUG] 错误响应数据: {"code":"ACCESS_DENIED","message":"访问被拒绝：Access Denied","timestamp":1755454111131}
+[2025-08-17T18:08:31.133Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440104; 无法获取作业信息进行视频检查: 660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:08:31.145Z] [INFO] ==================================================
+[2025-08-17T18:08:31.145Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T18:08:31.145Z] [INFO] 总测试数: 5
+[2025-08-17T18:08:31.145Z] [INFO] 通过测试: 4
+[2025-08-17T18:08:31.145Z] [INFO] 失败测试: 1
+[2025-08-17T18:08:31.145Z] [INFO] 成功率: 80.00%
+[2025-08-17T18:08:31.145Z] [INFO] 测试时长: 1秒
+[2025-08-17T18:08:31.145Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T18:08:31.145Z] [INFO] ==================================================
+[2025-08-17T18:09:33.218Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T18:09:33.220Z] [INFO] ==================================================
+[2025-08-17T18:09:33.221Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T18:09:33.221Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T18:09:33.221Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T18:09:33.802Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:33.803Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NDE3MywiZXhwIjoxNzU1NTQwNTczfQ.vzvMtvCoPVf09TtwN4ht7d6DPhyo1TvMNBcWo9o1Fg4","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NDE3MywiZXhwIjoxNzU2MDU4OTczfQ.eK_eAWJ0OLnAQgsXxOasWlIJhchtyuZgZ3VT5621E7E","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T02:09:33.779997"},"success":true,"message":"登录成功","timestamp":"2025-08-18T02:09:33.782714"}
+[2025-08-17T18:09:33.803Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T18:09:34.804Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T18:09:34.804Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T18:09:34.857Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:34.857Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T18:09:34.857Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T18:09:34.857Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T18:09:34.858Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:09:34.872Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:34.872Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:09:34.872Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:09:34.882Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:34.883Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:09:34.883Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T18:09:34.883Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T18:09:34.883Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:09:34.931Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:34.932Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440104","title":"Test_英语单词练习作业","description":"测试用英语单词记忆和拼写练习作业。请认真记忆单词拼写和含义","creatorId":15,"creatorUsername":"test_franchise_teacher","dueDate":"2025-08-22T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-14T00:31:15.195974","updatedAt":"2025-08-14T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}],"files":[]}
+[2025-08-17T18:09:34.932Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:09:34.956Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:34.957Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:09:34.957Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:09:34.974Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:34.974Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440101","title":"Test_数学基础练习作业","description":"测试用数学基础练习作业，包含加减乘除运算。请认真完成所有题目，注意计算准确性","creatorId":14,"creatorUsername":"test_hq_teacher","dueDate":"2025-08-25T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-16T00:31:15.195974","updatedAt":"2025-08-16T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}],"files":[]}
+[2025-08-17T18:09:34.974Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:09:34.990Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:34.990Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:09:34.990Z] [PASS] ✅ 逐题查看答案对比: PASSED - 作业"Test_英语单词练习作业"：可查看学生答案内容; 作业"Test_数学基础练习作业"：可查看学生答案内容
+[2025-08-17T18:09:34.990Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T18:09:34.991Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:09:35.015Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:35.015Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440104","title":"Test_英语单词练习作业","description":"测试用英语单词记忆和拼写练习作业。请认真记忆单词拼写和含义","creatorId":15,"creatorUsername":"test_franchise_teacher","dueDate":"2025-08-22T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-14T00:31:15.195974","updatedAt":"2025-08-14T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}],"files":[]}
+[2025-08-17T18:09:35.016Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:09:35.030Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:09:35.030Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440101","title":"Test_数学基础练习作业","description":"测试用数学基础练习作业，包含加减乘除运算。请认真完成所有题目，注意计算准确性","creatorId":14,"creatorUsername":"test_hq_teacher","dueDate":"2025-08-25T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-16T00:31:15.195974","updatedAt":"2025-08-16T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}],"files":[]}
+[2025-08-17T18:09:35.030Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 作业"Test_英语单词练习作业"：暂无视频讲解（测试环境可接受）; 作业"Test_数学基础练习作业"：暂无视频讲解（测试环境可接受）
+[2025-08-17T18:09:35.044Z] [INFO] ==================================================
+[2025-08-17T18:09:35.044Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T18:09:35.044Z] [INFO] 总测试数: 5
+[2025-08-17T18:09:35.044Z] [INFO] 通过测试: 5
+[2025-08-17T18:09:35.044Z] [INFO] 失败测试: 0
+[2025-08-17T18:09:35.044Z] [INFO] 成功率: 100.00%
+[2025-08-17T18:09:35.044Z] [INFO] 测试时长: 2秒
+[2025-08-17T18:09:35.044Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T18:09:35.044Z] [INFO] ==================================================
+[2025-08-17T18:10:50.157Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T18:10:50.160Z] [INFO] ==================================================
+[2025-08-17T18:10:50.160Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T18:10:50.160Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T18:10:50.160Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T18:10:50.315Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:50.315Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NDI1MCwiZXhwIjoxNzU1NTQwNjUwfQ.guWLyeYEDvpYbhBVrJEJWR64O4DdVInFKCiLHxRTE6U","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NDI1MCwiZXhwIjoxNzU2MDU5MDUwfQ.1_HKoikBlrQ7_dBRMF7r9XIgSJ7NxTGF3ukNIzuyrb0","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T02:10:50.308744"},"success":true,"message":"登录成功","timestamp":"2025-08-18T02:10:50.310024"}
+[2025-08-17T18:10:50.316Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T18:10:51.318Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T18:10:51.319Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T18:10:51.349Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:51.349Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T18:10:51.349Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T18:10:51.349Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T18:10:51.349Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:10:51.364Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:51.364Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:10:51.364Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:10:51.377Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:51.377Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:10:51.377Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T18:10:51.377Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T18:10:51.377Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:10:51.395Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:51.396Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440104","title":"Test_英语单词练习作业","description":"测试用英语单词记忆和拼写练习作业。请认真记忆单词拼写和含义","creatorId":15,"creatorUsername":"test_franchise_teacher","dueDate":"2025-08-22T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-14T00:31:15.195974","updatedAt":"2025-08-14T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}],"files":[]}
+[2025-08-17T18:10:51.396Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:10:51.404Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:51.404Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:10:51.404Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:10:51.416Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:51.417Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440101","title":"Test_数学基础练习作业","description":"测试用数学基础练习作业，包含加减乘除运算。请认真完成所有题目，注意计算准确性","creatorId":14,"creatorUsername":"test_hq_teacher","dueDate":"2025-08-25T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-16T00:31:15.195974","updatedAt":"2025-08-16T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}],"files":[]}
+[2025-08-17T18:10:51.417Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:10:51.424Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:51.424Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:10:51.424Z] [PASS] ✅ 逐题查看答案对比: PASSED - 作业"Test_英语单词练习作业"：可查看学生答案内容; 作业"Test_数学基础练习作业"：可查看学生答案内容
+[2025-08-17T18:10:51.424Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T18:10:51.424Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:10:51.440Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:51.441Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440104","title":"Test_英语单词练习作业","description":"测试用英语单词记忆和拼写练习作业。请认真记忆单词拼写和含义","creatorId":15,"creatorUsername":"test_franchise_teacher","dueDate":"2025-08-22T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-14T00:31:15.195974","updatedAt":"2025-08-14T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}],"files":[]}
+[2025-08-17T18:10:51.441Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:10:51.507Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:10:51.507Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440101","title":"Test_数学基础练习作业","description":"测试用数学基础练习作业，包含加减乘除运算。请认真完成所有题目，注意计算准确性","creatorId":14,"creatorUsername":"test_hq_teacher","dueDate":"2025-08-25T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-16T00:31:15.195974","updatedAt":"2025-08-16T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}],"files":[]}
+[2025-08-17T18:10:51.507Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 作业"Test_英语单词练习作业"：暂无视频讲解（测试环境可接受）; 作业"Test_数学基础练习作业"：暂无视频讲解（测试环境可接受）
+[2025-08-17T18:10:51.543Z] [INFO] ==================================================
+[2025-08-17T18:10:51.543Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T18:10:51.543Z] [INFO] 总测试数: 5
+[2025-08-17T18:10:51.543Z] [INFO] 通过测试: 5
+[2025-08-17T18:10:51.543Z] [INFO] 失败测试: 0
+[2025-08-17T18:10:51.544Z] [INFO] 成功率: 100.00%
+[2025-08-17T18:10:51.544Z] [INFO] 测试时长: 1秒
+[2025-08-17T18:10:51.544Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T18:10:51.544Z] [INFO] ==================================================
+[2025-08-17T18:25:40.631Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T18:25:40.634Z] [INFO] ==================================================
+[2025-08-17T18:25:40.634Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T18:25:40.634Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T18:25:40.634Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T18:25:41.086Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:41.087Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NTE0MSwiZXhwIjoxNzU1NTQxNTQxfQ.go0zgMWsYaBOtkaFtJ4_gxhZwVQeOnFbU9hNmk2SgkQ","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NTE0MSwiZXhwIjoxNzU2MDU5OTQxfQ.qt9TBi6g43ZLHXOH9wNAkdu8ukp3S6RBMQD46PQ1i-U","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T02:25:41.070815"},"success":true,"message":"登录成功","timestamp":"2025-08-18T02:25:41.075876"}
+[2025-08-17T18:25:41.087Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T18:25:42.088Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T18:25:42.089Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T18:25:42.129Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:42.130Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T18:25:42.130Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T18:25:42.130Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T18:25:42.130Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:25:42.146Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:42.146Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:25:42.147Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:25:42.160Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:42.160Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:25:42.160Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T18:25:42.161Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T18:25:42.161Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:25:42.196Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:42.196Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440104","title":"Test_英语单词练习作业","description":"测试用英语单词记忆和拼写练习作业。请认真记忆单词拼写和含义","creatorId":15,"creatorUsername":"test_franchise_teacher","dueDate":"2025-08-22T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-14T00:31:15.195974","updatedAt":"2025-08-14T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}],"files":[]}
+[2025-08-17T18:25:42.197Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:25:42.207Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:42.208Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:25:42.208Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:25:42.226Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:42.227Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440101","title":"Test_数学基础练习作业","description":"测试用数学基础练习作业，包含加减乘除运算。请认真完成所有题目，注意计算准确性","creatorId":14,"creatorUsername":"test_hq_teacher","dueDate":"2025-08-25T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-16T00:31:15.195974","updatedAt":"2025-08-16T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}],"files":[]}
+[2025-08-17T18:25:42.227Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:25:42.236Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:42.236Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:25:42.236Z] [PASS] ✅ 逐题查看答案对比: PASSED - 作业"Test_英语单词练习作业"：可查看学生答案内容; 作业"Test_数学基础练习作业"：可查看学生答案内容
+[2025-08-17T18:25:42.236Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T18:25:42.236Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:25:42.252Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:42.252Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440104","title":"Test_英语单词练习作业","description":"测试用英语单词记忆和拼写练习作业。请认真记忆单词拼写和含义","creatorId":15,"creatorUsername":"test_franchise_teacher","dueDate":"2025-08-22T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-14T00:31:15.195974","updatedAt":"2025-08-14T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}],"files":[]}
+[2025-08-17T18:25:42.252Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:25:42.269Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:25:42.269Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440101","title":"Test_数学基础练习作业","description":"测试用数学基础练习作业，包含加减乘除运算。请认真完成所有题目，注意计算准确性","creatorId":14,"creatorUsername":"test_hq_teacher","dueDate":"2025-08-25T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-16T00:31:15.195974","updatedAt":"2025-08-16T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}],"files":[]}
+[2025-08-17T18:25:42.269Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 作业"Test_英语单词练习作业"：暂无视频讲解（测试环境可接受）; 作业"Test_数学基础练习作业"：暂无视频讲解（测试环境可接受）
+[2025-08-17T18:25:42.310Z] [INFO] ==================================================
+[2025-08-17T18:25:42.310Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T18:25:42.310Z] [INFO] 总测试数: 5
+[2025-08-17T18:25:42.310Z] [INFO] 通过测试: 5
+[2025-08-17T18:25:42.310Z] [INFO] 失败测试: 0
+[2025-08-17T18:25:42.310Z] [INFO] 成功率: 100.00%
+[2025-08-17T18:25:42.310Z] [INFO] 测试时长: 2秒
+[2025-08-17T18:25:42.310Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T18:25:42.310Z] [INFO] ==================================================
+[2025-08-17T18:29:45.800Z] [INFO] 开始执行 Sprint 4 验收测试
+[2025-08-17T18:29:45.805Z] [INFO] ==================================================
+[2025-08-17T18:29:45.805Z] [INFO] 开始测试：学员身份登录
+[2025-08-17T18:29:45.805Z] [DEBUG] 发送请求: POST http://localhost:8080/api/auth/login
+[2025-08-17T18:29:45.805Z] [DEBUG] 请求数据: {"usernameOrEmail":"test_student1","password":"password123"}
+[2025-08-17T18:29:46.096Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:46.096Z] [DEBUG] 响应数据: {"data":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NTM4NiwiZXhwIjoxNzU1NTQxNzg2fQ.3F7s6jucFUKjqIRGZ6KDlVP4uekA_AzAP2UbUIh47r8","refreshToken":"eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwic3ViIjoidGVzdF9zdHVkZW50MSIsImlhdCI6MTc1NTQ1NTM4NiwiZXhwIjoxNzU2MDYwMTg2fQ.cg_ZEsKcqJ4JRljOcXyeZxTzHOCx9zX9wnl8onhLDb8","tokenType":"Bearer","expiresIn":86400000,"refreshExpiresIn":604800000,"userId":16,"username":"test_student1","email":"student1@test.wanli.com","roles":["ROLE_STUDENT"],"lastLoginAt":"2025-08-18T02:29:46.088849"},"success":true,"message":"登录成功","timestamp":"2025-08-18T02:29:46.090549"}
+[2025-08-17T18:29:46.096Z] [PASS] ✅ 学员登录: PASSED - 成功获取JWT token，用户角色: ROLE_STUDENT
+[2025-08-17T18:29:47.098Z] [INFO] 开始测试：查找已批改作业
+[2025-08-17T18:29:47.100Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/my-submissions
+[2025-08-17T18:29:47.205Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:47.206Z] [DEBUG] 响应数据: [{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"},{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}]
+[2025-08-17T18:29:47.206Z] [PASS] ✅ 查找已批改作业: PASSED - 找到 2 个已批改的作业提交
+[2025-08-17T18:29:47.206Z] [INFO] 开始测试：查看总分和教师评语
+[2025-08-17T18:29:47.206Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:29:47.228Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:47.229Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:29:47.229Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:29:47.236Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:47.236Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:29:47.236Z] [PASS] ✅ 查看总分和教师评语: PASSED - 作业"Test_英语单词练习作业"：分数 95，评语: "单词拼写完全正确，记忆效果很好！"; 作业"Test_数学基础练习作业"：分数 85，评语: "计算正确，但需要注意书写格式。"
+[2025-08-17T18:29:47.236Z] [INFO] 开始测试：逐题查看答案对比
+[2025-08-17T18:29:47.237Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:29:47.248Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:47.248Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440104","title":"Test_英语单词练习作业","description":"测试用英语单词记忆和拼写练习作业。请认真记忆单词拼写和含义","creatorId":15,"creatorUsername":"test_franchise_teacher","dueDate":"2025-08-22T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-14T00:31:15.195974","updatedAt":"2025-08-14T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}],"files":[]}
+[2025-08-17T18:29:47.248Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440004
+[2025-08-17T18:29:47.255Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:47.255Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}
+[2025-08-17T18:29:47.255Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:29:47.267Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:47.267Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440101","title":"Test_数学基础练习作业","description":"测试用数学基础练习作业，包含加减乘除运算。请认真完成所有题目，注意计算准确性","creatorId":14,"creatorUsername":"test_hq_teacher","dueDate":"2025-08-25T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-16T00:31:15.195974","updatedAt":"2025-08-16T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}],"files":[]}
+[2025-08-17T18:29:47.267Z] [DEBUG] 发送请求: GET http://localhost:8080/api/submissions/770e8400-e29b-41d4-a716-446655440001
+[2025-08-17T18:29:47.273Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:47.273Z] [DEBUG] 响应数据: {"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}
+[2025-08-17T18:29:47.273Z] [PASS] ✅ 逐题查看答案对比: PASSED - 作业"Test_英语单词练习作业"：可查看学生答案内容; 作业"Test_数学基础练习作业"：可查看学生答案内容
+[2025-08-17T18:29:47.274Z] [INFO] 开始测试：视频讲解功能
+[2025-08-17T18:29:47.274Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440104
+[2025-08-17T18:29:47.285Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:47.285Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440104","title":"Test_英语单词练习作业","description":"测试用英语单词记忆和拼写练习作业。请认真记忆单词拼写和含义","creatorId":15,"creatorUsername":"test_franchise_teacher","dueDate":"2025-08-22T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-14T00:31:15.195974","updatedAt":"2025-08-14T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440004","assignmentId":"660e8400-e29b-41d4-a716-446655440104","assignmentTitle":"Test_英语单词练习作业","studentId":16,"studentUsername":"test_student1","content":"apple - 苹果\\nbook - 书\\ncat - 猫\\ndog - 狗\\nhouse - 房子","score":95,"feedback":"单词拼写完全正确，记忆效果很好！","status":"GRADED","submittedAt":"2024-01-18T08:45:00","gradedAt":"2024-01-18T17:10:00"}],"files":[]}
+[2025-08-17T18:29:47.285Z] [DEBUG] 发送请求: GET http://localhost:8080/api/assignments/660e8400-e29b-41d4-a716-446655440101
+[2025-08-17T18:29:47.295Z] [DEBUG] 响应状态: 200
+[2025-08-17T18:29:47.295Z] [DEBUG] 响应数据: {"id":"660e8400-e29b-41d4-a716-446655440101","title":"Test_数学基础练习作业","description":"测试用数学基础练习作业，包含加减乘除运算。请认真完成所有题目，注意计算准确性","creatorId":14,"creatorUsername":"test_hq_teacher","dueDate":"2025-08-25T00:31:15.195974","totalScore":100,"status":"PUBLISHED","createdAt":"2025-08-16T00:31:15.195974","updatedAt":"2025-08-16T00:31:15.195974","submissions":[{"id":"770e8400-e29b-41d4-a716-446655440001","assignmentId":"660e8400-e29b-41d4-a716-446655440101","assignmentTitle":"Test_数学基础练习作业","studentId":16,"studentUsername":"test_student1","content":"第一题答案：5+3=8\\n第二题答案：10-4=6\\n第三题答案：7×2=14","score":85,"feedback":"计算正确，但需要注意书写格式。","status":"GRADED","submittedAt":"2024-01-15T10:30:00","gradedAt":"2024-01-15T14:20:00"}],"files":[]}
+[2025-08-17T18:29:47.295Z] [PASS] ✅ 视频讲解功能: PASSED - 测试环境下的视频功能检查: 作业"Test_英语单词练习作业"：暂无视频讲解（测试环境可接受）; 作业"Test_数学基础练习作业"：暂无视频讲解（测试环境可接受）
+[2025-08-17T18:29:47.324Z] [INFO] ==================================================
+[2025-08-17T18:29:47.324Z] [INFO] Sprint 4 验收测试完成
+[2025-08-17T18:29:47.324Z] [INFO] 总测试数: 5
+[2025-08-17T18:29:47.324Z] [INFO] 通过测试: 5
+[2025-08-17T18:29:47.324Z] [INFO] 失败测试: 0
+[2025-08-17T18:29:47.324Z] [INFO] 成功率: 100.00%
+[2025-08-17T18:29:47.324Z] [INFO] 测试时长: 1秒
+[2025-08-17T18:29:47.324Z] [INFO] 报告已保存到: /Users/wujames/Downloads/wanliRepo/integration-tests/reports/sprint4-acceptance-report.html
+[2025-08-17T18:29:47.324Z] [INFO] ==================================================

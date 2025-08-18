@@ -1,0 +1,46 @@
+{
+  "totalTests": 5,
+  "passedTests": 1,
+  "failedTests": 4,
+  "tests": [
+    {
+      "name": "视频播放器存在性检查",
+      "passed": false,
+      "details": "视频播放器组件: false, video元素: false",
+      "screenshot": "screenshots/video_player_check_1755503882842.png",
+      "timestamp": "2025-08-18T07:58:02.962Z"
+    },
+    {
+      "name": "视频URL加载检查",
+      "passed": false,
+      "details": "视频URL为空或未设置",
+      "screenshot": "screenshots/video_url_check_1755503882966.png",
+      "timestamp": "2025-08-18T07:58:03.054Z"
+    },
+    {
+      "name": "视频加载状态检查",
+      "passed": false,
+      "details": "视频元素不存在",
+      "screenshot": "screenshots/video_loading_state_1755503883054.png",
+      "timestamp": "2025-08-18T07:58:03.145Z"
+    },
+    {
+      "name": "视频播放控制检查",
+      "passed": false,
+      "details": "视频控制条不可用或视频元素不存在",
+      "screenshot": "screenshots/video_controls_test_1755503883145.png",
+      "timestamp": "2025-08-18T07:58:03.240Z"
+    },
+    {
+      "name": "视频错误处理检查",
+      "passed": true,
+      "details": "错误处理元素: 0, 无视频提示: 0, 视频错误: 无",
+      "screenshot": "screenshots/video_error_handling_1755503883240.png",
+      "timestamp": "2025-08-18T07:58:03.344Z"
+    }
+  ],
+  "startTime": "2025-08-18T07:57:46.330Z",
+  "endTime": "2025-08-18T07:58:03.444Z",
+  "duration": "17.11秒",
+  "successRate": "20.0%"
+}
