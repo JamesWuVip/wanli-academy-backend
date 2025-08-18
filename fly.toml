@@ -7,7 +7,6 @@ primary_region = "sin"
   builder = "paketobuildpacks/builder-jammy-base:latest"
   [build.args]
     BP_MAVEN_BUILT_MODULE = "backend"
-    BP_MAVEN_BUILD_ARGUMENTS = "-Dmaven.test.skip=true package"
 
 [env]
   BPL_JVM_THREAD_COUNT = "50"
