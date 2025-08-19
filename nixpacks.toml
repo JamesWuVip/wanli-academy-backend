@@ -2,10 +2,13 @@
 nixPkgs = ["jdk17", "maven"]
 
 [phases.build]
-cmds = ["mvn clean compile", "mvn package -DskipTests"]
+cmds = ["mvn clean package -DskipTests -X"]
 
 [phases.install]
-cmds = ["find target/ -name '*.jar' -type f"]
+cmds = ["ls -la", "test -d target && find target/ -name '*.jar' -type f || echo 'No target directory found'"]
+
+[variables]
+MAVEN_OPTS = "-Xmx512m"
 
 [start]
 cmd = "java -Xmx300m -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dserver.port=$PORT -Dspring.profiles.active=production -jar $(find target/ -name '*.jar' -type f | head -1)"
