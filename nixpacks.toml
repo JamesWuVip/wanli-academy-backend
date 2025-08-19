@@ -1,29 +1,15 @@
 [phases.setup]
-nixPkgs = ["jdk17", "maven"]
+nixPkgs = ['maven', 'openjdk17']
 
 [phases.build]
 cmds = [
-  "echo 'Starting Maven build...'",
-  "java -version",
-  "mvn -version",
-  "ls -la",
-  "cat pom.xml | head -20",
-  "mvn clean compile -e -X",
-  "ls -la target/ || echo 'Target directory not created after compile'",
-  "mvn package -DskipTests -e -X",
-  "ls -la target/ || echo 'Target directory not found after package'"
+    'mvn clean compile -DskipTests',
+    'mvn package -DskipTests'
 ]
-
-[phases.install]
-cmds = [
-  "pwd",
-  "ls -la",
-  "if [ -d target ]; then echo 'Target directory exists'; ls -la target/; find target/ -name '*.jar' -type f; else echo 'ERROR: Target directory does not exist'; exit 1; fi"
-]
-
-[variables]
-MAVEN_OPTS = "-Xmx1024m -XX:MaxMetaspaceSize=256m"
-JAVA_OPTS = "-Xmx512m"
 
 [start]
-cmd = "java $JAVA_OPTS -jar target/*.jar"
+cmd = 'java -jar target/wanli-academy-backend-0.0.1-SNAPSHOT.jar'
+
+[variables]
+MAVEN_OPTS = '-Xmx1024m'
+JAVA_OPTS = '-Xmx512m -Dfile.encoding=UTF-8 -Duser.timezone=Asia/Shanghai'
