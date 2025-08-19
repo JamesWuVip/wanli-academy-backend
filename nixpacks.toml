@@ -2,13 +2,28 @@
 nixPkgs = ["jdk17", "maven"]
 
 [phases.build]
-cmds = ["mvn clean package -DskipTests -X"]
+cmds = [
+  "echo 'Starting Maven build...'",
+  "java -version",
+  "mvn -version",
+  "ls -la",
+  "cat pom.xml | head -20",
+  "mvn clean compile -e -X",
+  "ls -la target/ || echo 'Target directory not created after compile'",
+  "mvn package -DskipTests -e -X",
+  "ls -la target/ || echo 'Target directory not found after package'"
+]
 
 [phases.install]
-cmds = ["ls -la", "test -d target && find target/ -name '*.jar' -type f || echo 'No target directory found'"]
+cmds = [
+  "pwd",
+  "ls -la",
+  "if [ -d target ]; then echo 'Target directory exists'; ls -la target/; find target/ -name '*.jar' -type f; else echo 'ERROR: Target directory does not exist'; exit 1; fi"
+]
 
 [variables]
-MAVEN_OPTS = "-Xmx512m"
+MAVEN_OPTS = "-Xmx1024m -XX:MaxMetaspaceSize=256m"
+JAVA_OPTS = "-Xmx512m"
 
 [start]
-cmd = "java -Xmx300m -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dserver.port=$PORT -Dspring.profiles.active=production -jar $(find target/ -name '*.jar' -type f | head -1)"
+cmd = "java $JAVA_OPTS -jar target/*.jar"
