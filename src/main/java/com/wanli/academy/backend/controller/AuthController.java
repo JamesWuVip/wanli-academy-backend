@@ -28,10 +28,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 认证控制器
- * 处理用户注册、登录、令牌刷新等认证相关的HTTP请求
+ * Authentication Controller
+ * Handles user registration, login, token refresh and other authentication-related HTTP requests
  */
-@Tag(name = "用户认证", description = "用户认证相关的API端点，包括注册、登录、令牌刷新等")
+@Tag(name = "User Authentication", description = "User authentication related API endpoints, including registration, login, token refresh, etc.")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -42,21 +42,21 @@ public class AuthController {
     private AuthService authService;
     
     /**
-     * 用户注册
+     * User Registration
      * POST /api/auth/register
      * 
-     * @param registerRequest 注册请求，包含用户名、邮箱、密码等信息
-     * @param bindingResult 验证结果
-     * @return 注册响应，包含用户信息和JWT令牌
+     * @param registerRequest registration request containing username, email, password and other information
+     * @param bindingResult validation result
+     * @return registration response containing user information and JWT token
      */
     @Operation(
-        summary = "用户注册",
-        description = "创建新用户账户，需要提供用户名、邮箱、密码等信息。注册成功后返回用户信息和访问令牌。"
+        summary = "User Registration",
+        description = "Create new user account, requires username, email, password and other information. Returns user information and access token upon successful registration."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "201",
-            description = "注册成功",
+            description = "Registration successful",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = AuthResponse.class)
@@ -64,21 +64,21 @@ public class AuthController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "请求参数无效或用户名/邮箱已存在"
+            description = "Invalid request parameters or username/email already exists"
         ),
         @ApiResponse(
             responseCode = "409",
-            description = "用户名或邮箱已被使用"
+            description = "Username or email already in use"
         )
     })
     @PostMapping("/register")
     public ResponseEntity<?> register(
-            @Parameter(description = "用户注册请求信息", required = true)
+            @Parameter(description = "User registration request information", required = true)
             @Valid @RequestBody RegisterRequest registerRequest,
                                     BindingResult bindingResult) {
-        logger.info("收到用户注册请求，用户名: {}", registerRequest.getUsername());
+        logger.info("Received user registration request, username: {}", registerRequest.getUsername());
         
-        // 检查请求参数验证结果
+        // Check request parameter validation results
         if (bindingResult.hasErrors()) {
             Map<String, Object> errorResponse = createValidationErrorResponse(bindingResult);
             return ResponseEntity.badRequest().body(errorResponse);
@@ -89,15 +89,15 @@ public class AuthController {
             
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("message", "用户注册成功");
+            response.put("message", "User registration successful");
             response.put("data", authResponse);
             response.put("timestamp", LocalDateTime.now());
             
-            logger.info("用户注册成功，用户名: {}", registerRequest.getUsername());
+            logger.info("User registration successful, username: {}", registerRequest.getUsername());
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
             
         } catch (RuntimeException e) {
-            logger.error("用户注册失败: {}", e.getMessage());
+            logger.error("User registration failed: {}", e.getMessage());
             
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
@@ -109,20 +109,20 @@ public class AuthController {
     }
     
     /**
-     * 用户登录
+     * User Login
      * POST /api/auth/login
      * 
-     * @param loginRequest 登录请求，包含用户名和密码
-     * @return 登录响应，包含用户信息和JWT令牌
+     * @param loginRequest login request containing username and password
+     * @return login response containing user information and JWT token
      */
     @Operation(
-        summary = "用户登录",
-        description = "用户使用用户名和密码进行登录认证。登录成功后返回用户信息和访问令牌。"
+        summary = "User Login",
+        description = "User authentication using username and password. Returns user information and access token upon successful login."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "登录成功",
+            description = "Login successful",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = AuthResponse.class)
@@ -130,26 +130,26 @@ public class AuthController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "请求参数无效"
+            description = "Invalid request parameters"
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "用户名或密码错误"
+            description = "Incorrect username or password"
         )
     })
     @PostMapping("/login")
     public ResponseEntity<?> login(
-            @Parameter(description = "用户登录请求信息", required = true)
+            @Parameter(description = "User login request information", required = true)
             @Valid @RequestBody LoginRequest loginRequest,
                                  BindingResult bindingResult,
                                  HttpServletRequest request) {
-        logger.info("收到用户登录请求，用户名或邮箱: {}", loginRequest.getUsernameOrEmail());
-        logger.info("请求Content-Type: {}", request.getContentType());
-        logger.info("LoginRequest对象: usernameOrEmail={}, password={}", 
+        logger.info("Received user login request, username or email: {}", loginRequest.getUsernameOrEmail());
+        logger.info("Request Content-Type: {}", request.getContentType());
+        logger.info("LoginRequest object: usernameOrEmail={}, password={}", 
                    loginRequest.getUsernameOrEmail(), 
-                   loginRequest.getPassword() != null ? "[已设置]" : "[未设置]");
+                   loginRequest.getPassword() != null ? "[SET]" : "[NOT SET]");
         
-        // 检查请求参数验证结果
+        // Check request parameter validation results
         if (bindingResult.hasErrors()) {
             Map<String, Object> errorResponse = createValidationErrorResponse(bindingResult);
             return ResponseEntity.badRequest().body(errorResponse);
@@ -160,15 +160,15 @@ public class AuthController {
             
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("message", "登录成功");
+            response.put("message", "Login successful");
             response.put("data", authResponse);
             response.put("timestamp", LocalDateTime.now());
             
-            logger.info("用户登录成功，用户名或邮箱: {}", loginRequest.getUsernameOrEmail());
+            logger.info("User login successful, username or email: {}", loginRequest.getUsernameOrEmail());
             return ResponseEntity.ok(response);
             
         } catch (RuntimeException e) {
-            logger.error("用户登录失败: {}", e.getMessage());
+            logger.error("User login failed: {}", e.getMessage());
             
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
@@ -180,20 +180,20 @@ public class AuthController {
     }
     
     /**
-     * 刷新访问令牌
+     * Refresh Access Token
      * POST /api/auth/refresh
      * 
-     * @param refreshTokenRequest 刷新令牌请求，包含刷新令牌
-     * @return 新的访问令牌和刷新令牌
+     * @param refreshTokenRequest refresh token request containing refresh token
+     * @return new access token and refresh token
      */
     @Operation(
-        summary = "刷新访问令牌",
-        description = "使用刷新令牌获取新的访问令牌。当访问令牌过期时使用此接口。"
+        summary = "Refresh Access Token",
+        description = "Use refresh token to get new access token. Use this interface when access token expires."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "令牌刷新成功",
+            description = "Token refresh successful",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = AuthResponse.class)
@@ -201,21 +201,21 @@ public class AuthController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "请求参数无效"
+            description = "Invalid request parameters"
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "刷新令牌无效或已过期"
+            description = "Invalid or expired refresh token"
         )
     })
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(
-            @Parameter(description = "刷新令牌请求信息", required = true)
+            @Parameter(description = "Refresh token request information", required = true)
             @Valid @RequestBody RefreshTokenRequest refreshTokenRequest,
                                         BindingResult bindingResult) {
-        logger.info("收到刷新令牌请求");
+        logger.info("Received refresh token request");
         
-        // 检查请求参数验证结果
+        // Check request parameter validation results
         if (bindingResult.hasErrors()) {
             Map<String, Object> errorResponse = createValidationErrorResponse(bindingResult);
             return ResponseEntity.badRequest().body(errorResponse);
@@ -226,15 +226,15 @@ public class AuthController {
             
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("message", "令牌刷新成功");
+            response.put("message", "Token refresh successful");
             response.put("data", authResponse);
             response.put("timestamp", LocalDateTime.now());
             
-            logger.info("令牌刷新成功");
+            logger.info("Token refresh successful");
             return ResponseEntity.ok(response);
             
         } catch (RuntimeException e) {
-            logger.error("令牌刷新失败: {}", e.getMessage());
+            logger.error("Token refresh failed: {}", e.getMessage());
             
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
@@ -246,18 +246,18 @@ public class AuthController {
     }
     
     /**
-     * 检查用户名是否可用
-     * @param username 用户名
-     * @return 可用性检查结果
+     * Check if username is available
+     * @param username username
+     * @return availability check result
      */
     @Operation(
-        summary = "检查用户名可用性",
-        description = "检查指定的用户名是否已被使用。用于注册前的用户名验证。"
+        summary = "Check Username Availability",
+        description = "Check if the specified username is already in use. Used for username validation before registration."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "检查完成",
+            description = "Check completed",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = Object.class)
@@ -265,19 +265,19 @@ public class AuthController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "请求参数无效"
+            description = "Invalid request parameters"
         )
     })
     @GetMapping("/check-username")
     public ResponseEntity<?> checkUsername(
-            @Parameter(description = "用户名", required = true)
+            @Parameter(description = "Username", required = true)
             @RequestParam String username) {
-        logger.info("检查用户名可用性: {}", username);
+        logger.info("Checking username availability: {}", username);
         
         if (username == null || username.trim().isEmpty()) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
-            errorResponse.put("message", "用户名不能为空");
+            errorResponse.put("message", "Username cannot be empty");
             errorResponse.put("timestamp", LocalDateTime.now());
             
             return ResponseEntity.badRequest().body(errorResponse);
@@ -288,27 +288,27 @@ public class AuthController {
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("available", available);
-        response.put("message", available ? "用户名可用" : "用户名已存在");
+        response.put("message", available ? "Username is available" : "Username already exists");
         response.put("timestamp", LocalDateTime.now());
         
         return ResponseEntity.ok(response);
     }
     
     /**
-     * 检查邮箱是否可用
+     * Check if email is available
      * GET /api/auth/check-email
      * 
-     * @param email 邮箱地址
-     * @return 可用性检查结果
+     * @param email email address
+     * @return availability check result
      */
     @Operation(
-        summary = "检查邮箱可用性",
-        description = "检查指定的邮箱地址是否已被使用。用于注册前的邮箱验证。"
+        summary = "Check Email Availability",
+        description = "Check if the specified email address is already in use. Used for email validation before registration."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "检查完成",
+            description = "Check completed",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = Object.class)
@@ -316,19 +316,19 @@ public class AuthController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "请求参数无效"
+            description = "Invalid request parameters"
         )
     })
     @GetMapping("/check-email")
     public ResponseEntity<?> checkEmail(
-            @Parameter(description = "邮箱地址", required = true)
+            @Parameter(description = "Email address", required = true)
             @RequestParam String email) {
-        logger.info("检查邮箱可用性: {}", email);
+        logger.info("Checking email availability: {}", email);
         
         if (email == null || email.trim().isEmpty()) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
-            errorResponse.put("message", "邮箱不能为空");
+            errorResponse.put("message", "Email cannot be empty");
             errorResponse.put("timestamp", LocalDateTime.now());
             
             return ResponseEntity.badRequest().body(errorResponse);
@@ -339,21 +339,38 @@ public class AuthController {
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("available", available);
-        response.put("message", available ? "邮箱可用" : "邮箱已存在");
+        response.put("message", available ? "Email is available" : "Email already exists");
         response.put("timestamp", LocalDateTime.now());
         
         return ResponseEntity.ok(response);
     }
     
     /**
-     * 健康检查端点
-     * @return 服务状态
+     * Health check endpoint
+     * GET /api/auth/health
+     * 
+     * @return service status information
      */
+    @Operation(
+        summary = "Health Check",
+        description = "Check the health status of the authentication service"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Service is healthy",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = Object.class)
+            )
+        )
+    })
     @GetMapping("/health")
     public ResponseEntity<?> health() {
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
-        response.put("message", "认证服务运行正常");
+        response.put("status", "healthy");
+        response.put("message", "Authentication service is running normally");
         response.put("timestamp", LocalDateTime.now());
         response.put("service", "auth-service");
         response.put("version", "1.0.0");
@@ -362,22 +379,22 @@ public class AuthController {
     }
     
     /**
-     * 创建验证错误响应
-     * @param bindingResult 验证结果
-     * @return 错误响应Map
+     * Create validation error response
+     * @param bindingResult validation result
+     * @return error response Map
      */
     private Map<String, Object> createValidationErrorResponse(BindingResult bindingResult) {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("success", false);
-        errorResponse.put("message", "请求参数验证失败");
+        errorResponse.put("message", "Request parameter validation failed");
         errorResponse.put("timestamp", LocalDateTime.now());
         
-        // 收集所有验证错误
+        // Collect all validation errors
         Map<String, String> fieldErrors = bindingResult.getFieldErrors().stream()
             .collect(Collectors.toMap(
                 fieldError -> fieldError.getField(),
                 fieldError -> fieldError.getDefaultMessage(),
-                (existing, replacement) -> existing // 如果有重复的字段，保留第一个错误信息
+                (existing, replacement) -> existing // If there are duplicate fields, keep the first error message
             ));
         
         errorResponse.put("errors", fieldErrors);
@@ -386,17 +403,17 @@ public class AuthController {
     }
     
     /**
-     * 全局异常处理
-     * @param e 异常
-     * @return 错误响应
+     * Global exception handling
+     * @param e exception
+     * @return error response
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e) {
-        logger.error("认证控制器发生未处理异常: {}", e.getMessage(), e);
+        logger.error("Unhandled exception in authentication controller: ", e);
         
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("success", false);
-        errorResponse.put("message", "服务器内部错误");
+        errorResponse.put("message", "Internal server error");
         errorResponse.put("timestamp", LocalDateTime.now());
         
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);

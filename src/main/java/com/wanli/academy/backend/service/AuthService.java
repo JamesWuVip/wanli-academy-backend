@@ -26,8 +26,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 认证服务类
- * 处理用户注册、登录、令牌刷新等认证相关业务逻辑
+ * Authentication Service
+ * Handles user registration, login, token refresh and other authentication related business logic
  */
 @Service
 @Transactional
@@ -60,21 +60,21 @@ public class AuthService {
      * @throws RuntimeException 当用户名或邮箱已存在时抛出异常
      */
     public AuthResponse register(RegisterRequest registerRequest) {
-        logger.info("开始用户注册流程，用户名: {}", registerRequest.getUsername());
+        logger.info("Starting user registration process, username: {}", registerRequest.getUsername());
         
-        // 检查用户名是否已存在
+        // Check if username already exists
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
-            logger.warn("注册失败：用户名已存在 - {}", registerRequest.getUsername());
-            throw new RuntimeException("用户名已存在");
+            logger.warn("Registration failed: username already exists - {}", registerRequest.getUsername());
+            throw new RuntimeException("Username already exists");
         }
         
-        // 检查邮箱是否已存在
+        // Check if email already exists
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
-            logger.warn("注册失败：邮箱已存在 - {}", registerRequest.getEmail());
-            throw new RuntimeException("邮箱已存在");
+            logger.warn("Registration failed: email already exists - {}", registerRequest.getEmail());
+            throw new RuntimeException("Email already exists");
         }
         
-        // 创建新用户
+        // Create new user
         User user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
@@ -84,37 +84,37 @@ public class AuthService {
         user.setPhoneNumber(registerRequest.getPhoneNumber());
         user.setIsActive(true);
         
-        // 分配默认角色（ROLE_STUDENT）
+        // Assign default role (ROLE_STUDENT)
         Optional<Role> studentRole = roleRepository.findByName("ROLE_STUDENT");
         if (studentRole.isPresent()) {
             user.addRole(studentRole.get());
         } else {
-            logger.warn("默认角色 'ROLE_STUDENT' 不存在，创建新角色");
-            Role newStudentRole = new Role("ROLE_STUDENT", "学生");
+            logger.warn("Default role 'ROLE_STUDENT' does not exist, creating new role");
+            Role newStudentRole = new Role("ROLE_STUDENT", "Student");
             newStudentRole.setIsActive(true);
             roleRepository.save(newStudentRole);
             user.addRole(newStudentRole);
         }
         
-        // 保存用户
+        // Save user
         User savedUser = userRepository.save(user);
-        logger.info("用户注册成功，用户ID: {}", savedUser.getId());
+        logger.info("User registration successful, user ID: {}", savedUser.getId());
         
-        // 生成JWT令牌
+        // Generate JWT token
         return generateAuthResponse(savedUser);
     }
     
     /**
-     * 用户登录
-     * @param loginRequest 登录请求
-     * @return 认证响应
-     * @throws RuntimeException 当认证失败时抛出异常
+     * User login
+     * @param loginRequest login request
+     * @return authentication response
+     * @throws RuntimeException when authentication fails
      */
     public AuthResponse login(LoginRequest loginRequest) {
-        logger.info("开始用户登录流程，用户名或邮箱: {}", loginRequest.getUsernameOrEmail());
+        logger.info("Starting user login process, username or email: {}", loginRequest.getUsernameOrEmail());
         
         try {
-            // 进行身份验证
+            // Perform authentication
             Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                     loginRequest.getUsernameOrEmail(),
@@ -122,82 +122,82 @@ public class AuthService {
                 )
             );
             
-            // 获取用户信息
+            // Get user information
             String usernameOrEmail = loginRequest.getUsernameOrEmail();
             User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(() -> new RuntimeException("用户不存在"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
             
-            // 检查用户是否激活
+            // Check if user is active
             if (!user.getIsActive()) {
-                logger.warn("登录失败：用户账户已被禁用 - {}", usernameOrEmail);
-                throw new RuntimeException("用户账户已被禁用");
+                logger.warn("Login failed: user account is disabled - {}", usernameOrEmail);
+                throw new RuntimeException("User account is disabled");
             }
             
-            // 更新最后登录时间
+            // Update last login time
             user.setUpdatedAt(LocalDateTime.now());
             userRepository.save(user);
             
-            logger.info("用户登录成功，用户ID: {}", user.getId());
+            logger.info("User login successful, user ID: {}", user.getId());
             
-            // 生成JWT令牌
+            // Generate JWT token
             return generateAuthResponse(user);
             
         } catch (AuthenticationException e) {
-            logger.error("登录失败：认证异常 - {}", e.getMessage());
-            throw new RuntimeException("用户名或密码错误");
+            logger.error("Login failed: authentication exception - {}", e.getMessage());
+            throw new RuntimeException("Invalid username or password");
         }
     }
     
     /**
-     * 刷新访问令牌
-     * @param refreshToken 刷新令牌
-     * @return 新的认证响应
-     * @throws RuntimeException 当刷新令牌无效时抛出异常
+     * Refresh access token
+     * @param refreshToken refresh token
+     * @return new authentication response
+     * @throws RuntimeException when refresh token is invalid
      */
     public AuthResponse refreshToken(String refreshToken) {
-        logger.info("开始刷新令牌流程");
+        logger.info("Starting token refresh process");
         
         try {
-            // 验证刷新令牌
+            // Validate refresh token
             if (!jwtService.isTokenValid(refreshToken)) {
-                logger.warn("刷新令牌无效或已过期");
-                throw new RuntimeException("刷新令牌无效或已过期");
+                logger.warn("Refresh token is invalid or expired");
+                throw new RuntimeException("Refresh token is invalid or expired");
             }
             
-            // 从令牌中提取用户名
+            // Extract username from token
             String username = jwtService.extractUsername(refreshToken);
             
-            // 获取用户信息
+            // Get user information
             User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("用户不存在"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
             
-            // 检查用户是否激活
+            // Check if user is active
             if (!user.getIsActive()) {
-                logger.warn("刷新令牌失败：用户账户已被禁用 - {}", username);
-                throw new RuntimeException("用户账户已被禁用");
+                logger.warn("Token refresh failed: user account is disabled - {}", username);
+                throw new RuntimeException("User account is disabled");
             }
             
-            logger.info("令牌刷新成功，用户ID: {}", user.getId());
+            logger.info("Token refresh successful, user ID: {}", user.getId());
             
-            // 生成新的JWT令牌
+            // Generate new JWT token
             return generateAuthResponse(user);
             
         } catch (Exception e) {
-            logger.error("刷新令牌失败: {}", e.getMessage());
-            throw new RuntimeException("刷新令牌失败: " + e.getMessage());
+            logger.error("Token refresh failed: {}", e.getMessage());
+            throw new RuntimeException("Token refresh failed: " + e.getMessage());
         }
     }
     
     /**
-     * 生成认证响应
-     * @param user 用户实体
-     * @return 认证响应
+     * Generate authentication response
+     * @param user user entity
+     * @return authentication response
      */
     private AuthResponse generateAuthResponse(User user) {
-        // 使用CustomUserDetailsService获取包含角色信息的UserDetails
+        // Use CustomUserDetailsService to get UserDetails with role information
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getUsername());
         
-        // 生成包含角色信息的JWT令牌
+        // Generate JWT token with role information
         String accessToken = jwtService.generateToken(userDetails);
         String refreshToken = jwtService.generateRefreshToken(userDetails);
         
@@ -223,58 +223,58 @@ public class AuthService {
     }
     
     /**
-     * 检查用户名是否可用
-     * @param username 用户名
-     * @return 是否可用
+     * Check if username is available
+     * @param username username
+     * @return whether available
      */
     public boolean isUsernameAvailable(String username) {
         return !userRepository.existsByUsername(username);
     }
     
     /**
-     * 检查邮箱是否可用
-     * @param email 邮箱
-     * @return 是否可用
+     * Check if email is available
+     * @param email email
+     * @return whether available
      */
     public boolean isEmailAvailable(String email) {
         return !userRepository.existsByEmail(email);
     }
     
     /**
-     * 根据用户名获取用户信息
-     * @param username 用户名
-     * @return 用户实体
+     * Get user information by username
+     * @param username username
+     * @return user entity
      */
     @Transactional(readOnly = true)
     public Optional<User> getUserByUsername(String username) {
         Optional<User> userOptional = userRepository.findByUsername(username);
-        // 在事务内初始化懒加载的roles关联，避免LazyInitializationException
+        // Initialize lazy-loaded roles association within transaction to avoid LazyInitializationException
         userOptional.ifPresent(user -> user.getRoles().size());
         return userOptional;
     }
     
     /**
-     * 根据用户ID获取用户信息
-     * @param userId 用户ID
-     * @return 用户实体
+     * Get user information by user ID
+     * @param userId user ID
+     * @return user entity
      */
     @Transactional(readOnly = true)
     public Optional<User> getUserById(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
-        // 在事务内初始化懒加载的roles关联，避免LazyInitializationException
+        // Initialize lazy-loaded roles association within transaction to avoid LazyInitializationException
         userOptional.ifPresent(user -> user.getRoles().size());
         return userOptional;
     }
     
     /**
-     * 获取所有用户列表
-     * @return 用户列表
+     * Get all users list
+     * @return users list
      */
     @Transactional(readOnly = true)
     public List<User> getAllUsers() {
-        logger.info("获取所有用户列表");
+        logger.info("Getting all users list");
         List<User> users = userRepository.findAll();
-        // 在事务内初始化懒加载的roles关联，避免LazyInitializationException
+        // Initialize lazy-loaded roles association within transaction to avoid LazyInitializationException
         users.forEach(user -> user.getRoles().size());
         return users;
     }
