@@ -1,37 +1,57 @@
-# .github/workflows/ci-cd.yml
-
-name: CI, Quality Scan & CD
+name: CI/CD Pipeline
 
 on:
   push:
     branches: [ main ]
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    branches: [ main ]
 
 jobs:
-  build_and_scan:
+  test:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Verify deployment readiness
-        run: |
-          echo "Deployment verification completed"
-          echo "Ready for Railway deployment"
-
-  deploy:
-    needs: build_and_scan
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Deploy to Railway
+    
+    services:
+      postgres:
+        image: postgres:13
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          # 安装 Railway CLI
-          npm install -g @railway/cli
-          # 连接到Railway项目并部署
-          railway login --token $RAILWAY_TOKEN
-          railway deploy
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    
+    - name: Run tests
+      run: mvn clean test
+      env:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
+        SPRING_DATASOURCE_USERNAME: postgres
+        SPRING_DATASOURCE_PASSWORD: postgres
+    
+    - name: Build with Maven
+      run: mvn clean package -DskipTests
+    
+    - name: Upload JAR
+      uses: actions/upload-artifact@v3
+      with:
+        name: jar-artifact
+        path: target/*.jar

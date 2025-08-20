@@ -1,10 +1,14 @@
 {
   "name": "wanli-academy-backend",
   "version": "1.0.0",
-  "description": "Wanli Academy Backend - Spring Boot Application",
+  "description": "Wanli Academy Backend Application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No Node.js tests specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesWuVip/wanli-academy-backend.git"
   },
   "keywords": [
     "spring-boot",
@@ -12,9 +16,10 @@
     "backend",
     "education"
   ],
-  "author": "JamesWu",
+  "author": "James Wu",
   "license": "MIT",
-  "devDependencies": {
-    "playwright": "^1.40.0"
-  }
+  "bugs": {
+    "url": "https://github.com/JamesWuVip/wanli-academy-backend/issues"
+  },
+  "homepage": "https://github.com/JamesWuVip/wanli-academy-backend#readme"
 }
