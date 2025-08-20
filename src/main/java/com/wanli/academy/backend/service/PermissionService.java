@@ -14,8 +14,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * 权限服务类
- * 负责处理用户权限验证和访问控制
+ * Permission service class
+ * Responsible for handling user permission verification and access control
  */
 @Service
 @Transactional(readOnly = true)
@@ -36,24 +36,24 @@ public class PermissionService {
     private AssignmentFileRepository assignmentFileRepository;
 
     /**
-     * 检查用户是否有管理员权限
-     * @return true如果用户是管理员
+     * Check if user has admin privileges
+     * @return true if user is admin
      */
     public boolean isAdmin() {
         return hasRole("ROLE_ADMIN");
     }
 
     /**
-     * 检查用户是否有教师权限
-     * @return true如果用户是教师或管理员
+     * Check if user has teacher privileges
+     * @return true if user is teacher or admin
      */
     public boolean isTeacher() {
         return hasRole("ROLE_HQ_TEACHER") || hasRole("ROLE_FRANCHISE_TEACHER") || hasRole("ROLE_ADMIN");
     }
 
     /**
-     * 检查用户是否有学生权限
-     * @return true如果用户是学生、教师或管理员
+     * Check if user has student privileges
+     * @return true if user is student, teacher or admin
      */
     public boolean isStudent() {
         logger.info("=== PermissionService.isStudent() called ===");
@@ -63,9 +63,9 @@ public class PermissionService {
     }
 
     /**
-     * 检查用户是否具有指定角色
-     * @param roleName 角色名称
-     * @return true如果用户具有该角色
+     * Check if user has specified role
+     * @param roleName role name
+     * @return true if user has the role
      */
     public boolean hasRole(String roleName) {
         logger.info("=== PermissionService.hasRole() called with roleName: {} ===", roleName);
@@ -87,9 +87,9 @@ public class PermissionService {
     }
 
     /**
-     * 检查用户是否可以访问指定作业
-     * @param assignmentId 作业ID
-     * @return true如果用户可以访问该作业
+     * Check if user can access specified assignment
+     * @param assignmentId assignment ID
+     * @return true if user can access the assignment
      */
     public boolean canAccessAssignment(UUID assignmentId) {
         System.out.println("=== PermissionService.canAccessAssignment() called ===");
@@ -110,13 +110,13 @@ public class PermissionService {
         
         logger.info("canAccessAssignment: Current user: {}, roles: {}", currentUser.getUsername(), currentUser.getRoles());
         
-        // 管理员和教师可以访问所有作业
+        // Admin and teachers can access all assignments
         if (isAdmin() || isTeacher()) {
             logger.info("canAccessAssignment: User is admin or teacher, access granted");
             return true;
         }
         
-        // 学生只能访问已发布的作业
+        // Students can only access published assignments
         Optional<Assignment> assignmentOpt = assignmentRepository.findById(assignmentId);
         if (assignmentOpt.isEmpty()) {
             logger.warn("canAccessAssignment: Assignment not found: {}", assignmentId);
@@ -133,9 +133,9 @@ public class PermissionService {
     }
 
     /**
-     * 检查用户是否可以修改指定作业
-     * @param assignmentId 作业ID
-     * @return true如果用户可以修改该作业
+     * Check if user can modify specified assignment
+     * @param assignmentId assignment ID
+     * @return true if user can modify the assignment
      */
     public boolean canModifyAssignment(UUID assignmentId) {
         try {
@@ -144,12 +144,12 @@ public class PermissionService {
                 return false;
             }
 
-            // 管理员可以修改所有作业
+            // Admin can modify all assignments
             if (isAdmin()) {
                 return true;
             }
 
-            // 教师只能修改自己创建的作业
+            // Teachers can only modify assignments they created
             if (isTeacher()) {
                 Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
                 return assignment.isPresent() && 
@@ -158,15 +158,15 @@ public class PermissionService {
 
             return false;
         } catch (Exception e) {
-            logger.error("检查作业修改权限时发生错误: {}", e.getMessage());
+            logger.error("Error occurred while checking assignment modification permission: {}", e.getMessage());
             return false;
         }
     }
 
     /**
-     * 检查用户是否可以访问指定提交
-     * @param submissionId 提交ID
-     * @return true如果用户可以访问该提交
+     * Check if user can access specified submission
+     * @param submissionId submission ID
+     * @return true if user can access the submission
      */
     public boolean canAccessSubmission(UUID submissionId) {
         try {
@@ -182,23 +182,23 @@ public class PermissionService {
 
             Submission sub = submission.get();
 
-            // 管理员和教师可以访问所有提交
+            // Admin and teachers can access all submissions
             if (isAdmin() || isTeacher()) {
                 return true;
             }
 
-            // 学生只能访问自己的提交
+            // Students can only access their own submissions
             return sub.getStudentId().equals(currentUser.getId());
         } catch (Exception e) {
-            logger.error("检查提交访问权限时发生错误: {}", e.getMessage());
+            logger.error("Error occurred while checking submission access permission: {}", e.getMessage());
             return false;
         }
     }
 
     /**
-     * 检查用户是否可以评分指定提交
-     * @param submissionId 提交ID
-     * @return true如果用户可以评分该提交
+     * Check if user can grade specified submission
+     * @param submissionId submission ID
+     * @return true if user can grade the submission
      */
     public boolean canGradeSubmission(UUID submissionId) {
         try {
@@ -207,7 +207,7 @@ public class PermissionService {
                 return false;
             }
 
-            // 只有管理员和教师可以评分
+            // Only admin and teachers can grade
             if (!isAdmin() && !isTeacher()) {
                 return false;
             }
@@ -217,24 +217,24 @@ public class PermissionService {
                 return false;
             }
 
-            // 管理员可以评分所有提交
+            // Admin can grade all submissions
             if (isAdmin()) {
                 return true;
             }
 
-            // 教师只能评分自己创建的作业的提交
+            // Teachers can only grade submissions for assignments they created
             Submission sub = submission.get();
             Optional<Assignment> assignment = assignmentRepository.findById(sub.getAssignmentId());
             return assignment.isPresent() && 
                    assignment.get().getCreatorId().equals(currentUser.getId());
         } catch (Exception e) {
-            logger.error("检查提交评分权限时发生错误: {}", e.getMessage());
+            logger.error("Error occurred while checking submission grading permission: {}", e.getMessage());
             return false;
         }
     }
 
     /**
-     * 检查用户是否可以删除提交
+     * Check if user can delete submission
      */
     public boolean canDeleteSubmission(UUID submissionId) {
         if (isAdmin()) {
@@ -246,31 +246,31 @@ public class PermissionService {
             return false;
         }
         
-        // 学生只能删除自己的提交
+        // Students can only delete their own submissions
         return isStudent() && getCurrentUserId().equals(submission.getStudentId());
     }
 
     /**
-     * 检查用户是否可以访问文件
+     * Check if user can access file
      */
     public boolean canAccessFile(UUID fileId) {
-        // 首先检查文件是否存在
+        // First check if file exists
         AssignmentFile file = assignmentFileRepository.findById(fileId).orElse(null);
         if (file == null) {
             return false;
         }
         
-        // 管理员可以访问所有存在的文件
+        // Admin can access all existing files
         if (isAdmin()) {
             return true;
         }
         
-        // 文件上传者可以访问
+        // File uploader can access
         if (getCurrentUserId().equals(file.getUploadedBy())) {
             return true;
         }
         
-        // 如果文件关联了作业，检查作业访问权限
+        // If file is associated with assignment, check assignment access permission
         if (file.getAssignmentId() != null) {
             return canAccessAssignment(file.getAssignmentId());
         }
@@ -279,10 +279,10 @@ public class PermissionService {
     }
 
     /**
-     * 检查用户是否可以删除指定文件
-     * @param fileId 文件ID
-     * @param uploaderId 文件上传者ID
-     * @return true如果用户可以删除该文件
+     * Check if user can delete specified file
+     * @param fileId file ID
+     * @param uploaderId file uploader ID
+     * @return true if user can delete the file
      */
     public boolean canDeleteFile(UUID fileId, Long uploaderId) {
         try {
@@ -291,21 +291,21 @@ public class PermissionService {
                 return false;
             }
 
-            // 管理员可以删除所有文件
+            // Admin can delete all files
             if (isAdmin()) {
                 return true;
             }
 
-            // 用户只能删除自己上传的文件
+            // Users can only delete files they uploaded
             return currentUser.getId().equals(uploaderId);
         } catch (Exception e) {
-            logger.error("检查文件删除权限时发生错误: {}", e.getMessage());
+            logger.error("Error occurred while checking file deletion permission: {}", e.getMessage());
             return false;
         }
     }
 
     /**
-     * 检查用户是否可以删除文件
+     * Check if user can delete file
      */
     public boolean canDeleteFile(UUID fileId) {
         if (isAdmin()) {
@@ -317,12 +317,12 @@ public class PermissionService {
             return false;
         }
         
-        // 文件上传者可以删除
+        // File uploader can delete
         if (getCurrentUserId().equals(file.getUploadedBy())) {
             return true;
         }
         
-        // 教师可以删除作业相关文件
+        // Teachers can delete assignment-related files
         if (isTeacher() && file.getAssignmentId() != null) {
             return canModifyAssignment(file.getAssignmentId());
         }
@@ -331,8 +331,8 @@ public class PermissionService {
     }
 
     /**
-     * 获取当前登录用户
-     * @return 当前用户对象，如果未登录则返回null
+     * Get current logged-in user
+     * @return current user object, null if not logged in
      */
     private User getCurrentUser() {
         try {
@@ -358,14 +358,14 @@ public class PermissionService {
             }
             return user;
         } catch (Exception e) {
-            logger.error("获取当前用户时发生错误: {}", e.getMessage());
+            logger.error("Error occurred while getting current user: {}", e.getMessage());
             return null;
         }
     }
 
     /**
-     * 获取当前用户ID
-     * @return 当前用户ID，如果未登录则返回null
+     * Get current user ID
+     * @return current user ID, null if not logged in
      */
     public Long getCurrentUserId() {
         User currentUser = getCurrentUser();
@@ -373,8 +373,8 @@ public class PermissionService {
     }
 
     /**
-     * 获取当前用户名
-     * @return 当前用户名，如果未登录则返回null
+     * Get current username
+     * @return current username, null if not logged in
      */
     public String getCurrentUsername() {
         User currentUser = getCurrentUser();

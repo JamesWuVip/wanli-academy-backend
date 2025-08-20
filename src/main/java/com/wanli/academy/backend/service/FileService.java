@@ -30,8 +30,8 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * 文件管理服务类
- * 处理文件上传、存储、下载和安全检查
+ * File management service class
+ * Handles file upload, storage, download and security checks
  */
 @Service
 @Transactional
@@ -39,15 +39,15 @@ public class FileService {
     
     private static final Logger logger = LoggerFactory.getLogger(FileService.class);
     
-    // 文件存储根路径
+    // File storage root path
     @Value("${file.upload.dir:./uploads}")
     private String uploadDir;
     
-    // 最大文件大小（默认10MB）
+    // Maximum file size (default 10MB)
     @Value("${file.upload.max-size:10485760}")
     private long maxFileSize;
     
-    // 允许的文件类型
+    // Allowed file types
     private static final Set<String> ALLOWED_FILE_TYPES = Set.of(
         "pdf", "doc", "docx", "txt", "rtf",
         "jpg", "jpeg", "png", "gif", "bmp",
@@ -57,13 +57,13 @@ public class FileService {
         "xls", "xlsx", "ppt", "pptx"
     );
     
-    // 危险文件类型黑名单
+    // Dangerous file types blacklist
     private static final Set<String> DANGEROUS_FILE_TYPES = Set.of(
         "exe", "bat", "cmd", "com", "pif", "scr", "vbs", "js", "jar",
         "sh", "php", "asp", "aspx", "jsp", "py", "rb", "pl"
     );
     
-    // 文件名安全检查正则
+    // Filename security check regex
     private static final Pattern SAFE_FILENAME_PATTERN = Pattern.compile("^[a-zA-Z0-9._-]+$");
     
     @Autowired
@@ -73,33 +73,33 @@ public class FileService {
     private UserRepository userRepository;
     
     /**
-     * 上传文件
-     * @param file 上传的文件
-     * @param assignmentId 作业ID（可选）
-     * @param fileType 文件类型（ASSIGNMENT_ATTACHMENT, SUBMISSION_FILE等）
-     * @return 文件信息
+     * Upload file
+     * @param file uploaded file
+     * @param assignmentId assignment ID (optional)
+     * @param fileType file type (ASSIGNMENT_ATTACHMENT, SUBMISSION_FILE, etc.)
+     * @return file information
      */
     public FileResponse uploadFile(MultipartFile file, UUID assignmentId, String fileType) {
         logger.info("Processing file upload: {}", file.getOriginalFilename());
         
-        // 文件安全检查
+        // File security check
         validateFile(file);
         
-        // 生成安全的文件名
+        // Generate safe filename
         String safeFileName = generateSafeFileName(file.getOriginalFilename());
         
-        // 创建存储路径
+        // Create storage path
         Path uploadPath = createUploadPath(fileType);
         
         try {
-            // 确保目录存在
+            // Ensure directory exists
             Files.createDirectories(uploadPath);
             
-            // 保存文件
+            // Save file
             Path filePath = uploadPath.resolve(safeFileName);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             
-            // 创建文件记录
+            // Create file record
             AssignmentFile assignmentFile = new AssignmentFile();
             assignmentFile.setAssignmentId(assignmentId);
             assignmentFile.setFileName(safeFileName);
@@ -120,22 +120,22 @@ public class FileService {
             
         } catch (IOException e) {
             logger.error("Failed to upload file: {}", file.getOriginalFilename(), e);
-            throw new RuntimeException("文件上传失败: " + e.getMessage());
+            throw new RuntimeException("File upload failed: " + e.getMessage());
         }
     }
     
     /**
-     * 下载文件
-     * @param fileId 文件ID
-     * @return 文件资源
+     * Download file
+     * @param fileId file ID
+     * @return file resource
      */
     public Resource downloadFile(UUID fileId) {
         logger.info("Processing file download: {}", fileId);
         
         AssignmentFile assignmentFile = assignmentFileRepository.findById(fileId)
-                .orElseThrow(() -> new IllegalArgumentException("文件不存在"));
+                .orElseThrow(() -> new IllegalArgumentException("File does not exist"));
         
-        // 权限检查
+        // Permission check
         validateFileAccess(assignmentFile);
         
         try {
@@ -146,28 +146,28 @@ public class FileService {
                 logger.info("File download successful: {}", assignmentFile.getFileName());
                 return resource;
             } else {
-                throw new RuntimeException("文件不存在或无法读取");
+                throw new RuntimeException("File does not exist or cannot be read");
             }
             
         } catch (MalformedURLException e) {
             logger.error("Failed to download file: {}", fileId, e);
-            throw new RuntimeException("文件下载失败: " + e.getMessage());
+            throw new RuntimeException("File download failed: " + e.getMessage());
         }
     }
     
     /**
-     * 删除文件
-     * @param fileId 文件ID
+     * Delete file
+     * @param fileId file ID
      */
     public void deleteFile(UUID fileId) {
         logger.info("Processing file deletion: {}", fileId);
         
         AssignmentFile assignmentFile = assignmentFileRepository.findById(fileId)
-                .orElseThrow(() -> new IllegalArgumentException("文件不存在"));
+                .orElseThrow(() -> new IllegalArgumentException("File does not exist"));
         
-        // 权限检查：只有上传者可以删除
+        // Permission check: only uploader can delete
         if (!assignmentFile.getUploadedBy().equals(getCurrentUserId())) {
-            throw new AccessDeniedException("您只能删除自己上传的文件");
+            throw new AccessDeniedException("You can only delete files you uploaded");
         }
         
         try {
@@ -182,7 +182,7 @@ public class FileService {
             
         } catch (IOException e) {
             logger.error("Failed to delete file: {}", fileId, e);
-            throw new RuntimeException("文件删除失败: " + e.getMessage());
+            throw new RuntimeException("File deletion failed: " + e.getMessage());
         }
     }
     
@@ -202,9 +202,9 @@ public class FileService {
     }
     
     /**
-     * 获取作业相关文件列表
-     * @param assignmentId 作业ID
-     * @return 文件列表
+     * Get assignment related file list
+     * @param assignmentId assignment ID
+     * @return file list
      */
     public List<FileResponse> getAssignmentFiles(UUID assignmentId) {
         List<AssignmentFile> files = assignmentFileRepository.findByAssignmentIdOrderByCreatedAtDesc(assignmentId);
@@ -212,8 +212,8 @@ public class FileService {
     }
     
     /**
-     * 获取用户上传的文件列表
-     * @return 文件列表
+     * Get user uploaded file list
+     * @return file list
      */
     public List<FileResponse> getUserFiles() {
         Long currentUserId = getCurrentUserId();
@@ -222,59 +222,59 @@ public class FileService {
     }
     
     /**
-     * 文件安全验证
-     * @param file 上传的文件
+     * Validate file security
+     * @param file uploaded file
      */
     private void validateFile(MultipartFile file) {
-        // 检查文件是否为空
+        // Check if file is empty
         if (file.isEmpty()) {
-            throw new IllegalArgumentException("文件不能为空");
+            throw new IllegalArgumentException("File cannot be empty");
         }
         
-        // 检查文件大小
+        // Check file size
         if (file.getSize() > maxFileSize) {
-            throw new IllegalArgumentException("文件大小不能超过 " + (maxFileSize / 1024 / 1024) + "MB");
+            throw new IllegalArgumentException("File size exceeds limit: " + (maxFileSize / 1024 / 1024) + "MB");
         }
         
-        // 获取文件扩展名
+        // Get file extension
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.trim().isEmpty()) {
-            throw new IllegalArgumentException("文件名不能为空");
+            throw new IllegalArgumentException("Filename cannot be empty");
         }
         
         String fileExtension = getFileExtension(originalFilename).toLowerCase();
         
-        // 检查危险文件类型
+        // Check dangerous file types
         if (DANGEROUS_FILE_TYPES.contains(fileExtension)) {
-            throw new IllegalArgumentException("不允许上传此类型的文件: " + fileExtension);
+            throw new IllegalArgumentException("Dangerous file type: " + fileExtension);
         }
         
-        // 检查允许的文件类型
+        // Check allowed file types
         if (!ALLOWED_FILE_TYPES.contains(fileExtension)) {
-            throw new IllegalArgumentException("不支持的文件类型: " + fileExtension);
+            throw new IllegalArgumentException("Unsupported file type: " + fileExtension);
         }
         
-        // 检查文件名安全性
+        // Check filename security
         if (!isFileNameSafe(originalFilename)) {
-            throw new IllegalArgumentException("文件名包含非法字符");
+            throw new IllegalArgumentException("Filename contains illegal characters");
         }
         
-        // 检查MIME类型
+        // Check MIME type
         validateMimeType(file, fileExtension);
     }
     
     /**
-     * 验证MIME类型
-     * @param file 文件
-     * @param fileExtension 文件扩展名
+     * Validate MIME type
+     * @param file file
+     * @param fileExtension file extension
      */
     private void validateMimeType(MultipartFile file, String fileExtension) {
         String contentType = file.getContentType();
         if (contentType == null) {
-            throw new IllegalArgumentException("无法确定文件类型");
+            throw new IllegalArgumentException("Cannot determine file type");
         }
         
-        // 简单的MIME类型验证
+        // Simple MIME type validation
         Map<String, Set<String>> allowedMimeTypes = Map.of(
             "pdf", Set.of("application/pdf"),
             "jpg", Set.of("image/jpeg"),
@@ -291,33 +291,33 @@ public class FileService {
         if (expectedMimeTypes != null && !expectedMimeTypes.contains(contentType)) {
             logger.warn("MIME type mismatch for file extension {}: expected {}, got {}", 
                        fileExtension, expectedMimeTypes, contentType);
-            // 注意：某些情况下MIME类型可能不准确，这里只记录警告而不抛出异常
+            // Note: MIME type may be inaccurate in some cases, only log warning without throwing exception
         }
     }
     
     /**
-     * 生成安全的文件名
-     * @param originalFilename 原始文件名
-     * @return 安全的文件名
+     * Generate safe filename
+     * @param originalFilename original filename
+     * @return safe filename
      */
     private String generateSafeFileName(String originalFilename) {
         String cleanName = StringUtils.cleanPath(originalFilename);
         String fileExtension = getFileExtension(cleanName);
         String baseName = cleanName.substring(0, cleanName.lastIndexOf('.'));
         
-        // 移除特殊字符，只保留字母、数字、点、下划线和连字符
+        // Remove unsafe characters
         baseName = baseName.replaceAll("[^a-zA-Z0-9._-]", "_");
         
-        // 生成时间戳避免文件名冲突
+        // Generate timestamp to avoid filename conflicts
         String timestamp = String.valueOf(System.currentTimeMillis());
         
         return baseName + "_" + timestamp + "." + fileExtension;
     }
     
     /**
-     * 创建上传路径
-     * @param fileType 文件类型
-     * @return 上传路径
+     * Create upload path
+     * @param fileType file type
+     * @return upload path
      */
     private Path createUploadPath(String fileType) {
         String subDir = switch (fileType) {
@@ -330,31 +330,31 @@ public class FileService {
     }
     
     /**
-     * 验证文件访问权限
-     * @param assignmentFile 文件信息
+     * Validate file access permission
+     * @param assignmentFile file information
      */
     private void validateFileAccess(AssignmentFile assignmentFile) {
         Long currentUserId = getCurrentUserId();
         
-        // 文件上传者可以访问
+        // File uploader can access
         if (assignmentFile.getUploadedBy().equals(currentUserId)) {
             return;
         }
         
-        // 如果是作业相关文件，作业创建者也可以访问
+        // If it's assignment-related file, assignment creator can also access
         if (assignmentFile.getAssignmentId() != null) {
-            // 这里可以添加更复杂的权限逻辑
-            // 例如检查当前用户是否是作业的创建者或参与者
+            // More complex permission logic can be added here
+            // For example, check if current user is assignment creator or participant
         }
         
-        // 其他情况拒绝访问
-        throw new AccessDeniedException("您没有权限访问此文件");
+        // Deny access in other cases
+        throw new AccessDeniedException("You do not have permission to access this file");
     }
     
     /**
-     * 获取文件扩展名
-     * @param filename 文件名
-     * @return 扩展名
+     * Get file extension
+     * @param filename filename
+     * @return extension
      */
     private String getFileExtension(String filename) {
         int lastDotIndex = filename.lastIndexOf('.');
@@ -365,47 +365,47 @@ public class FileService {
     }
     
     /**
-     * 检查文件名是否安全
-     * @param filename 文件名
-     * @return 是否安全
+     * Check if filename is safe
+     * @param filename filename
+     * @return whether it's safe
      */
     private boolean isFileNameSafe(String filename) {
-        // 检查路径遍历攻击
+        // Check for path traversal attacks
         if (filename.contains("../") || filename.contains("..\\")
             || filename.contains("/") || filename.contains("\\")) {
             return false;
         }
         
-        // 检查特殊字符
+        // Check for special characters
         return !filename.matches(".*[<>:\"|?*].*");
     }
     
     /**
-     * 获取当前用户ID
-     * @return 用户ID
+     * Get current user ID
+     * @return user ID
      */
     private Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
-            throw new AccessDeniedException("用户未登录");
+            throw new AccessDeniedException("User not logged in");
         }
         
         String username = authentication.getName();
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AccessDeniedException("用户不存在"));
+                .orElseThrow(() -> new AccessDeniedException("User does not exist"));
         
         return user.getId();
     }
     
     /**
-     * 清理过期的临时文件
-     * 可以通过定时任务调用
+     * Clean up expired temporary files
+     * Can be called by scheduled tasks
      */
     public void cleanupExpiredTempFiles() {
         logger.info("Starting cleanup of expired files");
         
         try {
-            // 查找超过30天的临时文件
+            // Find temporary files older than 30 days
             LocalDateTime cutoffDate = LocalDateTime.now().minusDays(30);
             List<AssignmentFile> expiredFiles = assignmentFileRepository.findByCreatedAtBeforeAndFileType(
                 cutoffDate, "TEMP");
@@ -429,9 +429,9 @@ public class FileService {
     }
     
     /**
-      * 转换AssignmentFile为FileResponse
-      * @param assignmentFile 文件实体
-      * @return 文件响应对象
+      * Convert AssignmentFile to FileResponse
+      * @param assignmentFile file entity
+      * @return file response object
       */
      private FileResponse convertToFileResponse(AssignmentFile assignmentFile) {
          FileResponse response = new FileResponse();
@@ -448,7 +448,7 @@ public class FileService {
          response.setCreatedAt(assignmentFile.getCreatedAt());
          response.setUpdatedAt(assignmentFile.getUpdatedAt());
          
-         // 设置上传者用户名（如果需要的话）
+         // Set uploader username (if needed)
          if (assignmentFile.getUploader() != null) {
              response.setUploaderUsername(assignmentFile.getUploader().getUsername());
          }
