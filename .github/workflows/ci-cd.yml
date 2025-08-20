@@ -25,7 +25,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -48,28 +47,28 @@ jobs:
       - name: Start backend for acceptance tests
         run: |
           cd backend
-          mvn spring-boot:run &
-          echo $! > ../backend.pid
+          SPRING_PROFILES_ACTIVE=test nohup java -jar ../target/wanli-academy-backend-0.0.1-SNAPSHOT.jar > backend.log 2>&1 &
+          echo $! > backend.pid
           sleep 30
-        env:
-          SPRING_PROFILES_ACTIVE: test
+          # 检查后端是否启动成功
+          if ! curl -f http://localhost:8080/actuator/health; then
+            echo "Backend failed to start"
+            cat backend.log
+            exit 1
+          fi
       - name: Run acceptance tests
         run: |
-          npm test
-          test_exit_code=$?
-          if [ -f backend.pid ]; then
-            kill $(cat backend.pid) || true
-            rm backend.pid
+          node acceptance-test.js
+          # 停止后端服务
+          if [ -f backend/backend.pid ]; then
+            kill $(cat backend/backend.pid) || true
+            rm backend/backend.pid
           fi
-          exit $test_exit_code
-        env:
-          TEST_BASE_URL: http://localhost:8080/api
-        timeout-minutes: 5
 
   deploy:
     needs: build_and_scan
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -78,19 +77,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build JAR
+      - name: Build with Maven
         run: mvn clean package -DskipTests
-      - name: Install Railway CLI
-        run: |
-          curl -fsSL https://railway.app/install.sh | sh
-          echo "$HOME/.railway/bin" >> $GITHUB_PATH
       - name: Deploy to Railway
-        run: railway up --service wanliRepo
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          # 安装 Railway CLI
+          npm install -g @railway/cli
+          # 部署到 Railway
+          railway deploy --service ${{ secrets.RAILWAY_SERVICE_ID }}
