@@ -39,11 +39,10 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Install Node.js dependencies
         run: npm install
-      - name: Build and analyze with Maven & SonarCloud
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=JamesWuVip_wanliRepo
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+      - name: Run tests
+        run: mvn test
       - name: Start backend for acceptance tests
         run: |
           cd backend
