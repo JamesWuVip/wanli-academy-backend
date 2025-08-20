@@ -1,2 +1,2 @@
-2025-08-20 18:02:05.123 [main] INFO  c.w.a.b.WanliAcademyBackendApplication - Starting WanliAcademyBackendApplication
-2025-08-20 18:02:05.456 [main] INFO  c.w.a.b.WanliAcademyBackendApplication - Application started successfully
+2025-08-20 01:20:52.697 [background-preinit] DEBUG org.jboss.logging - Logging Provider: org.jboss.logging.Slf4jLoggerProvider found via system property
+2025-08-20 01:20:52.698 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
