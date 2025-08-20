@@ -1,0 +1,20 @@
+{
+  "name": "wanli-academy-backend",
+  "version": "1.0.0",
+  "description": "Wanli Academy Backend - Spring Boot Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No Node.js tests specified\" && exit 0"
+  },
+  "keywords": [
+    "spring-boot",
+    "java",
+    "backend",
+    "education"
+  ],
+  "author": "JamesWu",
+  "license": "MIT",
+  "devDependencies": {
+    "playwright": "^1.40.0"
+  }
+}
