@@ -2,101 +2,119 @@ package com.wanli.academy.backend.service;
 
 import com.wanli.academy.backend.entity.User;
 import com.wanli.academy.backend.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.UUID;
 
 /**
- * 自定义用户详情服务
- * 实现Spring Security的UserDetailsService接口
+ * Spring Security User Details Service Implementation
+ * Responsible for loading user details based on username or user ID
  */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
-    private final UserRepository userRepository;
-
-    public CustomUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+    
+    @Autowired
+    private UserRepository userRepository;
+    
     /**
-     * 根据用户名加载用户详情
-     * @param username 用户名或邮箱
-     * @return UserDetails对象
-     * @throws UsernameNotFoundException 用户不存在异常
+     * Load user details by username (Spring Security interface method)
+     * @param username username
+     * @return UserDetails object
+     * @throws UsernameNotFoundException if user not found
      */
     @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 尝试通过用户名或邮箱查找用户
-        User user = userRepository.findByUsernameOrEmail(username, username)
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        "用户不存在: " + username));
-
-        // 检查用户是否激活
-        if (!user.getIsActive()) {
-            throw new UsernameNotFoundException("用户账户已被禁用: " + username);
-        }
-
-        // 构建并返回UserDetails对象
+        logger.debug("Loading user by username: {}", username);
+        
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> {
+                    logger.warn("User not found with username: {}", username);
+                    return new UsernameNotFoundException("User not found with username: " + username);
+                });
+        
+        logger.debug("Successfully loaded user: {} with role: {}", username, user.getRole());
         return buildUserDetails(user);
     }
-
+    
     /**
-     * 构建UserDetails对象
-     * @param user 用户实体
-     * @return UserDetails对象
+     * Load user details by user ID
+     * @param userId user ID
+     * @return UserDetails object
+     * @throws UsernameNotFoundException if user not found
+     */
+    public UserDetails loadUserById(UUID userId) throws UsernameNotFoundException {
+        logger.debug("Loading user by ID: {}", userId);
+        
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> {
+                    logger.warn("User not found with ID: {}", userId);
+                    return new UsernameNotFoundException("User not found with ID: " + userId);
+                });
+        
+        logger.debug("Successfully loaded user: {} with role: {}", user.getUsername(), user.getRole());
+        return buildUserDetails(user);
+    }
+    
+    /**
+     * Build Spring Security UserDetails object
+     * @param user user entity
+     * @return UserDetails object
      */
     private UserDetails buildUserDetails(User user) {
+        // Check if user is active
+        boolean isActive = user.getIsActive() != null ? user.getIsActive() : true;
+        
+        if (!isActive) {
+            logger.warn("User {} is inactive", user.getUsername());
+            throw new UsernameNotFoundException("User account is inactive: " + user.getUsername());
+        }
+        
+        // Get user authorities (roles)
+        Collection<GrantedAuthority> authorities = getUserAuthorities(user);
+        
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .authorities(getAuthorities(user))
+                .authorities(authorities)
                 .accountExpired(false)
-                .accountLocked(!user.getIsActive())
+                .accountLocked(false)
                 .credentialsExpired(false)
-                .disabled(!user.getIsActive())
+                .disabled(!isActive)
                 .build();
     }
-
+    
     /**
-     * 获取用户权限列表
-     * @param user 用户实体
-     * @return 权限集合
+     * Get user authorities based on role
+     * @param user user entity
+     * @return collection of granted authorities
      */
-    private Collection<? extends GrantedAuthority> getAuthorities(User user) {
-        return user.getRoles().stream()
-                .map(role -> {
-                    String roleName = role.getName();
-                    // 数据库中的角色名称已经包含ROLE_前缀，直接使用
-                    return new SimpleGrantedAuthority(roleName);
-                })
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * 根据用户ID加载用户详情
-     * @param userId 用户ID
-     * @return UserDetails对象
-     * @throws UsernameNotFoundException 用户不存在异常
-     */
-    @Transactional(readOnly = true)
-    public UserDetails loadUserById(Long userId) throws UsernameNotFoundException {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        "用户不存在，ID: " + userId));
-
-        if (!user.getIsActive()) {
-            throw new UsernameNotFoundException("用户账户已被禁用，ID: " + userId);
+    private Collection<GrantedAuthority> getUserAuthorities(User user) {
+        String role = user.getRole();
+        
+        // Ensure role has ROLE_ prefix
+        if (role != null && !role.startsWith("ROLE_")) {
+            role = "ROLE_" + role;
         }
-
-        return buildUserDetails(user);
+        
+        logger.debug("User {} has role: {}", user.getUsername(), role);
+        
+        if (role != null) {
+            return Collections.singletonList(new SimpleGrantedAuthority(role));
+        } else {
+            logger.warn("User {} has no role assigned, defaulting to ROLE_STUDENT", user.getUsername());
+            return Collections.singletonList(new SimpleGrantedAuthority("ROLE_STUDENT"));
+        }
     }
 }
