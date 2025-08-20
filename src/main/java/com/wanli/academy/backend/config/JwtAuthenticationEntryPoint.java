@@ -4,44 +4,41 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * JWT认证入口点
- * 处理未认证请求的异常响应
+ * 处理未经授权的请求异常
  */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
 
     @Override
-    public void commence(HttpServletRequest request, 
-                        HttpServletResponse response,
-                        AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+                         AuthenticationException authException) throws IOException, ServletException {
         
-        // 设置响应状态码为401未授权
+        logger.error("Unauthorized error: {}", authException.getMessage());
+        
+        response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding("UTF-8");
-
-        // 构建错误响应体
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("timestamp", LocalDateTime.now().toString());
-        errorResponse.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-        errorResponse.put("error", "Unauthorized");
-        errorResponse.put("message", "访问此资源需要完整的身份验证");
-        errorResponse.put("path", request.getRequestURI());
-
-        // 将错误响应写入响应体
-        response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
+        
+        Map<String, Object> body = new HashMap<>();
+        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
+        body.put("error", "Unauthorized");
+        body.put("message", "Authentication required");
+        body.put("path", request.getServletPath());
+        
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(response.getOutputStream(), body);
     }
 }
