@@ -1,13 +1,12 @@
 package com.wanli.academy.backend.controller;
 
-import com.wanli.academy.backend.dto.AssignmentCreateRequest;
+import com.wanli.academy.backend.dto.AssignmentRequest;
 import com.wanli.academy.backend.dto.AssignmentResponse;
-import com.wanli.academy.backend.dto.StudentAssignmentResponse;
-import com.wanli.academy.backend.dto.SubmissionResponse;
-import com.wanli.academy.backend.dto.AssignmentFileResponse;
-import com.wanli.academy.backend.exception.ErrorResponse;
+import com.wanli.academy.backend.dto.AssignmentSubmissionRequest;
+import com.wanli.academy.backend.dto.AssignmentSubmissionResponse;
+import com.wanli.academy.backend.entity.Assignment;
+import com.wanli.academy.backend.entity.AssignmentSubmission;
 import com.wanli.academy.backend.service.AssignmentService;
-import com.wanli.academy.backend.service.AssignmentServiceQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,22 +19,32 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
- * 作业控制器
- * 处理作业相关的HTTP请求
+ * Assignment Controller
+ * Handles assignment-related HTTP requests including creation, retrieval, update, deletion, and submission management
  */
-@Tag(name = "作业管理", description = "作业相关的API端点，包括创建作业、获取作业列表、更新作业和删除作业")
+@Tag(name = "Assignment Management", description = "Assignment management related API endpoints, including creation, retrieval, update, deletion, and submission management")
 @RestController
 @RequestMapping("/api/assignments")
-
-@SecurityRequirement(name = "Bearer Authentication")
+@SecurityRequirement(name = "bearerAuth")
 public class AssignmentController {
     
     private static final Logger logger = LoggerFactory.getLogger(AssignmentController.class);
@@ -43,24 +52,23 @@ public class AssignmentController {
     @Autowired
     private AssignmentService assignmentService;
     
-    @Autowired
-    private AssignmentServiceQuery assignmentServiceQuery;
-
     /**
-     * 创建新作业
+     * Create Assignment
      * POST /api/assignments
      * 
-     * @param request 创建作业请求
-     * @return 创建的作业信息
+     * @param assignmentRequest assignment creation request
+     * @param bindingResult validation result
+     * @param authentication authentication information
+     * @return assignment creation response
      */
     @Operation(
-        summary = "创建新作业",
-        description = "创建一个新的作业，需要提供作业标题、描述、截止日期等信息。只有总部教师角色可以访问此接口。"
+        summary = "Create Assignment",
+        description = "Create a new assignment. Only teachers and administrators can create assignments."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "201",
-            description = "作业创建成功",
+            description = "Assignment created successfully",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = AssignmentResponse.class)
@@ -68,147 +76,218 @@ public class AssignmentController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "请求参数无效",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = ErrorResponse.class)
-            )
+            description = "Invalid request parameters"
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "未授权访问"
+            description = "Unauthorized access"
         ),
         @ApiResponse(
             responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            description = "Insufficient permissions"
         )
     })
     @PostMapping
-    @PreAuthorize("@permissionService.isTeacher()")
-    public ResponseEntity<AssignmentResponse> createAssignment(
-            @Parameter(description = "作业创建请求信息", required = true)
-            @Valid @RequestBody AssignmentCreateRequest request) {
-        logger.info("Received request to create assignment: {}", request.getTitle());
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
+    public ResponseEntity<?> createAssignment(
+            @Parameter(description = "Assignment creation request information", required = true)
+            @Valid @RequestBody AssignmentRequest assignmentRequest,
+            BindingResult bindingResult,
+            Authentication authentication) {
+        
+        logger.info("Received assignment creation request, title: {}", assignmentRequest.getTitle());
+        
+        // Check request parameter validation results
+        if (bindingResult.hasErrors()) {
+            Map<String, Object> errorResponse = createValidationErrorResponse(bindingResult);
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
         
         try {
-            AssignmentResponse response = assignmentService.createAssignment(request);
-            logger.info("Successfully created assignment with ID: {}", response.getId());
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        } catch (Exception e) {
-            logger.error("Error creating assignment: {}", e.getMessage(), e);
-            throw e;
+            String username = authentication.getName();
+            AssignmentResponse assignmentResponse = assignmentService.createAssignment(assignmentRequest, username);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Assignment created successfully");
+            response.put("data", assignmentResponse);
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("Assignment created successfully, ID: {}", assignmentResponse.getId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            
+        } catch (RuntimeException e) {
+            logger.error("Assignment creation failed: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
-
+    
     /**
-     * 获取当前用户创建的作业列表
+     * Get Assignment List
      * GET /api/assignments
      * 
-     * @return 作业列表
+     * @param page page number (starting from 0)
+     * @param size page size
+     * @param sortBy sort field
+     * @param sortDir sort direction (asc/desc)
+     * @param courseId course ID filter (optional)
+     * @param status assignment status filter (optional)
+     * @return assignment list
      */
     @Operation(
-        summary = "获取作业列表",
-        description = "获取当前登录用户创建的所有作业列表。只有总部教师角色可以访问此接口。"
+        summary = "Get Assignment List",
+        description = "Get paginated assignment list with optional filtering by course and status"
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "成功获取作业列表",
+            description = "Assignment list retrieved successfully",
             content = @Content(
                 mediaType = "application/json",
-                schema = @Schema(implementation = AssignmentResponse.class)
+                schema = @Schema(implementation = Object.class)
             )
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "未授权访问"
-        ),
-        @ApiResponse(
-            responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            description = "Unauthorized access"
         )
     })
     @GetMapping
-    @PreAuthorize("@permissionService.isTeacher()")
-    public ResponseEntity<List<AssignmentResponse>> getAssignments() {
-        logger.info("Received request to get assignments for current user");
+    public ResponseEntity<?> getAssignments(
+            @Parameter(description = "Page number (starting from 0)") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Page size") @RequestParam(defaultValue = "10") int size,
+            @Parameter(description = "Sort field") @RequestParam(defaultValue = "createdAt") String sortBy,
+            @Parameter(description = "Sort direction (asc/desc)") @RequestParam(defaultValue = "desc") String sortDir,
+            @Parameter(description = "Course ID filter") @RequestParam(required = false) Long courseId,
+            @Parameter(description = "Assignment status filter") @RequestParam(required = false) String status,
+            Authentication authentication) {
+        
+        logger.info("Received assignment list request, page: {}, size: {}", page, size);
         
         try {
-            List<AssignmentResponse> assignments = assignmentServiceQuery.getAssignmentsByCreator();
-            logger.info("Successfully retrieved {} assignments", assignments.size());
-            return new ResponseEntity<>(assignments, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error retrieving assignments: {}", e.getMessage(), e);
-            throw e;
+            // Create pagination and sorting
+            Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
+            Pageable pageable = PageRequest.of(page, size, sort);
+            
+            String username = authentication.getName();
+            Page<AssignmentResponse> assignmentPage = assignmentService.getAssignments(pageable, courseId, status, username);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Assignment list retrieved successfully");
+            response.put("data", assignmentPage.getContent());
+            response.put("pagination", Map.of(
+                "currentPage", assignmentPage.getNumber(),
+                "totalPages", assignmentPage.getTotalPages(),
+                "totalElements", assignmentPage.getTotalElements(),
+                "size", assignmentPage.getSize(),
+                "hasNext", assignmentPage.hasNext(),
+                "hasPrevious", assignmentPage.hasPrevious()
+            ));
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("Assignment list retrieved successfully, total: {}", assignmentPage.getTotalElements());
+            return ResponseEntity.ok(response);
+            
+        } catch (RuntimeException e) {
+            logger.error("Failed to retrieve assignment list: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
-
+    
     /**
-     * 根据ID获取作业详情
-     * GET /api/assignments/{assignmentId}
+     * Get Assignment Details
+     * GET /api/assignments/{id}
      * 
-     * @param assignmentId 作业ID
-     * @return 作业详情
+     * @param id assignment ID
+     * @param authentication authentication information
+     * @return assignment details
      */
     @Operation(
-        summary = "获取作业详情",
-        description = "根据作业ID获取作业的详细信息。只有总部教师角色可以访问此接口。"
+        summary = "Get Assignment Details",
+        description = "Get detailed information of a specific assignment"
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "成功获取作业详情",
+            description = "Assignment details retrieved successfully",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = AssignmentResponse.class)
             )
         ),
         @ApiResponse(
-            responseCode = "404",
-            description = "作业不存在"
-        ),
-        @ApiResponse(
             responseCode = "401",
-            description = "未授权访问"
+            description = "Unauthorized access"
         ),
         @ApiResponse(
-            responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            responseCode = "404",
+            description = "Assignment not found"
         )
     })
-    @GetMapping("/{assignmentId}")
-    @PreAuthorize("@permissionService.canAccessAssignment(#assignmentId)")
-    public ResponseEntity<AssignmentResponse> getAssignmentById(
-            @Parameter(description = "作业的唯一标识符", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
-            @PathVariable UUID assignmentId) {
-        logger.info("Received request to get assignment: {}", assignmentId);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAssignmentById(
+            @Parameter(description = "Assignment ID", required = true) @PathVariable Long id,
+            Authentication authentication) {
+        
+        logger.info("Received assignment details request, ID: {}", id);
         
         try {
-            AssignmentResponse response = assignmentServiceQuery.getAssignmentById(assignmentId);
-            logger.info("Successfully retrieved assignment: {}", assignmentId);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error retrieving assignment {}: {}", assignmentId, e.getMessage(), e);
-            throw e;
+            String username = authentication.getName();
+            AssignmentResponse assignmentResponse = assignmentService.getAssignmentById(id, username);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Assignment details retrieved successfully");
+            response.put("data", assignmentResponse);
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("Assignment details retrieved successfully, ID: {}", id);
+            return ResponseEntity.ok(response);
+            
+        } catch (RuntimeException e) {
+            logger.error("Failed to retrieve assignment details: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            HttpStatus status = e.getMessage().contains("not found") ? HttpStatus.NOT_FOUND : HttpStatus.BAD_REQUEST;
+            return ResponseEntity.status(status).body(errorResponse);
         }
     }
-
+    
     /**
-     * 更新作业信息
-     * PUT /api/assignments/{assignmentId}
+     * Update Assignment
+     * PUT /api/assignments/{id}
      * 
-     * @param assignmentId 作业ID
-     * @param request 更新作业请求
-     * @return 更新后的作业信息
+     * @param id assignment ID
+     * @param assignmentRequest assignment update request
+     * @param bindingResult validation result
+     * @param authentication authentication information
+     * @return assignment update response
      */
     @Operation(
-        summary = "更新作业信息",
-        description = "更新指定作业的信息，包括标题、描述、截止日期等。只有总部教师角色可以访问此接口。"
+        summary = "Update Assignment",
+        description = "Update assignment information. Only the assignment creator, teachers, and administrators can update assignments."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "作业更新成功",
+            description = "Assignment updated successfully",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = AssignmentResponse.class)
@@ -216,355 +295,453 @@ public class AssignmentController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "请求参数无效"
+            description = "Invalid request parameters"
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Unauthorized access"
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Insufficient permissions"
         ),
         @ApiResponse(
             responseCode = "404",
-            description = "作业不存在"
-        ),
-        @ApiResponse(
-            responseCode = "401",
-            description = "未授权访问"
-        ),
-        @ApiResponse(
-            responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            description = "Assignment not found"
         )
     })
-    @PutMapping("/{assignmentId}")
-    @PreAuthorize("@permissionService.canModifyAssignment(#assignmentId)")
-    public ResponseEntity<AssignmentResponse> updateAssignment(
-            @Parameter(description = "作业的唯一标识符", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
-            @PathVariable UUID assignmentId,
-            @Parameter(description = "作业更新请求信息", required = true)
-            @Valid @RequestBody AssignmentCreateRequest request) {
-        logger.info("Received request to update assignment: {}", assignmentId);
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
+    public ResponseEntity<?> updateAssignment(
+            @Parameter(description = "Assignment ID", required = true) @PathVariable Long id,
+            @Parameter(description = "Assignment update request information", required = true)
+            @Valid @RequestBody AssignmentRequest assignmentRequest,
+            BindingResult bindingResult,
+            Authentication authentication) {
+        
+        logger.info("Received assignment update request, ID: {}", id);
+        
+        // Check request parameter validation results
+        if (bindingResult.hasErrors()) {
+            Map<String, Object> errorResponse = createValidationErrorResponse(bindingResult);
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
         
         try {
-            AssignmentResponse response = assignmentService.updateAssignment(assignmentId, request);
-            logger.info("Successfully updated assignment: {}", assignmentId);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error updating assignment {}: {}", assignmentId, e.getMessage(), e);
-            throw e;
+            String username = authentication.getName();
+            AssignmentResponse assignmentResponse = assignmentService.updateAssignment(id, assignmentRequest, username);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Assignment updated successfully");
+            response.put("data", assignmentResponse);
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("Assignment updated successfully, ID: {}", id);
+            return ResponseEntity.ok(response);
+            
+        } catch (RuntimeException e) {
+            logger.error("Assignment update failed: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            HttpStatus status = e.getMessage().contains("not found") ? HttpStatus.NOT_FOUND : 
+                              e.getMessage().contains("permission") ? HttpStatus.FORBIDDEN : HttpStatus.BAD_REQUEST;
+            return ResponseEntity.status(status).body(errorResponse);
         }
     }
-
+    
     /**
-     * 删除作业
-     * DELETE /api/assignments/{assignmentId}
+     * Delete Assignment
+     * DELETE /api/assignments/{id}
      * 
-     * @param assignmentId 作业ID
-     * @return 删除结果
+     * @param id assignment ID
+     * @param authentication authentication information
+     * @return deletion response
      */
     @Operation(
-        summary = "删除作业",
-        description = "删除指定的作业及其相关的所有数据。只有总部教师角色可以访问此接口。"
+        summary = "Delete Assignment",
+        description = "Delete assignment. Only the assignment creator, teachers, and administrators can delete assignments."
     )
     @ApiResponses(value = {
         @ApiResponse(
-            responseCode = "204",
-            description = "作业删除成功"
+            responseCode = "200",
+            description = "Assignment deleted successfully"
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Unauthorized access"
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Insufficient permissions"
         ),
         @ApiResponse(
             responseCode = "404",
-            description = "作业不存在"
-        ),
-        @ApiResponse(
-            responseCode = "401",
-            description = "未授权访问"
-        ),
-        @ApiResponse(
-            responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            description = "Assignment not found"
         )
     })
-    @DeleteMapping("/{assignmentId}")
-    @PreAuthorize("@permissionService.canModifyAssignment(#assignmentId)")
-    public ResponseEntity<Void> deleteAssignment(
-            @Parameter(description = "作业的唯一标识符", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
-            @PathVariable UUID assignmentId) {
-        logger.info("Received request to delete assignment: {}", assignmentId);
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
+    public ResponseEntity<?> deleteAssignment(
+            @Parameter(description = "Assignment ID", required = true) @PathVariable Long id,
+            Authentication authentication) {
+        
+        logger.info("Received assignment deletion request, ID: {}", id);
         
         try {
-            assignmentService.deleteAssignment(assignmentId);
-            logger.info("Successfully deleted assignment: {}", assignmentId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            logger.error("Error deleting assignment {}: {}", assignmentId, e.getMessage(), e);
-            throw e;
+            String username = authentication.getName();
+            assignmentService.deleteAssignment(id, username);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Assignment deleted successfully");
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("Assignment deleted successfully, ID: {}", id);
+            return ResponseEntity.ok(response);
+            
+        } catch (RuntimeException e) {
+            logger.error("Assignment deletion failed: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            HttpStatus status = e.getMessage().contains("not found") ? HttpStatus.NOT_FOUND : 
+                              e.getMessage().contains("permission") ? HttpStatus.FORBIDDEN : HttpStatus.BAD_REQUEST;
+            return ResponseEntity.status(status).body(errorResponse);
         }
     }
-
+    
     /**
-     * 获取作业的提交列表
-     * GET /api/assignments/{assignmentId}/submissions
+     * Submit Assignment
+     * POST /api/assignments/{id}/submissions
      * 
-     * @param assignmentId 作业ID
-     * @return 提交列表
+     * @param id assignment ID
+     * @param submissionRequest submission request
+     * @param bindingResult validation result
+     * @param authentication authentication information
+     * @return submission response
      */
     @Operation(
-        summary = "获取作业提交列表",
-        description = "获取指定作业的所有提交记录。只有总部教师角色可以访问此接口。"
+        summary = "Submit Assignment",
+        description = "Submit assignment solution. Only students can submit assignments."
     )
     @ApiResponses(value = {
         @ApiResponse(
-            responseCode = "200",
-            description = "成功获取提交列表",
+            responseCode = "201",
+            description = "Assignment submitted successfully",
             content = @Content(
                 mediaType = "application/json",
-                schema = @Schema(implementation = SubmissionResponse.class)
+                schema = @Schema(implementation = AssignmentSubmissionResponse.class)
             )
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Invalid request parameters"
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Unauthorized access"
         ),
         @ApiResponse(
             responseCode = "404",
-            description = "作业不存在"
-        ),
-        @ApiResponse(
-            responseCode = "401",
-            description = "未授权访问"
-        ),
-        @ApiResponse(
-            responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            description = "Assignment not found"
         )
     })
-    @GetMapping("/{assignmentId}/submissions")
-    @PreAuthorize("@permissionService.canAccessAssignment(#assignmentId)")
-    public ResponseEntity<List<SubmissionResponse>> getAssignmentSubmissions(
-            @Parameter(description = "作业的唯一标识符", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
-            @PathVariable UUID assignmentId) {
-        logger.info("Received request to get submissions for assignment: {}", assignmentId);
+    @PostMapping("/{id}/submissions")
+    @PreAuthorize("hasRole('STUDENT')")
+    public ResponseEntity<?> submitAssignment(
+            @Parameter(description = "Assignment ID", required = true) @PathVariable Long id,
+            @Parameter(description = "Assignment submission request information", required = true)
+            @Valid @RequestBody AssignmentSubmissionRequest submissionRequest,
+            BindingResult bindingResult,
+            Authentication authentication) {
+        
+        logger.info("Received assignment submission request, assignment ID: {}", id);
+        
+        // Check request parameter validation results
+        if (bindingResult.hasErrors()) {
+            Map<String, Object> errorResponse = createValidationErrorResponse(bindingResult);
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
         
         try {
-            List<SubmissionResponse> submissions = assignmentServiceQuery.getSubmissionsByAssignment(assignmentId);
-            logger.info("Successfully retrieved {} submissions for assignment: {}", submissions.size(), assignmentId);
-            return new ResponseEntity<>(submissions, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error retrieving submissions for assignment {}: {}", assignmentId, e.getMessage(), e);
-            throw e;
+            String username = authentication.getName();
+            AssignmentSubmissionResponse submissionResponse = assignmentService.submitAssignment(id, submissionRequest, username);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Assignment submitted successfully");
+            response.put("data", submissionResponse);
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("Assignment submitted successfully, submission ID: {}", submissionResponse.getId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            
+        } catch (RuntimeException e) {
+            logger.error("Assignment submission failed: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            HttpStatus status = e.getMessage().contains("not found") ? HttpStatus.NOT_FOUND : HttpStatus.BAD_REQUEST;
+            return ResponseEntity.status(status).body(errorResponse);
         }
     }
-
+    
     /**
-     * 获取作业的文件列表
-     * GET /api/assignments/{assignmentId}/files
+     * Get Assignment Submissions
+     * GET /api/assignments/{id}/submissions
      * 
-     * @param assignmentId 作业ID
-     * @return 文件列表
+     * @param id assignment ID
+     * @param page page number
+     * @param size page size
+     * @param authentication authentication information
+     * @return submission list
      */
     @Operation(
-        summary = "获取作业文件列表",
-        description = "获取指定作业的所有相关文件。只有总部教师角色可以访问此接口。"
+        summary = "Get Assignment Submissions",
+        description = "Get assignment submission list. Teachers and administrators can view all submissions, students can only view their own submissions."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "成功获取文件列表",
+            description = "Submission list retrieved successfully",
             content = @Content(
                 mediaType = "application/json",
-                schema = @Schema(implementation = AssignmentFileResponse.class)
+                schema = @Schema(implementation = Object.class)
             )
+        ),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Unauthorized access"
         ),
         @ApiResponse(
             responseCode = "404",
-            description = "作业不存在"
+            description = "Assignment not found"
+        )
+    })
+    @GetMapping("/{id}/submissions")
+    public ResponseEntity<?> getAssignmentSubmissions(
+            @Parameter(description = "Assignment ID", required = true) @PathVariable Long id,
+            @Parameter(description = "Page number (starting from 0)") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Page size") @RequestParam(defaultValue = "10") int size,
+            Authentication authentication) {
+        
+        logger.info("Received assignment submissions request, assignment ID: {}", id);
+        
+        try {
+            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "submittedAt"));
+            String username = authentication.getName();
+            
+            Page<AssignmentSubmissionResponse> submissionPage = assignmentService.getAssignmentSubmissions(id, pageable, username);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Submission list retrieved successfully");
+            response.put("data", submissionPage.getContent());
+            response.put("pagination", Map.of(
+                "currentPage", submissionPage.getNumber(),
+                "totalPages", submissionPage.getTotalPages(),
+                "totalElements", submissionPage.getTotalElements(),
+                "size", submissionPage.getSize(),
+                "hasNext", submissionPage.hasNext(),
+                "hasPrevious", submissionPage.hasPrevious()
+            ));
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("Submission list retrieved successfully, total: {}", submissionPage.getTotalElements());
+            return ResponseEntity.ok(response);
+            
+        } catch (RuntimeException e) {
+            logger.error("Failed to retrieve submission list: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            HttpStatus status = e.getMessage().contains("not found") ? HttpStatus.NOT_FOUND : HttpStatus.BAD_REQUEST;
+            return ResponseEntity.status(status).body(errorResponse);
+        }
+    }
+    
+    /**
+     * Upload Assignment Files
+     * POST /api/assignments/{id}/files
+     * 
+     * @param id assignment ID
+     * @param files uploaded files
+     * @param authentication authentication information
+     * @return file upload response
+     */
+    @Operation(
+        summary = "Upload Assignment Files",
+        description = "Upload files for assignment. Only the assignment creator, teachers, and administrators can upload files."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Files uploaded successfully"
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Invalid request parameters"
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "未授权访问"
+            description = "Unauthorized access"
         ),
         @ApiResponse(
             responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            description = "Insufficient permissions"
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Assignment not found"
         )
     })
-    @GetMapping("/{assignmentId}/files")
-    @PreAuthorize("@permissionService.canAccessAssignment(#assignmentId)")
-    public ResponseEntity<List<AssignmentFileResponse>> getAssignmentFiles(
-            @Parameter(description = "作业的唯一标识符", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
-            @PathVariable UUID assignmentId) {
-        logger.info("Received request to get files for assignment: {}", assignmentId);
+    @PostMapping("/{id}/files")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
+    public ResponseEntity<?> uploadAssignmentFiles(
+            @Parameter(description = "Assignment ID", required = true) @PathVariable Long id,
+            @Parameter(description = "Files to upload", required = true) @RequestParam("files") MultipartFile[] files,
+            Authentication authentication) {
+        
+        logger.info("Received assignment file upload request, assignment ID: {}, file count: {}", id, files.length);
         
         try {
-            List<AssignmentFileResponse> files = assignmentServiceQuery.getFilesByAssignment(assignmentId);
-            logger.info("Successfully retrieved {} files for assignment: {}", files.size(), assignmentId);
-            return new ResponseEntity<>(files, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error retrieving files for assignment {}: {}", assignmentId, e.getMessage(), e);
-            throw e;
+            String username = authentication.getName();
+            List<String> fileUrls = assignmentService.uploadAssignmentFiles(id, files, username);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Files uploaded successfully");
+            response.put("data", Map.of("fileUrls", fileUrls));
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("Assignment files uploaded successfully, assignment ID: {}, file count: {}", id, fileUrls.size());
+            return ResponseEntity.ok(response);
+            
+        } catch (RuntimeException e) {
+            logger.error("Assignment file upload failed: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            HttpStatus status = e.getMessage().contains("not found") ? HttpStatus.NOT_FOUND : 
+                              e.getMessage().contains("permission") ? HttpStatus.FORBIDDEN : HttpStatus.BAD_REQUEST;
+            return ResponseEntity.status(status).body(errorResponse);
         }
     }
-
+    
     /**
-     * 获取即将到期的作业列表
-     * GET /api/assignments/due-soon
+     * Get Assignment Files
+     * GET /api/assignments/{id}/files
      * 
-     * @param hours 小时数，默认为24小时
-     * @return 即将到期的作业列表
+     * @param id assignment ID
+     * @param authentication authentication information
+     * @return file list
      */
     @Operation(
-        summary = "获取即将到期的作业",
-        description = "获取在指定小时数内即将到期的作业列表。只有总部教师角色可以访问此接口。"
+        summary = "Get Assignment Files",
+        description = "Get assignment file list"
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "成功获取即将到期的作业列表",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = AssignmentResponse.class)
-            )
+            description = "File list retrieved successfully"
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "未授权访问"
+            description = "Unauthorized access"
         ),
         @ApiResponse(
-            responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            responseCode = "404",
+            description = "Assignment not found"
         )
     })
-    @GetMapping("/due-soon")
-    @PreAuthorize("@permissionService.isTeacher()")
-    public ResponseEntity<List<AssignmentResponse>> getAssignmentsDueSoon(
-            @Parameter(description = "小时数，默认为24小时", example = "24")
-            @RequestParam(defaultValue = "24") int hours) {
-        logger.info("Received request to get assignments due within {} hours", hours);
+    @GetMapping("/{id}/files")
+    public ResponseEntity<?> getAssignmentFiles(
+            @Parameter(description = "Assignment ID", required = true) @PathVariable Long id,
+            Authentication authentication) {
+        
+        logger.info("Received assignment files request, assignment ID: {}", id);
         
         try {
-            List<AssignmentResponse> assignments = assignmentServiceQuery.getAssignmentsDueSoon(hours);
-            logger.info("Successfully retrieved {} assignments due within {} hours", assignments.size(), hours);
-            return new ResponseEntity<>(assignments, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error retrieving assignments due soon: {}", e.getMessage(), e);
-            throw e;
+            String username = authentication.getName();
+            List<String> fileUrls = assignmentService.getAssignmentFiles(id, username);
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "File list retrieved successfully");
+            response.put("data", Map.of("fileUrls", fileUrls));
+            response.put("timestamp", LocalDateTime.now());
+            
+            logger.info("Assignment files retrieved successfully, assignment ID: {}, file count: {}", id, fileUrls.size());
+            return ResponseEntity.ok(response);
+            
+        } catch (RuntimeException e) {
+            logger.error("Failed to retrieve assignment files: {}", e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            errorResponse.put("timestamp", LocalDateTime.now());
+            
+            HttpStatus status = e.getMessage().contains("not found") ? HttpStatus.NOT_FOUND : HttpStatus.BAD_REQUEST;
+            return ResponseEntity.status(status).body(errorResponse);
         }
     }
-
+    
     /**
-     * 获取已发布的作业列表（学生专用）
-     * GET /api/assignments/published
-     * 
-     * @return 已发布的作业列表
+     * Create validation error response
+     * @param bindingResult validation result
+     * @return error response Map
      */
-    @Operation(
-        summary = "获取已发布的作业列表",
-        description = "学生获取所有已发布的作业列表，可以进行提交。"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "成功获取已发布作业列表",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = AssignmentResponse.class)
-            )
-        ),
-        @ApiResponse(
-            responseCode = "401",
-            description = "未授权访问"
-        )
-    })
-    @GetMapping("/published")
-    @PreAuthorize("@permissionService.isStudent()")
-    public ResponseEntity<List<AssignmentResponse>> getPublishedAssignments() {
-        logger.info("Received request to get published assignments for student");
+    private Map<String, Object> createValidationErrorResponse(BindingResult bindingResult) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("success", false);
+        errorResponse.put("message", "Request parameter validation failed");
+        errorResponse.put("timestamp", LocalDateTime.now());
         
-        try {
-            List<AssignmentResponse> assignments = assignmentServiceQuery.getPublishedAssignments();
-            logger.info("Successfully retrieved {} published assignments", assignments.size());
-            return new ResponseEntity<>(assignments, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error retrieving published assignments: {}", e.getMessage(), e);
-            throw e;
-        }
+        // Collect all validation errors
+        Map<String, String> fieldErrors = bindingResult.getFieldErrors().stream()
+            .collect(Collectors.toMap(
+                fieldError -> fieldError.getField(),
+                fieldError -> fieldError.getDefaultMessage(),
+                (existing, replacement) -> existing // If there are duplicate fields, keep the first error message
+            ));
+        
+        errorResponse.put("errors", fieldErrors);
+        
+        return errorResponse;
     }
-
+    
     /**
-     * 获取学生的作业列表（包含提交状态）
-     * GET /api/assignments/my-assignments
-     * 
-     * @return 包含学生提交状态的作业列表
+     * Global exception handling
+     * @param e exception
+     * @return error response
      */
-    @Operation(
-        summary = "获取学生的作业列表",
-        description = "学生获取所有已发布的作业列表，包含自己的提交状态和提交ID。"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "成功获取学生作业列表",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = StudentAssignmentResponse.class)
-            )
-        ),
-        @ApiResponse(
-            responseCode = "401",
-            description = "未授权访问"
-        )
-    })
-    @GetMapping("/my-assignments")
-    @PreAuthorize("@permissionService.isStudent()")
-    public ResponseEntity<List<StudentAssignmentResponse>> getMyAssignments() {
-        logger.info("Received request to get assignments with submission status for student");
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleException(Exception e) {
+        logger.error("Unhandled exception in assignment controller: ", e);
         
-        try {
-            List<StudentAssignmentResponse> assignments = assignmentServiceQuery.getStudentAssignments();
-            logger.info("Successfully retrieved {} assignments with submission status", assignments.size());
-            return new ResponseEntity<>(assignments, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error retrieving student assignments: {}", e.getMessage(), e);
-            throw e;
-        }
-    }
-
-    /**
-     * 根据状态获取作业列表
-     * GET /api/assignments/status/{status}
-     * 
-     * @param status 作业状态
-     * @return 指定状态的作业列表
-     */
-    @Operation(
-        summary = "根据状态获取作业列表",
-        description = "根据指定状态获取作业列表。只有总部教师角色可以访问此接口。"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "成功获取作业列表",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = AssignmentResponse.class)
-            )
-        ),
-        @ApiResponse(
-            responseCode = "401",
-            description = "未授权访问"
-        ),
-        @ApiResponse(
-            responseCode = "403",
-            description = "权限不足，需要总部教师角色"
-        )
-    })
-    @GetMapping("/status/{status}")
-    @PreAuthorize("@permissionService.isTeacher()")
-    public ResponseEntity<List<AssignmentResponse>> getAssignmentsByStatus(
-            @Parameter(description = "作业状态", required = true, example = "PUBLISHED")
-            @PathVariable String status) {
-        logger.info("Received request to get assignments by status: {}", status);
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("success", false);
+        errorResponse.put("message", "Internal server error");
+        errorResponse.put("timestamp", LocalDateTime.now());
         
-        try {
-            List<AssignmentResponse> assignments = assignmentServiceQuery.getAssignmentsByStatus(status);
-            logger.info("Successfully retrieved {} assignments with status: {}", assignments.size(), status);
-            return new ResponseEntity<>(assignments, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("Error retrieving assignments by status {}: {}", status, e.getMessage(), e);
-            throw e;
-        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
-
-
 }
