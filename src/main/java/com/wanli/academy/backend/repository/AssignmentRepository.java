@@ -4,6 +4,7 @@ import com.wanli.academy.backend.entity.Assignment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,7 @@ import java.util.UUID;
  * 提供作业相关的数据库操作方法
  */
 @Repository
-public interface AssignmentRepository extends JpaRepository<Assignment, UUID> {
+public interface AssignmentRepository extends JpaRepository<Assignment, UUID>, JpaSpecificationExecutor<Assignment> {
     
     /**
      * 根据创建者ID查询作业列表
