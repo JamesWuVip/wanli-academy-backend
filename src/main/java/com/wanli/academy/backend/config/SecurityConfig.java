@@ -24,8 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Spring Security 配置类
- * 配置认证、授权、CORS等安全相关设置
+ * Spring Security Configuration Class
+ * Configures authentication, authorization, CORS and other security settings
  */
 @Configuration
 @EnableWebSecurity
@@ -45,8 +45,8 @@ public class SecurityConfig {
     }
 
     /**
-     * 密码编码器Bean
-     * 使用BCrypt算法进行密码加密
+     * Password Encoder Bean
+     * Uses BCrypt algorithm for password encryption
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -54,7 +54,7 @@ public class SecurityConfig {
     }
 
     /**
-     * 认证管理器Bean
+     * Authentication Manager Bean
      */
     @Bean
     public AuthenticationManager authenticationManager(
@@ -63,8 +63,8 @@ public class SecurityConfig {
     }
 
     /**
-     * DAO认证提供者Bean
-     * 配置用户详情服务和密码编码器
+     * DAO Authentication Provider Bean
+     * Configures user details service and password encoder
      */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -75,17 +75,17 @@ public class SecurityConfig {
     }
 
     /**
-     * CORS配置
-     * 允许前端跨域访问
+     * CORS Configuration
+     * Allows frontend cross-origin access
      */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("*")); // 允许所有来源
+        configuration.setAllowedOriginPatterns(List.of("*")); // Allow all origins
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L); // 预检请求缓存时间
+        configuration.setMaxAge(3600L); // Preflight request cache time
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -93,51 +93,51 @@ public class SecurityConfig {
     }
 
     /**
-     * HTTP安全配置
-     * 配置请求授权规则和JWT过滤器
+     * HTTP Security Configuration
+     * Configures request authorization rules and JWT filter
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // 禁用CSRF保护（因为使用JWT）
+            // Disable CSRF protection (using JWT)
             .csrf(AbstractHttpConfigurer::disable)
             
-            // 启用CORS
+            // Enable CORS
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             
-            // 配置会话管理为无状态
+            // Configure session management as stateless
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             
-            // 配置异常处理
+            // Configure exception handling
             .exceptionHandling(exception -> 
                 exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
             
-            // 配置请求授权规则
+            // Configure request authorization rules
             .authorizeHttpRequests(auth -> auth
-                // 允许对认证相关端点的公开访问
+                // Allow public access to authentication endpoints
                 .requestMatchers("/api/auth/**").permitAll()
                 
-                // 允许对健康检查端点的访问
+                // Allow access to health check endpoints
                 .requestMatchers("/actuator/health").permitAll()
                 
-                // 允许对Actuator监控端点的访问（用于诊断）
+                // Allow access to Actuator monitoring endpoints (for diagnostics)
                 .requestMatchers("/actuator/**").permitAll()
                 
-                // 允许对Swagger文档的访问（如果需要）
+                // Allow access to Swagger documentation (if needed)
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 
-                // 允许对静态资源的访问
+                // Allow access to static resources
                 .requestMatchers("/static/**", "/public/**").permitAll()
                 
-                // 管理员权限 - 完全访问权限
+                // Admin permissions - full access
                 .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                 
-                // 教师权限 - 作业和提交管理
+                // Teacher permissions - homework and submission management
                 .requestMatchers("/api/homework/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER")
                 .requestMatchers("/api/homeworks/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER")
                 
-                // 作业相关权限 - 让@PreAuthorize注解处理具体权限控制
+                // Assignment related permissions - let @PreAuthorize annotation handle specific permission control
                 .requestMatchers("/api/assignments/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER", "ROLE_STUDENT")
                 
                 .requestMatchers("/api/submissions/*/grade").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER")
@@ -147,24 +147,24 @@ public class SecurityConfig {
                 .requestMatchers("/api/submissions/my-submissions").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER", "ROLE_STUDENT")
                 .requestMatchers("/api/submissions/*/result").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER", "ROLE_STUDENT")
                 
-                // 文件管理权限
+                // File management permissions
                 .requestMatchers("/api/files/upload").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER", "ROLE_STUDENT")
                 .requestMatchers("/api/files/download/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER", "ROLE_STUDENT")
                 .requestMatchers("/api/files/delete/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER", "ROLE_STUDENT")
                 .requestMatchers("/api/files/cleanup").hasAuthority("ROLE_ADMIN")
                 
-                // 用户信息访问
+                // User information access
                 .requestMatchers("/api/users/me").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER", "ROLE_STUDENT")
                 .requestMatchers("/api/users/profile").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER", "ROLE_STUDENT")
                 .requestMatchers("/api/users/auth-status").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER", "ROLE_FRANCHISE_TEACHER", "ROLE_STUDENT")
                 .requestMatchers("/api/users").hasAnyAuthority("ROLE_ADMIN", "ROLE_HQ_TEACHER")
                 .requestMatchers("/api/users/**").hasAuthority("ROLE_ADMIN")
                 
-                // 所有其他请求都需要认证
+                // All other requests require authentication
                 .anyRequest().authenticated()
             )
             
-            // 添加JWT认证过滤器
+            // Add JWT authentication filter
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

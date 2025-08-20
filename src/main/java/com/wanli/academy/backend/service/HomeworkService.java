@@ -27,8 +27,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * 作业服务类
- * 处理作业相关的业务逻辑
+ * Homework service class
+ * Handles homework-related business logic
  */
 @Service
 @Transactional
@@ -46,26 +46,26 @@ public class HomeworkService {
     private UserRepository userRepository;
     
     /**
-     * 创建新作业
-     * @param request 创建作业请求
-     * @return 创建的作业响应
+     * Create new homework
+     * @param request homework creation request
+     * @return created homework response
      */
     public HomeworkResponse createHomework(HomeworkCreateRequest request) {
         logger.info("Creating new homework with title: {}", request.getTitle());
         
-        // 获取当前登录用户
+        // Get current logged-in user
         User currentUser = getCurrentUser();
         
-        // 创建作业实体
+        // Create homework entity
         Homework homework = new Homework();
         homework.setTitle(request.getTitle());
         homework.setDescription(request.getDescription());
         homework.setCreatorId(currentUser.getId());
-        homework.setCreator(currentUser);  // 设置完整的User对象
+        homework.setCreator(currentUser);  // Set complete User object
         homework.setCreatedAt(LocalDateTime.now());
         homework.setUpdatedAt(LocalDateTime.now());
         
-        // 保存作业
+        // Save homework
         Homework savedHomework = homeworkRepository.save(homework);
         
         logger.info("Successfully created homework with ID: {}", savedHomework.getId());
@@ -74,16 +74,16 @@ public class HomeworkService {
     }
     
     /**
-     * 获取当前用户创建的作业列表
-     * @return 作业列表
+     * Get homework list created by current user
+     * @return homework list
      */
     public List<HomeworkResponse> getHomeworksByCreator() {
         logger.info("Fetching homeworks for current user");
         
-        // 获取当前登录用户
+        // Get current logged-in user
         User currentUser = getCurrentUser();
         
-        // 查询当前用户创建的作业
+        // Query homework created by current user
         List<Homework> homeworks = homeworkRepository.findByCreatorIdOrderByCreatedAtDesc(currentUser.getId());
         
         logger.info("Found {} homeworks for user: {}", homeworks.size(), currentUser.getUsername());
@@ -94,21 +94,21 @@ public class HomeworkService {
     }
     
     /**
-     * 向作业添加题目
-     * @param homeworkId 作业ID
-     * @param request 题目创建请求
-     * @return 创建的题目响应
+     * Add question to homework
+     * @param homeworkId homework ID
+     * @param request question creation request
+     * @return created question response
      */
     @Transactional
     public QuestionResponse addQuestionToHomework(UUID homeworkId, QuestionCreateRequest request) {
         logger.info("Adding question to homework: {}", homeworkId);
         
-        // 验证作业存在且属于当前用户
+        // Validate homework exists and belongs to current user
         Homework homework = validateHomeworkOwnership(homeworkId);
         
-        // 创建题目实体
+        // Create question entity
         Question question = new Question();
-        // 将String转换为Map<String, Object>以适配JSONB字段
+        // Convert String to Map<String, Object> to adapt JSONB field
         Map<String, Object> contentMap = new HashMap<>();
         contentMap.put("text", request.getContent());
         question.setContent(contentMap);
@@ -119,12 +119,12 @@ public class HomeworkService {
         answerMap.put("text", request.getStandardAnswer());
         question.setStandardAnswer(answerMap);
         question.setOrderIndex(request.getOrderIndex());
-        // 只设置homeworkId，不设置homework对象，避免JPA关联冲突
+        // Only set homeworkId, not homework object, to avoid JPA association conflicts
         question.setHomeworkId(homeworkId);
         question.setCreatedAt(LocalDateTime.now());
         question.setUpdatedAt(LocalDateTime.now());
         
-        // 保存题目
+        // Save question
         Question savedQuestion = questionRepository.save(question);
         
         logger.info("Successfully added question with ID: {} to homework: {}", 
@@ -134,7 +134,7 @@ public class HomeworkService {
     }
     
     /**
-     * 从JSONB字段中提取文本内容
+     * Extract text content from JSONB field
      */
     private String extractTextFromJsonb(Map<String, Object> jsonbField) {
         if (jsonbField == null) {
@@ -145,38 +145,38 @@ public class HomeworkService {
     }
     
     /**
-     * 验证作业所有权
-     * @param homeworkId 作业ID
-     * @return 作业实体
-     * @throws RuntimeException 如果作业不存在
-     * @throws AccessDeniedException 如果用户无权访问该作业
+     * Validate homework ownership
+     * @param homeworkId homework ID
+     * @return homework entity
+     * @throws RuntimeException if homework does not exist
+     * @throws AccessDeniedException if user has no access to the homework
      */
     public Homework validateHomeworkOwnership(UUID homeworkId) {
         logger.debug("Validating homework ownership for ID: {}", homeworkId);
         
-        // 查找作业
+        // Find homework
         Homework homework = homeworkRepository.findById(homeworkId)
                 .orElseThrow(() -> {
                     logger.warn("Homework not found with ID: {}", homeworkId);
-                    return new RuntimeException("作业不存在");
+                    return new RuntimeException("Homework does not exist");
                 });
         
-        // 获取当前用户
+        // Get current user
         User currentUser = getCurrentUser();
         
-        // 验证所有权
+        // Validate ownership
         if (!homework.getCreator().getId().equals(currentUser.getId())) {
             logger.warn("User {} attempted to access homework {} owned by user {}", 
                        currentUser.getUsername(), homeworkId, homework.getCreator().getUsername());
-            throw new AccessDeniedException("您无权访问此作业");
+            throw new AccessDeniedException("You have no access to this homework");
         }
         
         return homework;
     }
     
     /**
-     * 获取当前登录用户
-     * @return 当前用户
+     * Get current logged-in user
+     * @return current user
      */
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -185,14 +185,14 @@ public class HomeworkService {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> {
                     logger.error("Current user not found: {}", username);
-                    return new RuntimeException("当前用户不存在");
+                    return new RuntimeException("Current user does not exist");
                 });
     }
     
     /**
-     * 转换作业实体为响应DTO
-     * @param homework 作业实体
-     * @return 作业响应DTO
+     * Convert homework entity to response DTO
+     * @param homework homework entity
+     * @return homework response DTO
      */
     private HomeworkResponse convertToHomeworkResponse(Homework homework) {
         HomeworkResponse response = new HomeworkResponse();
@@ -204,7 +204,7 @@ public class HomeworkService {
         response.setCreatedAt(homework.getCreatedAt());
         response.setUpdatedAt(homework.getUpdatedAt());
         
-        // 如果需要包含题目列表，可以在这里添加
+        // If need to include question list, can add here
         if (homework.getQuestions() != null) {
             List<QuestionResponse> questionResponses = homework.getQuestions().stream()
                     .map(this::convertToQuestionResponse)
@@ -216,9 +216,9 @@ public class HomeworkService {
     }
     
     /**
-     * 转换题目实体为响应DTO
-     * @param question 题目实体
-     * @return 题目响应DTO
+     * Convert question entity to response DTO
+     * @param question question entity
+     * @return question response DTO
      */
     private QuestionResponse convertToQuestionResponse(Question question) {
         QuestionResponse response = new QuestionResponse();
@@ -227,11 +227,11 @@ public class HomeworkService {
         response.setQuestionType(question.getQuestionType());
         response.setStandardAnswer(extractTextFromJsonb(question.getStandardAnswer()));
         response.setOrderIndex(question.getOrderIndex());
-        // 使用homework关联获取作业ID，如果homework为null则使用homeworkId字段作为备选
+        // Use homework association to get homework ID, if homework is null then use homeworkId field as fallback
         response.setHomeworkId(question.getHomework() != null ? question.getHomework().getId() : question.getHomeworkId());
         response.setCreatedAt(question.getCreatedAt());
         response.setUpdatedAt(question.getUpdatedAt());
-        // 添加新字段
+        // Add new fields
         response.setExplanation(question.getExplanation());
         response.setVideoUrl(question.getVideoUrl());
         
