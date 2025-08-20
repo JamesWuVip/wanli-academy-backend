@@ -1,14 +1,13 @@
 package com.wanli.academy.backend.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
  * 作业请求DTO
- * 用于创建和更新作业的数据传输对象
+ * 用于创建和更新作业的请求数据传输
  */
 public class AssignmentRequest {
     
@@ -19,26 +18,26 @@ public class AssignmentRequest {
     @Size(max = 2000, message = "作业描述长度不能超过2000个字符")
     private String description;
     
-    @NotNull(message = "截止日期不能为空")
+    @NotNull(message = "截止时间不能为空")
     private LocalDateTime dueDate;
     
-    @NotNull(message = "总分不能为空")
-    @Positive(message = "总分必须大于0")
-    private Integer totalPoints;
+    @NotNull(message = "最大分数不能为空")
+    private Integer maxScore;
     
-    @NotBlank(message = "作业状态不能为空")
-    private String status;
+    @NotNull(message = "课程ID不能为空")
+    private Long courseId;
     
-    // 默认构造函数
+    private Boolean isActive = true;
+    
+    // 构造函数
     public AssignmentRequest() {}
     
-    // 全参构造函数
-    public AssignmentRequest(String title, String description, LocalDateTime dueDate, Integer totalPoints, String status) {
+    public AssignmentRequest(String title, String description, LocalDateTime dueDate, Integer maxScore, Long courseId) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
-        this.totalPoints = totalPoints;
-        this.status = status;
+        this.maxScore = maxScore;
+        this.courseId = courseId;
     }
     
     // Getter和Setter方法
@@ -66,20 +65,28 @@ public class AssignmentRequest {
         this.dueDate = dueDate;
     }
     
-    public Integer getTotalPoints() {
-        return totalPoints;
+    public Integer getMaxScore() {
+        return maxScore;
     }
     
-    public void setTotalPoints(Integer totalPoints) {
-        this.totalPoints = totalPoints;
+    public void setMaxScore(Integer maxScore) {
+        this.maxScore = maxScore;
     }
     
-    public String getStatus() {
-        return status;
+    public Long getCourseId() {
+        return courseId;
     }
     
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+    
+    public Boolean getIsActive() {
+        return isActive;
+    }
+    
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
     
     @Override
@@ -88,8 +95,9 @@ public class AssignmentRequest {
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", dueDate=" + dueDate +
-                ", totalPoints=" + totalPoints +
-                ", status='" + status + '\'' +
+                ", maxScore=" + maxScore +
+                ", courseId=" + courseId +
+                ", isActive=" + isActive +
                 '}';
     }
 }
