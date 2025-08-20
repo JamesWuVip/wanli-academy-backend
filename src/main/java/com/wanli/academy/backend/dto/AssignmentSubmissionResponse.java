@@ -12,6 +12,9 @@ import java.util.UUID;
 @Schema(description = "作业提交综合响应")
 public class AssignmentSubmissionResponse {
     
+    @Schema(description = "ID", example = "550e8400-e29b-41d4-a716-446655440000")
+    private UUID id;
+    
     @Schema(description = "作业ID", example = "550e8400-e29b-41d4-a716-446655440000")
     private UUID assignmentId;
     
@@ -54,7 +57,7 @@ public class AssignmentSubmissionResponse {
     // 默认构造函数
     public AssignmentSubmissionResponse() {}
     
-    // 构造函数
+    // 带参数的构造函数
     public AssignmentSubmissionResponse(UUID assignmentId, String assignmentTitle, String assignmentDescription,
                                       Long creatorId, String creatorUsername, LocalDateTime dueDate,
                                       Integer totalScore, String assignmentStatus, LocalDateTime assignmentCreatedAt,
@@ -73,12 +76,13 @@ public class AssignmentSubmissionResponse {
         // 计算统计信息
         if (submissions != null) {
             this.totalSubmissions = submissions.size();
-            this.gradedSubmissions = (int) submissions.stream().filter(s -> s.getScore() != null).count();
+            this.gradedSubmissions = (int) submissions.stream()
+                .filter(s -> s.getScore() != null)
+                .count();
             this.averageScore = submissions.stream()
-                    .filter(s -> s.getScore() != null)
-                    .mapToInt(SubmissionResponse::getScore)
-                    .average()
-                    .orElse(0.0);
+                .filter(s -> s.getScore() != null)
+                .mapToDouble(s -> s.getScore().doubleValue())
+                .average().orElse(0.0);
         } else {
             this.totalSubmissions = 0;
             this.gradedSubmissions = 0;
@@ -86,7 +90,15 @@ public class AssignmentSubmissionResponse {
         }
     }
     
-    // Getter和Setter方法
+    // Getter and Setter methods
+    public UUID getId() {
+        return id;
+    }
+    
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    
     public UUID getAssignmentId() {
         return assignmentId;
     }
@@ -169,12 +181,13 @@ public class AssignmentSubmissionResponse {
         // 重新计算统计信息
         if (submissions != null) {
             this.totalSubmissions = submissions.size();
-            this.gradedSubmissions = (int) submissions.stream().filter(s -> s.getScore() != null).count();
+            this.gradedSubmissions = (int) submissions.stream()
+                .filter(s -> s.getScore() != null)
+                .count();
             this.averageScore = submissions.stream()
-                    .filter(s -> s.getScore() != null)
-                    .mapToInt(SubmissionResponse::getScore)
-                    .average()
-                    .orElse(0.0);
+                .filter(s -> s.getScore() != null)
+                .mapToDouble(s -> s.getScore().doubleValue())
+                .average().orElse(0.0);
         } else {
             this.totalSubmissions = 0;
             this.gradedSubmissions = 0;
@@ -209,7 +222,8 @@ public class AssignmentSubmissionResponse {
     @Override
     public String toString() {
         return "AssignmentSubmissionResponse{" +
-                "assignmentId=" + assignmentId +
+                "id=" + id +
+                ", assignmentId=" + assignmentId +
                 ", assignmentTitle='" + assignmentTitle + '\'' +
                 ", assignmentDescription='" + assignmentDescription + '\'' +
                 ", creatorId=" + creatorId +
@@ -218,6 +232,7 @@ public class AssignmentSubmissionResponse {
                 ", totalScore=" + totalScore +
                 ", assignmentStatus='" + assignmentStatus + '\'' +
                 ", assignmentCreatedAt=" + assignmentCreatedAt +
+                ", submissions=" + submissions +
                 ", totalSubmissions=" + totalSubmissions +
                 ", gradedSubmissions=" + gradedSubmissions +
                 ", averageScore=" + averageScore +
