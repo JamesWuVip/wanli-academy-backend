@@ -21,8 +21,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 用户控制器
- * 处理用户相关的HTTP请求
+ * User Controller
+ * Handles user-related HTTP requests
  */
 @RestController
 @RequestMapping("/api/users")
@@ -35,39 +35,39 @@ public class UserController {
     private AuthService authService;
     
     /**
-     * 获取当前登录用户信息
-     * @return 当前用户信息
+     * Get current logged-in user information
+     * @return Current user information
      */
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser() {
-        logger.info("收到获取当前用户信息请求");
+        logger.info("Received get current user information request");
         
         try {
-            // 从安全上下文中获取当前认证信息
+            // Get current authentication information from security context
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             
             if (authentication == null || !authentication.isAuthenticated()) {
-                logger.warn("用户未认证");
+                logger.warn("User not authenticated");
                 Map<String, Object> errorResponse = new HashMap<>();
                 errorResponse.put("success", false);
-                errorResponse.put("message", "用户未认证");
+                errorResponse.put("message", "User not authenticated");
                 errorResponse.put("timestamp", LocalDateTime.now());
                 
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
             }
             
-            // 获取用户名
+            // Get username
             String username = authentication.getName();
-            logger.info("获取用户信息，用户名: {}", username);
+            logger.info("Getting user information, username: {}", username);
             
-            // 从数据库获取用户详细信息
+            // Get user details from database
             Optional<User> userOptional = authService.getUserByUsername(username);
             
             if (userOptional.isEmpty()) {
-                logger.error("用户不存在: {}", username);
+                logger.error("User not found: {}", username);
                 Map<String, Object> errorResponse = new HashMap<>();
                 errorResponse.put("success", false);
-                errorResponse.put("message", "用户不存在");
+                errorResponse.put("message", "User not found");
                 errorResponse.put("timestamp", LocalDateTime.now());
                 
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
@@ -75,35 +75,35 @@ public class UserController {
             
             User user = userOptional.get();
             
-            // 检查用户是否激活
+            // Check if user is active
             if (!user.getIsActive()) {
-                logger.warn("用户账户已被禁用: {}", username);
+                logger.warn("User account has been disabled: {}", username);
                 Map<String, Object> errorResponse = new HashMap<>();
                 errorResponse.put("success", false);
-                errorResponse.put("message", "用户账户已被禁用");
+                errorResponse.put("message", "User account has been disabled");
                 errorResponse.put("timestamp", LocalDateTime.now());
                 
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
             }
             
-            // 转换为UserResponse DTO
+            // Convert to UserResponse DTO
             UserResponse userResponse = convertToUserResponse(user);
             
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("message", "获取用户信息成功");
+            response.put("message", "Get user information successful");
             response.put("data", userResponse);
             response.put("timestamp", LocalDateTime.now());
             
-            logger.info("成功返回用户信息，用户ID: {}", user.getId());
+            logger.info("Successfully returned user information, user ID: {}", user.getId());
             return ResponseEntity.ok(response);
             
         } catch (Exception e) {
-            logger.error("获取当前用户信息失败: {}", e.getMessage(), e);
+            logger.error("Failed to get current user information: {}", e.getMessage(), e);
             
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
-            errorResponse.put("message", "获取用户信息失败");
+            errorResponse.put("message", "Failed to get user information");
             errorResponse.put("timestamp", LocalDateTime.now());
             
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
@@ -111,53 +111,53 @@ public class UserController {
     }
     
     /**
-     * 获取用户个人资料（与/me相同，提供备用端点）
-     * @return 当前用户信息
+     * Get user profile (same as /me, provides alternative endpoint)
+     * @return Current user information
      */
     @GetMapping("/profile")
     public ResponseEntity<?> getUserProfile() {
-        logger.info("收到获取用户个人资料请求");
+        logger.info("Received get user profile request");
         return getCurrentUser();
     }
     
     /**
-     * 获取所有用户列表（仅管理员）
-     * @return 用户列表
+     * Get all users list (admin only)
+     * @return User list
      */
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
-        logger.info("收到获取用户列表请求");
+        logger.info("Received get user list request");
         
         try {
-            // 从安全上下文中获取当前认证信息
+            // Get current authentication information from security context
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             
             if (authentication == null || !authentication.isAuthenticated()) {
-                logger.warn("用户未认证");
+                logger.warn("User not authenticated");
                 Map<String, Object> errorResponse = new HashMap<>();
                 errorResponse.put("success", false);
-                errorResponse.put("message", "用户未认证");
+                errorResponse.put("message", "User not authenticated");
                 errorResponse.put("timestamp", LocalDateTime.now());
                 
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
             }
             
-            // 检查是否为管理员或总部教师角色
+            // Check if user has admin or headquarters teacher role
             boolean hasPermission = authentication.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN") || 
                                 auth.getAuthority().equals("ROLE_HQ_TEACHER"));
             
             if (!hasPermission) {
-                logger.warn("用户权限不足，无法访问用户列表: {}", authentication.getName());
+                logger.warn("User has insufficient permissions to access user list: {}", authentication.getName());
                 Map<String, Object> errorResponse = new HashMap<>();
                 errorResponse.put("success", false);
-                errorResponse.put("message", "权限不足，仅管理员和总部教师可访问");
+                errorResponse.put("message", "Insufficient permissions, only admins and headquarters teachers can access");
                 errorResponse.put("timestamp", LocalDateTime.now());
                 
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
             }
             
-            // 获取所有用户
+            // Get all users
             var users = authService.getAllUsers();
             var userResponses = users.stream()
                 .map(this::convertToUserResponse)
@@ -165,19 +165,19 @@ public class UserController {
             
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("message", "获取用户列表成功");
+            response.put("message", "Get user list successful");
             response.put("data", userResponses);
             response.put("timestamp", LocalDateTime.now());
             
-            logger.info("成功返回用户列表，共{}个用户", userResponses.size());
+            logger.info("Successfully returned user list, total {} users", userResponses.size());
             return ResponseEntity.ok(response);
             
         } catch (Exception e) {
-            logger.error("获取用户列表失败: {}", e.getMessage(), e);
+            logger.error("Failed to get user list: {}", e.getMessage(), e);
             
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
-            errorResponse.put("message", "获取用户列表失败");
+            errorResponse.put("message", "Failed to get user list");
             errorResponse.put("timestamp", LocalDateTime.now());
             
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
@@ -185,12 +185,12 @@ public class UserController {
     }
     
     /**
-     * 检查用户认证状态
-     * @return 认证状态信息
+     * Check user authentication status
+     * @return Authentication status information
      */
     @GetMapping("/auth-status")
     public ResponseEntity<?> getAuthStatus() {
-        logger.info("收到检查认证状态请求");
+        logger.info("Received check authentication status request");
         
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -207,19 +207,19 @@ public class UserController {
             if (isAuthenticated) {
                 response.put("username", authentication.getName());
                 response.put("authorities", authentication.getAuthorities());
-                response.put("message", "用户已认证");
+                response.put("message", "User authenticated");
             } else {
-                response.put("message", "用户未认证");
+                response.put("message", "User not authenticated");
             }
             
             return ResponseEntity.ok(response);
             
         } catch (Exception e) {
-            logger.error("检查认证状态失败: {}", e.getMessage(), e);
+            logger.error("Failed to check authentication status: {}", e.getMessage(), e);
             
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
-            errorResponse.put("message", "检查认证状态失败");
+            errorResponse.put("message", "Failed to check authentication status");
             errorResponse.put("timestamp", LocalDateTime.now());
             
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
@@ -227,12 +227,12 @@ public class UserController {
     }
     
     /**
-     * 将User实体转换为UserResponse DTO
-     * @param user 用户实体
+     * Convert User entity to UserResponse DTO
+     * @param user User entity
      * @return UserResponse DTO
      */
     private UserResponse convertToUserResponse(User user) {
-        // 获取用户角色名称集合
+        // Get user role name collection
         Set<String> roleNames = user.getRoles().stream()
             .map(Role::getName)
             .collect(Collectors.toSet());
@@ -252,17 +252,17 @@ public class UserController {
     }
     
     /**
-     * 全局异常处理
-     * @param e 异常
-     * @return 错误响应
+     * Global exception handling
+     * @param e Exception
+     * @return Error response
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e) {
-        logger.error("用户控制器发生未处理异常: {}", e.getMessage(), e);
+        logger.error("Unhandled exception occurred in user controller: {}", e.getMessage(), e);
         
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("success", false);
-        errorResponse.put("message", "服务器内部错误");
+        errorResponse.put("message", "Internal server error");
         errorResponse.put("timestamp", LocalDateTime.now());
         
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);

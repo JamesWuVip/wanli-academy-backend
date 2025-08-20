@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * 作业控制器
- * 处理作业相关的HTTP请求
+ * Homework Controller
+ * Handles homework related HTTP requests
  */
-@Tag(name = "作业管理", description = "作业相关的API端点，包括创建作业、获取作业列表和添加题目")
+@Tag(name = "Homework Management", description = "Homework related API endpoints, including create homework, get homework list and add questions")
 @RestController
 @RequestMapping("/api/homeworks")
 @PreAuthorize("hasRole('HQ_TEACHER')")
@@ -42,20 +42,20 @@ public class HomeworkController {
     private HomeworkService homeworkService;
     
     /**
-     * 创建新作业
+     * Create new homework
      * POST /api/homeworks
      * 
-     * @param request 创建作业请求
-     * @return 创建的作业信息
+     * @param request Create homework request
+     * @return Created homework information
      */
     @Operation(
-        summary = "创建新作业",
-        description = "创建一个新的作业，需要提供作业标题和描述。只有总部教师角色可以访问此接口。"
+        summary = "Create new homework",
+        description = "Create a new homework, requires homework title and description. Only accessible by headquarters teacher role."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "201",
-            description = "作业创建成功",
+            description = "Homework created successfully",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = HomeworkResponse.class)
@@ -63,7 +63,7 @@ public class HomeworkController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "请求参数无效",
+            description = "Invalid request parameters",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = ErrorResponse.class)
@@ -71,16 +71,16 @@ public class HomeworkController {
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "未授权访问"
+            description = "Unauthorized access"
         ),
         @ApiResponse(
             responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            description = "Insufficient permissions, headquarters teacher role required"
         )
     })
     @PostMapping
     public ResponseEntity<HomeworkResponse> createHomework(
-            @Parameter(description = "作业创建请求信息", required = true)
+            @Parameter(description = "Homework creation request information", required = true)
             @Valid @RequestBody HomeworkCreateRequest request) {
         logger.info("Received request to create homework: {}", request.getTitle());
         
@@ -95,19 +95,19 @@ public class HomeworkController {
     }
     
     /**
-     * 获取当前用户创建的作业列表
+     * Get homework list created by current user
      * GET /api/homeworks
      * 
-     * @return 作业列表
+     * @return Homework list
      */
     @Operation(
-        summary = "获取作业列表",
-        description = "获取当前登录用户创建的所有作业列表。只有总部教师角色可以访问此接口。"
+        summary = "Get homework list",
+        description = "Get all homework list created by current logged-in user. Only accessible by headquarters teacher role."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "成功获取作业列表",
+            description = "Successfully retrieved homework list",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = HomeworkResponse.class)
@@ -115,11 +115,11 @@ public class HomeworkController {
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "未授权访问"
+            description = "Unauthorized access"
         ),
         @ApiResponse(
             responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            description = "Insufficient permissions, headquarters teacher role required"
         )
     })
     @GetMapping
@@ -137,21 +137,21 @@ public class HomeworkController {
     }
     
     /**
-     * 向作业添加题目
+     * Add question to homework
      * POST /api/homeworks/{homeworkId}/questions
      * 
-     * @param homeworkId 作业ID
-     * @param request 题目创建请求
-     * @return 创建的题目信息
+     * @param homeworkId Homework ID
+     * @param request Question creation request
+     * @return Created question information
      */
     @Operation(
-        summary = "向作业添加题目",
-        description = "向指定的作业中添加一个新题目。题目包含内容、类型、标准答案等信息。只有总部教师角色可以访问此接口。"
+        summary = "Add question to homework",
+        description = "Add a new question to the specified homework. Question contains content, type, standard answer and other information. Only accessible by headquarters teacher role."
     )
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "201",
-            description = "题目添加成功",
+            description = "Question added successfully",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = QuestionResponse.class)
@@ -159,7 +159,7 @@ public class HomeworkController {
         ),
         @ApiResponse(
             responseCode = "400",
-            description = "请求参数无效或作业不存在",
+            description = "Invalid request parameters or homework does not exist",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = ErrorResponse.class)
@@ -167,22 +167,22 @@ public class HomeworkController {
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "未授权访问"
+            description = "Unauthorized access"
         ),
         @ApiResponse(
             responseCode = "403",
-            description = "权限不足，需要总部教师角色"
+            description = "Insufficient permissions, headquarters teacher role required"
         ),
         @ApiResponse(
             responseCode = "404",
-            description = "作业不存在"
+            description = "Homework not found"
         )
     })
     @PostMapping("/{homeworkId}/questions")
     public ResponseEntity<QuestionResponse> addQuestionToHomework(
-            @Parameter(description = "作业的唯一标识符", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
+            @Parameter(description = "Unique identifier of the homework", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
             @PathVariable UUID homeworkId,
-            @Parameter(description = "题目创建请求信息", required = true)
+            @Parameter(description = "Question creation request information", required = true)
             @Valid @RequestBody QuestionCreateRequest request) {
         
         logger.info("Received request to add question to homework: {}", homeworkId);

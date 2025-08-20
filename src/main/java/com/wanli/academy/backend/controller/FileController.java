@@ -25,12 +25,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * 文件管理控制器
- * 处理文件上传、下载、删除等操作
+ * File Management Controller
+ * Handles file upload, download, delete and other operations
  */
 @RestController
 @RequestMapping("/api/files")
-@Tag(name = "文件管理", description = "文件上传、下载、删除等操作")
+@Tag(name = "File Management", description = "File upload, download, delete and other operations")
 public class FileController {
     
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
@@ -39,22 +39,22 @@ public class FileController {
     private FileService fileService;
     
     /**
-     * 上传文件
+     * Upload file
      */
     @PostMapping("/upload")
     @PreAuthorize("isAuthenticated()")
-    @Operation(summary = "上传文件", description = "上传文件到服务器")
+    @Operation(summary = "Upload file", description = "Upload file to server")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "上传成功"),
-            @ApiResponse(responseCode = "400", description = "文件格式不支持或文件过大"),
-            @ApiResponse(responseCode = "401", description = "未授权")
+            @ApiResponse(responseCode = "200", description = "Upload successful"),
+            @ApiResponse(responseCode = "400", description = "Unsupported file format or file too large"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     public ResponseEntity<FileResponse> uploadFile(
-            @Parameter(description = "要上传的文件", required = true)
+            @Parameter(description = "File to upload", required = true)
             @RequestParam("file") @NotNull MultipartFile file,
-            @Parameter(description = "关联的作业ID")
+            @Parameter(description = "Associated assignment ID")
             @RequestParam(value = "assignmentId", required = false) UUID assignmentId,
-            @Parameter(description = "文件类别 (ASSIGNMENT_FILE, SUBMISSION_FILE, TEMP_FILE)", required = true)
+            @Parameter(description = "File category (ASSIGNMENT_FILE, SUBMISSION_FILE, TEMP_FILE)", required = true)
             @RequestParam("fileCategory") @NotNull String fileCategory) {
         
         try {
@@ -74,18 +74,18 @@ public class FileController {
     }
     
     /**
-     * 下载文件
+     * Download file
      */
     @GetMapping("/download/{fileId}")
     @PreAuthorize("@permissionService.canAccessFile(#fileId)")
-    @Operation(summary = "下载文件", description = "根据文件ID下载文件")
+    @Operation(summary = "Download file", description = "Download file by file ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "下载成功"),
-            @ApiResponse(responseCode = "404", description = "文件不存在"),
-            @ApiResponse(responseCode = "403", description = "无权限访问")
+            @ApiResponse(responseCode = "200", description = "Download successful"),
+            @ApiResponse(responseCode = "404", description = "File not found"),
+            @ApiResponse(responseCode = "403", description = "No permission to access")
     })
     public ResponseEntity<Resource> downloadFile(
-            @Parameter(description = "文件ID", required = true)
+            @Parameter(description = "File ID", required = true)
             @PathVariable @NotNull UUID fileId) {
         
         try {
@@ -93,7 +93,7 @@ public class FileController {
             
             Resource resource = fileService.downloadFile(fileId);
             
-            // 获取文件信息用于设置响应头
+            // Get file information for setting response headers
             FileResponse fileInfo = fileService.getFileInfo(fileId);
             
             return ResponseEntity.ok()
@@ -115,18 +115,18 @@ public class FileController {
     }
     
     /**
-     * 删除文件
+     * Delete file
      */
     @DeleteMapping("/{fileId}")
     @PreAuthorize("@permissionService.canDeleteFile(#fileId)")
-    @Operation(summary = "删除文件", description = "根据文件ID删除文件")
+    @Operation(summary = "Delete file", description = "Delete file by file ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "删除成功"),
-            @ApiResponse(responseCode = "404", description = "文件不存在"),
-            @ApiResponse(responseCode = "403", description = "无权限删除")
+            @ApiResponse(responseCode = "200", description = "Delete successful"),
+            @ApiResponse(responseCode = "404", description = "File not found"),
+            @ApiResponse(responseCode = "403", description = "No permission to delete")
     })
     public ResponseEntity<Void> deleteFile(
-            @Parameter(description = "文件ID", required = true)
+            @Parameter(description = "File ID", required = true)
             @PathVariable @NotNull UUID fileId) {
         
         try {
@@ -148,18 +148,18 @@ public class FileController {
     }
     
     /**
-     * 获取文件信息
+     * Get file information
      */
     @GetMapping("/{fileId}/info")
     @PreAuthorize("@permissionService.canAccessFile(#fileId)")
-    @Operation(summary = "获取文件信息", description = "根据文件ID获取文件详细信息")
+    @Operation(summary = "Get file information", description = "Get detailed file information by file ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "获取成功"),
-            @ApiResponse(responseCode = "404", description = "文件不存在"),
-            @ApiResponse(responseCode = "403", description = "无权限访问")
+            @ApiResponse(responseCode = "200", description = "Get successful"),
+            @ApiResponse(responseCode = "404", description = "File not found"),
+            @ApiResponse(responseCode = "403", description = "No permission to access")
     })
     public ResponseEntity<FileResponse> getFileInfo(
-            @Parameter(description = "文件ID", required = true)
+            @Parameter(description = "File ID", required = true)
             @PathVariable @NotNull UUID fileId) {
         
         try {
@@ -181,20 +181,20 @@ public class FileController {
     }
     
     /**
-     * 获取作业相关文件列表
+     * Get assignment related file list
      */
     @GetMapping("/assignment/{assignmentId}")
     @PreAuthorize("@permissionService.canAccessAssignment(#assignmentId)")
-    @Operation(summary = "获取作业文件列表", description = "获取指定作业的所有相关文件")
+    @Operation(summary = "Get assignment file list", description = "Get all related files for specified assignment")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "获取成功"),
-            @ApiResponse(responseCode = "404", description = "作业不存在"),
-            @ApiResponse(responseCode = "403", description = "无权限访问")
+            @ApiResponse(responseCode = "200", description = "Get successful"),
+            @ApiResponse(responseCode = "404", description = "Assignment not found"),
+            @ApiResponse(responseCode = "403", description = "No permission to access")
     })
     public ResponseEntity<List<FileResponse>> getAssignmentFiles(
-            @Parameter(description = "作业ID", required = true)
+            @Parameter(description = "Assignment ID", required = true)
             @PathVariable @NotNull UUID assignmentId,
-            @Parameter(description = "文件类别过滤 (可选)")
+            @Parameter(description = "File category filter (optional)")
             @RequestParam(value = "fileCategory", required = false) String fileCategory) {
         
         try {
@@ -216,17 +216,17 @@ public class FileController {
     }
     
     /**
-     * 获取用户上传的文件列表
+     * Get user uploaded file list
      */
     @GetMapping("/user")
     @PreAuthorize("isAuthenticated()")
-    @Operation(summary = "获取用户文件列表", description = "获取当前用户上传的所有文件")
+    @Operation(summary = "Get user file list", description = "Get all files uploaded by current user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "获取成功"),
-            @ApiResponse(responseCode = "401", description = "未授权")
+            @ApiResponse(responseCode = "200", description = "Get successful"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     public ResponseEntity<List<FileResponse>> getUserFiles(
-            @Parameter(description = "文件类别过滤 (可选)")
+            @Parameter(description = "File category filter (optional)")
             @RequestParam(value = "fileCategory", required = false) String fileCategory) {
         
         try {
@@ -242,14 +242,14 @@ public class FileController {
     }
     
     /**
-     * 清理过期临时文件
+     * Clean up expired temporary files
      */
     @PostMapping("/cleanup")
     @PreAuthorize("@permissionService.isAdmin()")
-    @Operation(summary = "清理过期文件", description = "清理过期的临时文件（管理员功能）")
+    @Operation(summary = "Clean up expired files", description = "Clean up expired temporary files (admin function)")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "清理成功"),
-            @ApiResponse(responseCode = "403", description = "无权限执行此操作")
+            @ApiResponse(responseCode = "200", description = "Cleanup successful"),
+            @ApiResponse(responseCode = "403", description = "No permission to perform this operation")
     })
     public ResponseEntity<String> cleanupExpiredFiles() {
         
@@ -257,17 +257,17 @@ public class FileController {
             logger.info("Starting cleanup of expired files");
             
             fileService.cleanupExpiredTempFiles();
-            String message = "过期文件清理操作已完成";
+            String message = "Expired file cleanup operation completed";
             
             return ResponseEntity.ok(message);
             
         } catch (AccessDeniedException e) {
             logger.error("Access denied for file cleanup: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("无权限执行此操作");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No permission to perform this operation");
         } catch (RuntimeException e) {
             logger.error("File cleanup failed: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("清理操作失败: " + e.getMessage());
+                    .body("Cleanup operation failed: " + e.getMessage());
         }
     }
 }
